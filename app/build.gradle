@@ -5,6 +5,10 @@ android {
     compileOptions.encoding = 'UTF-8'
 
     defaultConfig {
+
+        versionCode 8
+        versionName "0.1.2"
+
         applicationId "com.hoikutech.tagcam"
         minSdkVersion 15
         targetSdkVersion 28
