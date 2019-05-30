@@ -10,7 +10,20 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         />
-    
+
+    <ImageButton
+        android:id="@+id/voice_tag"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/voice_tag"
+        android:src="@drawable/ic_dictation_off"
+        android:onClick="clickedVoiceTag"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        />
+
     <ImageButton
         android:id="@+id/take_photo"
         android:layout_width="100dp"
@@ -169,6 +182,8 @@
         android:onClick="clickedSettings"
         />
 
+
+
     <ImageButton
         android:id="@+id/popup"
         android:layout_width="@dimen/onscreen_button_size"
@@ -197,6 +212,7 @@
         android:onClick="clickedExposure"
         android:visibility="gone"
         />
+
 
     <ImageButton
         android:id="@+id/exposure_lock"

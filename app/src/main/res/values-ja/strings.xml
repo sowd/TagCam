@@ -225,7 +225,12 @@
     <string name="about_available">利用可能</string>
     <string name="about_not_available">利用不可</string>
     <string name="about_copy_to_clipboard">クリップボードにコピーする</string>
-    
+
+    <string name="voice_tag">音声認識でタグをつける</string>
+    <string name="voice_tag_enabled">音声タグを有効にしました</string>
+    <string name="voice_tag_disabled">音声タグを無効にしました</string>
+
+
     <string name="take_photo">写真を撮影する</string>
     <string name="gallery">ギャラリーを開く</string>
     <string name="exposure">露出を設定する</string>

@@ -240,7 +240,7 @@
     <string name="about_available">Available</string>
     <string name="about_not_available">Not available</string>
     <string name="about_copy_to_clipboard">Copy to clipboard</string>
-    
+
     <string name="take_photo">Take Photo</string>
     <string name="gallery">Gallery</string>
     <string name="exposure">Exposure</string>
@@ -877,4 +877,9 @@
             <li>Other improvements and bug fixes.\n</li>
         </ul>
     </string>
+
+    <string name="voice_tag">Add voice tag</string>
+    <string name="voice_tag_enabled">Tagging the image by voice recognition is enabled</string>
+    <string name="voice_tag_disabled">Tagging the image by voice recognition is disabled</string>
+
 </resources>
