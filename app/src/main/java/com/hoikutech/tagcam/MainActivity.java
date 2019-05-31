@@ -3144,6 +3144,8 @@ public class MainActivity extends Activity {
         }
 
         // Start voice recognition (ToDo)
+
+        this.getPreview().mDelayedImageSaver.saveImage(true);
     }
 
     public void clickedShare(View view) {

@@ -5706,10 +5706,6 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             Log.d(TAG, "remaining_repeat_photos: " + remaining_repeat_photos);
 
         CameraController.PictureCallback pictureCallback = new CameraController.PictureCallback() {
-            private boolean success = false; // whether jpeg callback succeeded
-            private boolean has_date = false;
-            private Date current_date = null;
-
             public void onStarted() {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onStarted");
@@ -5724,6 +5720,12 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             public void onCompleted() {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onCompleted");
+
+                if( (remaining_repeat_photos == -1 || remaining_repeat_photos > 0 )
+                    || !applicationInterface.getPausePreviewPref() ){
+                    mDelayedImageSaver.saveImage(false);  /// Non-preview pause modes
+                }
+
                 applicationInterface.onPictureCompleted();
                 if( !using_android_l ) {
                     is_preview_started = false; // preview automatically stopped due to taking photo on original Camera API
@@ -5746,7 +5748,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                     boolean pause_preview = applicationInterface.getPausePreviewPref();
                     if( MyDebug.LOG )
                         Log.d(TAG, "pause_preview? " + pause_preview);
-                    if( pause_preview && success ) {
+                    if( pause_preview /*&& success*/ ) {  // success check disabled because files are not saved yet.
                         if( is_preview_started ) {
                             // need to manually stop preview on Android L Camera2
                             if( camera_controller != null ) {
@@ -5787,64 +5789,32 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                 }
             }
 
-            /** Ensures we get the same date for both JPEG and RAW; and that we set the date ASAP so that it corresponds to actual
-             *  photo time.
-             */
-            private void initDate() {
-                if( !has_date ) {
-                    has_date = true;
-                    current_date = new Date();
-                    if( MyDebug.LOG )
-                        Log.d(TAG, "picture taken on date: " + current_date);
-                }
-            }
-
             public void onPictureTaken(byte[] data) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onPictureTaken");
-                initDate();
-                if( !applicationInterface.onPictureTaken(data, current_date) ) {
-                    if( MyDebug.LOG )
-                        Log.e(TAG, "applicationInterface.onPictureTaken failed");
-                    success = false;
-                }
-                else {
-                    success = true;
-                }
+                mDelayedImageSaver.initDate();
+                mDelayedImageSaver.data = data ;
             }
 
             public void onRawPictureTaken(RawImage raw_image) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onRawPictureTaken");
-                initDate();
-                if( !applicationInterface.onRawPictureTaken(raw_image, current_date) ) {
-                    if( MyDebug.LOG )
-                        Log.e(TAG, "applicationInterface.onRawPictureTaken failed");
-                }
+                mDelayedImageSaver.initDate();
+                mDelayedImageSaver.raw_image = raw_image ;
             }
 
             public void onBurstPictureTaken(List<byte[]> images) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onBurstPictureTaken");
-                initDate();
-
-                success = true;
-                if( !applicationInterface.onBurstPictureTaken(images, current_date) ) {
-                    if( MyDebug.LOG )
-                        Log.e(TAG, "applicationInterface.onBurstPictureTaken failed");
-                    success = false;
-                }
+                mDelayedImageSaver.initDate();
+                mDelayedImageSaver.images = images;
             }
 
             public void onRawBurstPictureTaken(List<RawImage> raw_images) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onRawBurstPictureTaken");
-                initDate();
-
-                if( !applicationInterface.onRawBurstPictureTaken(raw_images, current_date) ) {
-                    if( MyDebug.LOG )
-                        Log.e(TAG, "applicationInterface.onRawBurstPictureTaken failed");
-                }
+                mDelayedImageSaver.initDate();
+                mDelayedImageSaver.raw_images = raw_images;
             }
 
             public boolean imageQueueWouldBlock(int n_raw, int n_jpegs) {
@@ -5903,6 +5873,70 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         if( MyDebug.LOG )
             Log.d(TAG, "takePhotoWhenFocused exit");
     }
+
+    public class DelayedImageSaver {
+        private byte[] data = null;
+        private RawImage raw_image = null;
+        private List<byte[]> images = null;
+        private List<RawImage> raw_images = null;
+
+        private boolean success = false; // whether jpeg callback succeeded
+        private boolean has_date = false;
+        private Date current_date = null;
+
+        /** Ensures we get the same date for both JPEG and RAW; and that we set the date ASAP so that it corresponds to actual
+         *  photo time.
+         */
+        private void initDate() {
+            if( !has_date ) {
+                has_date = true;
+                current_date = new Date();
+                if( MyDebug.LOG )
+                    Log.d(TAG, "picture taken on date: " + current_date);
+            }
+        }
+
+        public void saveImage(boolean bRestartPreviewAfterSaving){
+            if( data != null ){
+                if( !applicationInterface.onPictureTaken(data, current_date) ) {
+                    if( MyDebug.LOG )
+                        Log.e(TAG, "applicationInterface.onPictureTaken failed");
+                    success = false;
+                }
+                else {
+                    success = true;
+                }
+            } else if(raw_image != null ){
+                if( !applicationInterface.onRawPictureTaken(raw_image, current_date) ) {
+                    if( MyDebug.LOG )
+                        Log.e(TAG, "applicationInterface.onRawPictureTaken failed");
+                }
+            } else if(images != null ){
+                success = true;
+                if( !applicationInterface.onBurstPictureTaken(images, current_date) ) {
+                    if( MyDebug.LOG )
+                        Log.e(TAG, "applicationInterface.onBurstPictureTaken failed");
+                    success = false;
+                }
+            } else if(raw_images!=null ){
+                if( !applicationInterface.onRawBurstPictureTaken(raw_images, current_date) ) {
+                    if( MyDebug.LOG )
+                        Log.e(TAG, "applicationInterface.onRawBurstPictureTaken failed");
+                }
+            }
+            data = null; raw_image = null; images = null; raw_images = null;
+
+            if( bRestartPreviewAfterSaving ){
+                if( !is_preview_started ) {
+                    // we need to restart the preview; and we do this in the callback, as we need to restart after saving the image
+                    // (otherwise this can fail, at least on Nexus 7)
+                    startCameraPreview();
+                }
+                applicationInterface.cameraInOperation(false, false);
+            }
+        }
+    };
+    public DelayedImageSaver mDelayedImageSaver = new DelayedImageSaver();
 
     private void takeRemainingRepeatPhotos() {
         if( MyDebug.LOG )
