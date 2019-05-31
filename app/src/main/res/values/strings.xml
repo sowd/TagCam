@@ -881,5 +881,7 @@
     <string name="voice_tag">Add voice tag</string>
     <string name="voice_tag_enabled">Tagging the image by voice recognition is enabled</string>
     <string name="voice_tag_disabled">Tagging the image by voice recognition is disabled</string>
+    <string name="preference_show_voice_tag">Show voice tag icon</string>
+    <string name="preference_show_voice_tag_summary">Whether to show an on-screen icon for enabling or disabling voice tagging</string>
 
 </resources>
