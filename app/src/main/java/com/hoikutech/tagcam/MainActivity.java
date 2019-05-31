@@ -3127,6 +3127,25 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void clickedVoiceTag(View view) {
+        if( MyDebug.LOG )
+            Log.d(TAG, "clickedVoiceTag");
+
+        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+            // we restrict the checks to Android 6 or later just in case, see note in LocationSupplier.setupLocationListener()
+            if( MyDebug.LOG )
+                Log.d(TAG, "check for record audio permission");
+            if( ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ) {
+                if( MyDebug.LOG )
+                    Log.d(TAG, "record audio permission not available");
+                applicationInterface.requestRecordAudioPermission();
+                return;
+            }
+        }
+
+        // Start voice recognition (ToDo)
+    }
+
     public void clickedShare(View view) {
         if( MyDebug.LOG )
             Log.d(TAG, "clickedShare");

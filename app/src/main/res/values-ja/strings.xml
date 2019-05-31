@@ -355,5 +355,6 @@
     <string name="preference_ui_placement_left">左利き用</string>
     <string name="preference_ui_placement_right">右利き用</string>
 
+    <string name="voice_tag">音声認識でタグをつける</string>
 
 </resources>
