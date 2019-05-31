@@ -360,5 +360,8 @@
     <string name="voice_tag_disabled">音声認識タグを無効にしました</string>
     <string name="preference_show_voice_tag">音声認識タグアイコンを表示する</string>
     <string name="preference_show_voice_tag_summary">音声認識によるタグ付けを制御するアイコンを表示します</string>
+    <string name="save_with_voice_tag_button_label">保存</string>
+    <string name="save_without_voice_tag">音声認識タグをファイルに含めない</string>
+    <string name="save_with_voice_tag_confirm">音声認識タグを埋め込みます</string>
 
 </resources>
