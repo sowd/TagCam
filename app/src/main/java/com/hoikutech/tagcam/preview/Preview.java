@@ -1371,8 +1371,6 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         current_focus_index = -1;
         max_num_focus_areas = 0;
 
-        supports_voice_tag = true;
-
         applicationInterface.cameraInOperation(false, false);
         if( is_video )
             applicationInterface.cameraInOperation(false, true);
@@ -2029,11 +2027,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             this.video_quality_handler.setVideoSizes(camera_features.video_sizes);
             this.video_quality_handler.setVideoSizesHighSpeed(camera_features.video_sizes_high_speed);
             this.supported_preview_sizes = camera_features.preview_sizes;
-
-            this.supports_voice_tag = true; //camera_features.supports_voice_tag;
         }
-
-        this.is_voice_tag_enabled = applicationInterface.getEnableVoiceTagPref();
 
         if( MyDebug.LOG ) {
             Log.d(TAG, "setupCameraParameters: time after getting read only info: " + (System.currentTimeMillis() - debug_time));
@@ -8055,24 +8049,4 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         return this.zoom_ratios.get(zoom_factor)/100.0f;
     }
 
-    private boolean supports_voice_tag; // そもそも音声認識が可能かどうか
-    private boolean is_voice_tag_enabled; // 現在認識モードになっているかどうか
-
-    // public boolean supportsFaceDetection() とかが連続しているところ？
-    public boolean supportsVoiceTag() {
-        // don't log this, as we call from DrawPreview!
-        return supports_voice_tag;
-    }
-
-    public void toggleEnableVoiceTag() {
-        if( MyDebug.LOG )
-            Log.d(TAG, "toggleEnableVoiceTag()");
-
-        if( supports_voice_tag ) {
-            is_voice_tag_enabled = !is_voice_tag_enabled;
-            applicationInterface.setEnableVoiceTagPref(is_voice_tag_enabled);
-        }
-    }
-
-    public boolean isVoiceTagEnabled(){ return is_voice_tag_enabled;}
 }

@@ -221,10 +221,6 @@ public class PreferenceKeys {
         return "preference_save_zulu_time";
     }
 
-    public static final String EnableVoiceTagPreferenceKey = "preference_enable_voice_tag";
-
-    public static final String ShowVoiceTagPreferenceKey = "preference_show_voice_tag";
-
     public static final String ShowZoomControlsPreferenceKey = "preference_show_zoom_controls";
 
     public static final String ShowZoomSliderControlsPreferenceKey = "preference_show_zoom_slider_controls";

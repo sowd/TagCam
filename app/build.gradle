@@ -10,7 +10,7 @@ android {
         versionName "0.1.2"
 
         applicationId "com.hoikutech.tagcam"
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 28
 
         renderscriptTargetApi 20

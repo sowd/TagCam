@@ -138,8 +138,6 @@ public class MyApplicationInterface extends BasicApplicationInterface {
     // camera properties that aren't saved even in the bundle; these should be initialised/reset in reset()
     private int zoom_factor; // don't save zoom, as doing so tends to confuse users; other camera applications don't seem to save zoom when pause/resuming
 
-    RecognizeSpeech mRecognizeSpeech;
-
     MyApplicationInterface(MainActivity main_activity, Bundle savedInstanceState) {
         long debug_time = 0;
         if( MyDebug.LOG ) {
@@ -2966,20 +2964,6 @@ public class MyApplicationInterface extends BasicApplicationInterface {
         }
     }
 
-    @Override
-    public void setEnableVoiceTagPref(boolean bEnabled) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(PreferenceKeys.EnableVoiceTagPreferenceKey, bEnabled);
-        editor.apply();
-    }
-    @Override
-    public boolean getEnableVoiceTagPref(){
-        return sharedPreferences.getBoolean(PreferenceKeys.EnableVoiceTagPreferenceKey, false);
-    }
-    @Override
-    public boolean getShowVoiceTagPref(){
-        return sharedPreferences.getBoolean(PreferenceKeys.ShowVoiceTagPreferenceKey, false);
-    }
 
     // for testing
 

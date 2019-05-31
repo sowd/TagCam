@@ -123,10 +123,6 @@ public interface ApplicationInterface {
     boolean usePhotoVideoRecording(); // whether to enable support for taking photos when recording video (if not supported, this won't be called)
     boolean isPreviewInBackground(); // if true, then Preview can disable real-time effects (e.g., computing histogram)
 
-    void setEnableVoiceTagPref(boolean bEnabled);
-    boolean getEnableVoiceTagPref();
-    boolean getShowVoiceTagPref();
-
 
     // for testing purposes:
     boolean isTestAlwaysFocus(); // if true, pretend autofocus always successful

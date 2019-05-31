@@ -12,20 +12,6 @@
         />
 
     <ImageButton
-        android:id="@+id/voice_tag"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/voice_tag"
-        android:src="@drawable/ic_dictation_off"
-        android:onClick="clickedVoiceTag"
-        android:layout_centerVertical="true"
-        android:background="@null"
-        android:visibility="gone"
-        />
-
-    <ImageButton
         android:id="@+id/take_photo"
         android:layout_width="100dp"
         android:layout_height="100dp"

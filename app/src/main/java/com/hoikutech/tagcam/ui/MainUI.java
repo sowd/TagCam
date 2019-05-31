@@ -304,9 +304,6 @@ public class MainUI {
             buttons_permanent.add(main_activity.findViewById(R.id.audio_control));
             buttons_permanent.add(main_activity.findViewById(R.id.kraken_icon));
 
-            /// Edited!!!
-            buttons_permanent.add(main_activity.findViewById(R.id.voice_tag));
-
             List<View> buttons_all = new ArrayList<>(buttons_permanent);
             // icons which only sometimes show on the icon panel:
             buttons_all.add(main_activity.findViewById(R.id.trash));
@@ -817,18 +814,6 @@ public class MainUI {
         }
     }
 
-    // Edited!!
-    public boolean isVoiceTagEnabled() {
-        if( !main_activity.getPreview().supportsVoiceTag() )
-            return false;
-        return main_activity.getApplicationInterface().getEnableVoiceTagPref();
-    }
-    public boolean showVoiceTagIcon() {
-        if( !main_activity.getPreview().supportsVoiceTag() )
-            return false;
-        return main_activity.getApplicationInterface().getShowVoiceTagPref();
-    }
-
     public boolean showExposureLockIcon() {
         if( !main_activity.getPreview().supportsExposureLock() )
             return false;
@@ -948,10 +933,6 @@ public class MainUI {
                 galleryButton.setVisibility(visibility);
                 settingsButton.setVisibility(visibility);
 
-                View voiceTagBtn = main_activity.findViewById(R.id.voice_tag);
-                if( showVoiceTagIcon() )
-                    voiceTagBtn.setVisibility(visibility);
-
 
                 if( MyDebug.LOG ) {
                     Log.d(TAG, "has_zoom: " + main_activity.getPreview().supportsZoom());
@@ -1061,10 +1042,6 @@ public class MainUI {
                     closePopup(); // we still allow the popup when recording video, but need to update the UI (so it only shows flash options), so easiest to just close
                 }
 
-                View voiceTagBtn = main_activity.findViewById(R.id.voice_tag);
-                if( showVoiceTagIcon() )
-                    voiceTagBtn.setVisibility(visibility);
-
                 View remoteConnectedIcon = main_activity.findViewById(R.id.kraken_icon);
                 if (main_activity.getBluetoothRemoteControl().remoteConnected() ) {
                     if( MyDebug.LOG )
@@ -1082,13 +1059,6 @@ public class MainUI {
                 }
             }
         });
-    }
-
-    public void updateVoiceTagIcon() {
-        ImageButton view = main_activity.findViewById(R.id.voice_tag);
-        boolean enabled = main_activity.getPreview().isVoiceTagEnabled();
-        view.setImageResource(enabled ? R.drawable.ic_dictation_on : R.drawable.ic_dictation_off);
-        //view.setContentDescription( main_activity.getResources().getString(enabled ? R.string.exposure_unlock : R.string.exposure_lock) ); // Buggy?
     }
 
     public void updateExposureLockIcon() {
@@ -1195,7 +1165,6 @@ public class MainUI {
         this.updateAutoLevelIcon();
         this.updateCycleFlashIcon();
         this.updateFaceDetectionIcon();
-        this.updateVoiceTagIcon();
     }
 
     public void audioControlStarted() {

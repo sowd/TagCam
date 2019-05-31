@@ -1085,28 +1085,6 @@ public class MainActivity extends Activity {
         this.takePicture(false);
     }
 
-    public void clickedVoiceTag(View view) {
-        if( MyDebug.LOG )
-            Log.d(TAG, "clickedVoiceTag");
-
-        if( !preview.isVoiceTagEnabled() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            // we restrict the checks to Android 6 or later just in case, see note in LocationSupplier.setupLocationListener()
-            if( MyDebug.LOG )
-                Log.d(TAG, "check for record audio permission");
-            if( ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ) {
-                if( MyDebug.LOG )
-                    Log.d(TAG, "record audio permission not available");
-                applicationInterface.requestRecordAudioPermission();
-                //return; // Proceed anyway
-            }
-        }
-
-        this.preview.toggleEnableVoiceTag();
-        mainUI.updateVoiceTagIcon();
-        preview.showToast(exposure_lock_toast, preview.isVoiceTagEnabled()
-                ? R.string.voice_tag_enabled
-                : R.string.voice_tag_disabled);
-    }
 
     /** User has clicked button to take a photo snapshot whilst video recording.
      */
@@ -1960,10 +1938,6 @@ public class MainActivity extends Activity {
         if( sharedPreferences.getString(PreferenceKeys.AudioControlPreferenceKey, "none").equals("none") ) {
             View speechRecognizerButton = findViewById(R.id.audio_control);
             speechRecognizerButton.setVisibility(View.GONE);
-        }
-        if( !mainUI.showVoiceTagIcon() ) {
-            View button = findViewById(R.id.voice_tag);
-            button.setVisibility(View.GONE);
         }
 
         speechControl.initSpeechRecognizer(); // in case we've enabled or disabled speech recognizer
