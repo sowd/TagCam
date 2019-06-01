@@ -1,5 +1,6 @@
 package com.hoikutech.tagcam.preview;
 
+import com.hoikutech.tagcam.ImageSaver;
 import com.hoikutech.tagcam.MainActivity;
 import com.hoikutech.tagcam.cameracontroller.RawImage;
 //import com.hoikutech.tagcam.MainActivity;
@@ -25,7 +26,9 @@ import java.io.FileNotFoundException;
 //import java.io.FileOutputStream;
 import java.io.IOException;
 //import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -5903,6 +5906,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         }
         private void clearTempImages(){
             data = null; raw_image = null; images = null; raw_images = null;
+            ImageSaver.Request.exifComment_Static = null;
         }
 
         public boolean isWaitingForSave(){
@@ -5911,11 +5915,25 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
 
 
         public static final String TAG_TRANSCRIPT = "transcript";
-        public void addTag(String tagKey,String tagValue){
-            showToast(null, "Tag "+tagKey+": \""+tagValue+"\" Added.");
+        public void addTag(String tagKey,String _tagValue){
+            String tagValue = _tagValue;
+            if( tagKey.equals(TAG_TRANSCRIPT) ){ // Tag convert to urlencoded utf8
+                try { tagValue = URLEncoder.encode(_tagValue, "UTF-8"); }
+                catch (UnsupportedEncodingException e) { tagValue = _tagValue ; }
+            }
+            String kv = "\""+tagKey+"\" : \""+tagValue+"\"\n";
+            if( ImageSaver.Request.exifComment_Static == null )
+                ImageSaver.Request.exifComment_Static = "\t"+kv;
+            else
+                ImageSaver.Request.exifComment_Static += "\t,"+kv;
+
+            showToast(null, "Tag "+tagKey+": \""+_tagValue+"\" Added.");
         }
 
         public void saveImage(boolean bRestartPreviewAfterSaving){
+            if( ImageSaver.Request.exifComment_Static != null) // Make it a JSON formatted str
+                ImageSaver.Request.exifComment_Static = "{\n"+ImageSaver.Request.exifComment_Static +"}";
+
             if( data != null ){
                 if( !applicationInterface.onPictureTaken(data, current_date) ) {
                     if( MyDebug.LOG )

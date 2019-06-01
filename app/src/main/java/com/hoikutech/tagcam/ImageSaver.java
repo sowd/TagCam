@@ -91,7 +91,9 @@ public class ImageSaver extends Thread {
     public volatile boolean test_slow_saving;
     public volatile boolean test_queue_blocked;
 
-    static class Request {
+    public static class Request {
+        public static String exifComment_Static;
+        private String exifComment;
         enum Type {
             JPEG, // also covers WEBP
             RAW,
@@ -669,7 +671,7 @@ public class ImageSaver extends Thread {
 
     /** Internal saveImage method to handle both JPEG and RAW.
      */
-    private boolean saveImage(boolean do_in_background,
+        private boolean saveImage(boolean do_in_background,
                               boolean is_raw,
                               boolean is_hdr,
                               boolean force_suffix,
@@ -724,6 +726,9 @@ public class ImageSaver extends Thread {
                 custom_tag_artist,
                 custom_tag_copyright,
                 sample_factor);
+
+        request.exifComment = Request.exifComment_Static;
+        Request.exifComment_Static = null; // Unnecessary, but just to make sure
 
         if( do_in_background ) {
             if( MyDebug.LOG )
@@ -2806,6 +2811,9 @@ public class ImageSaver extends Thread {
                 exif_new.setAttribute(ExifInterface.TAG_USER_COMMENT, exif_user_comment);
         }
 
+        if( request.exifComment != null )
+            exif_new.setAttribute(ExifInterface.TAG_USER_COMMENT, request.exifComment);
+
         modifyExif(exif_new, request.type == Request.Type.JPEG, request.using_camera2, request.current_date, request.store_location, request.store_geo_direction, request.geo_direction, request.custom_tag_artist, request.custom_tag_copyright);
         setDateTimeExif(exif_new);
         exif_new.saveAttributes();
@@ -3062,6 +3070,8 @@ public class ImageSaver extends Thread {
             try {
                 ExifInterface exif = new ExifInterface(picFile.getAbsolutePath());
                 modifyExif(exif, request.type == Request.Type.JPEG, request.using_camera2, request.current_date, request.store_location, request.store_geo_direction, request.geo_direction, request.custom_tag_artist, request.custom_tag_copyright);
+                if( request.exifComment != null )
+                    exif.setAttribute(ExifInterface.TAG_USER_COMMENT, request.exifComment);
                 exif.saveAttributes();
             }
             catch(NoClassDefFoundError exception) {
@@ -3079,6 +3089,8 @@ public class ImageSaver extends Thread {
             try {
                 ExifInterface exif = new ExifInterface(picFile.getAbsolutePath());
                 fixGPSTimestamp(exif, request.current_date);
+                if( request.exifComment != null )
+                    exif.setAttribute(ExifInterface.TAG_USER_COMMENT, request.exifComment);
                 exif.saveAttributes();
             }
             catch(NoClassDefFoundError exception) {
@@ -3091,6 +3103,20 @@ public class ImageSaver extends Thread {
         else {
             if( MyDebug.LOG )
                 Log.d(TAG, "no exif data to update for: " + picFile);
+
+            try {
+                ExifInterface exif = new ExifInterface(picFile.getAbsolutePath());
+                if( request.exifComment != null )
+                    exif.setAttribute(ExifInterface.TAG_USER_COMMENT, request.exifComment);
+                exif.saveAttributes();
+            }
+            catch(NoClassDefFoundError exception) {
+                // have had Google Play crashes from new ExifInterface() elsewhere for Galaxy Ace4 (vivalto3g), Galaxy S Duos3 (vivalto3gvn), so also catch here just in case
+                if( MyDebug.LOG )
+                    Log.e(TAG, "exif orientation NoClassDefFoundError");
+                exception.printStackTrace();
+            }
+
         }
     }
 
