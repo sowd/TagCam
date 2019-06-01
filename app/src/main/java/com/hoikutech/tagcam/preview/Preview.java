@@ -1,5 +1,6 @@
 package com.hoikutech.tagcam.preview;
 
+import com.hoikutech.tagcam.MainActivity;
 import com.hoikutech.tagcam.cameracontroller.RawImage;
 //import com.hoikutech.tagcam.MainActivity;
 import com.hoikutech.tagcam.MyDebug;
@@ -93,6 +94,7 @@ import android.view.WindowManager;
 import android.view.View.MeasureSpec;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 /** This class was originally named due to encapsulating the camera preview,
@@ -5756,6 +5758,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                             }
                             is_preview_started = false;
                         }
+
                         setPreviewPaused(true);
                     }
                     else {
@@ -5792,28 +5795,28 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             public void onPictureTaken(byte[] data) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onPictureTaken");
-                mDelayedImageSaver.initDate();
+                mDelayedImageSaver.init();
                 mDelayedImageSaver.data = data ;
             }
 
             public void onRawPictureTaken(RawImage raw_image) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onRawPictureTaken");
-                mDelayedImageSaver.initDate();
+                mDelayedImageSaver.init();
                 mDelayedImageSaver.raw_image = raw_image ;
             }
 
             public void onBurstPictureTaken(List<byte[]> images) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onBurstPictureTaken");
-                mDelayedImageSaver.initDate();
+                mDelayedImageSaver.init();
                 mDelayedImageSaver.images = images;
             }
 
             public void onRawBurstPictureTaken(List<RawImage> raw_images) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "onRawBurstPictureTaken");
-                mDelayedImageSaver.initDate();
+                mDelayedImageSaver.init();
                 mDelayedImageSaver.raw_images = raw_images;
             }
 
@@ -5887,7 +5890,10 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         /** Ensures we get the same date for both JPEG and RAW; and that we set the date ASAP so that it corresponds to actual
          *  photo time.
          */
-        private void initDate() {
+        private void init() {
+            clearTempImages();
+            success = false; // whether jpeg callback succeeded
+
             if( !has_date ) {
                 has_date = true;
                 current_date = new Date();
@@ -5895,9 +5901,16 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                     Log.d(TAG, "picture taken on date: " + current_date);
             }
         }
+        private void clearTempImages(){
+            data = null; raw_image = null; images = null; raw_images = null;
+        }
+
+        public boolean isWaitingForSave(){
+            return data!=null || raw_image!=null || images!=null || raw_images != null ;
+        }
+
 
         public static final String TAG_TRANSCRIPT = "transcript";
-
         public void addTag(String tagKey,String tagValue){
             showToast(null, "Tag "+tagKey+": \""+tagValue+"\" Added.");
         }
@@ -5930,7 +5943,8 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                         Log.e(TAG, "applicationInterface.onRawBurstPictureTaken failed");
                 }
             }
-            data = null; raw_image = null; images = null; raw_images = null;
+
+            onEnterPauseMode(false);
 
             if( bRestartPreviewAfterSaving ){
                 if( !is_preview_started ) {
@@ -5939,6 +5953,21 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                     startCameraPreview();
                 }
                 applicationInterface.cameraInOperation(false, false);
+            }
+        }
+
+        public void onEnterPauseMode(boolean bAsSaveButton){
+            // Temporarily replace photo shoot icon by save button
+            MainActivity main_activity = (MainActivity)applicationInterface.getContext();
+            ImageButton view = main_activity.findViewById(R.id.take_photo);
+            if( bAsSaveButton ) { // Enter
+                view.setImageResource(R.drawable.ic_save_white_48dp);
+            } else { // Exit
+                if(main_activity.mRecognizeSpeech!=null){
+                    main_activity.mRecognizeSpeech.interruptRecognition();
+                }
+                clearTempImages();
+                view.setImageResource(R.drawable.take_photo_selector);
             }
         }
     };
@@ -6244,9 +6273,13 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         if( MyDebug.LOG )
             Log.d(TAG, "setPreviewPaused: " + paused);
         applicationInterface.hasPausedPreview(paused);
+
+        mDelayedImageSaver.onEnterPauseMode(paused);
+
         if( paused ) {
             this.phase = PHASE_PREVIEW_PAUSED;
             // shouldn't call applicationInterface.cameraInOperation(true, ...), as should already have done when we started to take a photo (or above when exiting immersive mode)
+
         }
         else {
             this.phase = PHASE_NORMAL;

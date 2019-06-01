@@ -1082,6 +1082,13 @@ public class MainActivity extends Activity {
     public void clickedTakePhoto(View view) {
         if( MyDebug.LOG )
             Log.d(TAG, "clickedTakePhoto");
+
+        if( getPreview().mDelayedImageSaver.isWaitingForSave()){
+            if(mRecognizeSpeech!=null) return ;
+            this.getPreview().mDelayedImageSaver.saveImage(true);
+            return;
+        }
+
         this.takePicture(false);
     }
 
@@ -3127,6 +3134,25 @@ public class MainActivity extends Activity {
         }
     }
 
+
+    public void clickedShare(View view) {
+        if( MyDebug.LOG )
+            Log.d(TAG, "clickedShare");
+        applicationInterface.shareLastImage();
+    }
+
+    public void clickedTrash(View view) {
+        if( MyDebug.LOG )
+            Log.d(TAG, "clickedTrash");
+
+        if( getPreview().mDelayedImageSaver.isWaitingForSave()){
+            getPreview().mDelayedImageSaver.onEnterPauseMode(false);
+        }
+
+        applicationInterface.trashLastImage();
+    }
+
+
     public void clickedVoiceTag(View view) {
         if( MyDebug.LOG )
             Log.d(TAG, "clickedVoiceTag");
@@ -3153,28 +3179,7 @@ public class MainActivity extends Activity {
             mRecognizeSpeech.doRecognize(this);
         }
     }
-    RecognizeSpeech mRecognizeSpeech;
-
-    public void clickedSaveAfterPause(View view) {
-        if (MyDebug.LOG)
-            Log.d(TAG, "clickedVoiceTag");
-
-        if(mRecognizeSpeech!=null) return ;
-
-        this.getPreview().mDelayedImageSaver.saveImage(true);
-    }
-
-    public void clickedShare(View view) {
-        if( MyDebug.LOG )
-            Log.d(TAG, "clickedShare");
-        applicationInterface.shareLastImage();
-    }
-
-    public void clickedTrash(View view) {
-        if( MyDebug.LOG )
-            Log.d(TAG, "clickedTrash");
-        applicationInterface.trashLastImage();
-    }
+    public RecognizeSpeech mRecognizeSpeech;
 
     /** User has pressed the take picture button, or done an equivalent action to request this (e.g.,
      *  volume buttons, audio trigger).

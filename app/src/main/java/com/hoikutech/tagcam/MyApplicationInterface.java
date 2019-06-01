@@ -2050,18 +2050,15 @@ public class MyApplicationInterface extends BasicApplicationInterface {
             Log.d(TAG, "hasPausedPreview: " + paused);
         View voiceTagButton = main_activity.findViewById(R.id.voice_tag);
         //View shareButton = main_activity.findViewById(R.id.share);
-        View saveButton = main_activity.findViewById(R.id.save_after_pause_btn);
         View trashButton = main_activity.findViewById(R.id.trash);
         if( paused ) {
             voiceTagButton.setVisibility(View.VISIBLE);
             //shareButton.setVisibility(View.VISIBLE);
-            saveButton.setVisibility(View.VISIBLE);
             trashButton.setVisibility(View.VISIBLE);
         }
         else {
             voiceTagButton.setVisibility(View.GONE);
             //shareButton.setVisibility(View.GONE);
-            saveButton.setVisibility(View.GONE);
             trashButton.setVisibility(View.GONE);
             this.clearLastImages();
         }
