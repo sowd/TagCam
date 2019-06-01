@@ -878,6 +878,10 @@
         </ul>
     </string>
 
-    <string name="voice_tag">Add voice tag</string>
+    <string name="voice_tag">Insert voice tag</string>
+    <string name="add_voice_tag_button_label">Insert</string>
+    <string name="add_voice_tag_cancel_button_label">Cancel</string>
+    <string name="add_voice_tag_confirm">Add voice recognition tag</string>
+
 
 </resources>

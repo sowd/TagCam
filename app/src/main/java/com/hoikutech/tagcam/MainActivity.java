@@ -3143,10 +3143,17 @@ public class MainActivity extends Activity {
             }
         }
 
-        // Start voice recognition (ToDo)
+        // Start voice recognition
 
-        this.getPreview().mDelayedImageSaver.saveImage(true);
+        if( mRecognizeSpeech != null && mRecognizeSpeech.isRecognizing() ) {
+            mRecognizeSpeech.interruptRecognition();
+            mRecognizeSpeech = null ;
+        } else {
+            mRecognizeSpeech = new RecognizeSpeech();
+            mRecognizeSpeech.doRecognize(this);
+        }
     }
+    RecognizeSpeech mRecognizeSpeech;
 
     public void clickedShare(View view) {
         if( MyDebug.LOG )

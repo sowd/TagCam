@@ -5723,7 +5723,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
 
                 if( (remaining_repeat_photos == -1 || remaining_repeat_photos > 0 )
                     || !applicationInterface.getPausePreviewPref() ){
-                    mDelayedImageSaver.saveImage(false);  /// Non-preview pause modes
+                    mDelayedImageSaver.saveImage(false );  /// Non-preview pause modes
                 }
 
                 applicationInterface.onPictureCompleted();
@@ -5896,7 +5896,13 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             }
         }
 
-        public void saveImage(boolean bRestartPreviewAfterSaving){
+        public static final String TAG_TRANSCRIPT = "transcript";
+
+        public void addTag(String tagKey,String tagValue){
+            showToast(null, "Tag "+tagKey+": \""+tagValue+"\" Added.");
+        }
+
+        private void saveImage(boolean bRestartPreviewAfterSaving){
             if( data != null ){
                 if( !applicationInterface.onPictureTaken(data, current_date) ) {
                     if( MyDebug.LOG )
