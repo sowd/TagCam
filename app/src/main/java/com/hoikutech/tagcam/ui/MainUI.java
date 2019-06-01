@@ -307,7 +307,8 @@ public class MainUI {
             List<View> buttons_all = new ArrayList<>(buttons_permanent);
             // icons which only sometimes show on the icon panel:
             buttons_all.add(main_activity.findViewById(R.id.trash));
-            buttons_all.add(main_activity.findViewById(R.id.share));
+            //buttons_all.add(main_activity.findViewById(R.id.share));
+            buttons_all.add(main_activity.findViewById(R.id.save_after_pause_btn));
             buttons_all.add(main_activity.findViewById(R.id.voice_tag));
 
             for(View this_view : buttons_all) {

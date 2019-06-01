@@ -441,6 +441,21 @@
         android:visibility="gone"
         />
 
+    <ImageButton
+        android:id="@+id/save_after_pause_btn"
+        android:layout_width="@dimen/onscreen_button_size"
+        android:layout_height="@dimen/onscreen_button_size"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/save_image_after_pause"
+        android:src="@drawable/ic_save_white_48dp"
+        android:background="@color/icons_background"
+        android:backgroundTint="@color/icons_background_tint"
+        android:backgroundTintMode="src_in"
+        android:onClick="clickedSaveAfterPause"
+        android:visibility="gone"
+        />
+
     <LinearLayout
         android:id="@+id/sliders_container"
         android:layout_width="wrap_content"

@@ -356,8 +356,7 @@
     <string name="preference_ui_placement_right">右利き用</string>
 
     <string name="voice_tag">音声認識でタグをつける</string>
-    <string name="add_voice_tag_button_label">タグ追加</string>
-    <string name="add_voice_tag_cancel_button_label">キャンセル</string>
     <string name="add_voice_tag_confirm">音声認識タグの追加</string>
+    <string name="save_image_after_pause">保存</string>
 
 </resources>

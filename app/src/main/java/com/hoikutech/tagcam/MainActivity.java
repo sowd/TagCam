@@ -3155,6 +3155,15 @@ public class MainActivity extends Activity {
     }
     RecognizeSpeech mRecognizeSpeech;
 
+    public void clickedSaveAfterPause(View view) {
+        if (MyDebug.LOG)
+            Log.d(TAG, "clickedVoiceTag");
+
+        if(mRecognizeSpeech!=null) return ;
+
+        this.getPreview().mDelayedImageSaver.saveImage(true);
+    }
+
     public void clickedShare(View view) {
         if( MyDebug.LOG )
             Log.d(TAG, "clickedShare");

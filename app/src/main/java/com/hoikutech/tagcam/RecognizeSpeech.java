@@ -106,18 +106,15 @@ public class RecognizeSpeech implements RecognitionListener {
             view.setImageResource(R.drawable.ic_dictation_on);
 
             // Show image saving dialog
-
-
             if( strings == null )
                 strings = new ArrayList<String>();
-            else
-                strings.add(main_activity.getResources().getString(R.string.add_voice_tag_cancel_button_label));
             final ArrayList<String> candidateStrings = strings;
 
             class TagGenerator {
                 public String getText(int idx){
-                    return (idx+1 >= candidateStrings.size()
-                            ? "" : candidateStrings.get(idx));
+                    return candidateStrings.get(idx);
+                    // Considered cancel button but not used anymore
+                    //return (idx+1 >= candidateStrings.size() ? "" : candidateStrings.get(idx));
                 }
                 public void addTagMain() {
                     String text = ""+descTextBox.getText();
@@ -139,16 +136,16 @@ public class RecognizeSpeech implements RecognitionListener {
 
             final AlertDialog mAlertDialog = alertDlgBuilder.setTitle(R.string.add_voice_tag_confirm)
                     //.setMessage(dateStr)
-                    /*.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             tagGenerator.addTagMain();
-                            //mTagCamFragment.addTagMain(fng.getFullFileName());
+                            main_activity.mRecognizeSpeech = null ;
                         }
-                    })*/
+                    })
                     .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
-                            //mTagCamFragment.changeState(TagCamFragment.State.PREVIEW);
+                            main_activity.mRecognizeSpeech = null ;
                         }
                     })
                     .show();
@@ -156,8 +153,6 @@ public class RecognizeSpeech implements RecognitionListener {
             ////////    Preview imageを設定する
             //ImageView previewView = (ImageView)mAlertDialog .findViewById(R.id.imageview_preview);
             //previewView.setImageBitmap(mTagCamFragment.getStoredFileBitmap());
-
-
 
             // ListViewにArrayAdapterを設定する
             ListView listView = (ListView) mAlertDialog .findViewById(R.id.text_candidates_list);
@@ -178,16 +173,6 @@ public class RecognizeSpeech implements RecognitionListener {
 
             tagGenerator.descTextBox = (EditText)mAlertDialog.findViewById(R.id.description_text);
             tagGenerator.descTextBox.setText(tagGenerator.getText(0));
-
-            // Click save button
-            Button addButton = (Button) mAlertDialog .findViewById(R.id.add_voice_tag_button);
-            addButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    tagGenerator.addTagMain();
-                    mAlertDialog.dismiss();
-                }
-            });
         }
     }
 }

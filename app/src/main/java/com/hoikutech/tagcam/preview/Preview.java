@@ -5902,7 +5902,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             showToast(null, "Tag "+tagKey+": \""+tagValue+"\" Added.");
         }
 
-        private void saveImage(boolean bRestartPreviewAfterSaving){
+        public void saveImage(boolean bRestartPreviewAfterSaving){
             if( data != null ){
                 if( !applicationInterface.onPictureTaken(data, current_date) ) {
                     if( MyDebug.LOG )

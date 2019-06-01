@@ -18,19 +18,11 @@
 
         <EditText
             android:id="@+id/description_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text|textPersonName"
             android:text="Name" />
-
-        <Button
-            android:id="@+id/add_voice_tag_button"
-            style="@android:style/Widget.Button.Inset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/add_voice_tag_button_label" />
 
     </LinearLayout>
 
