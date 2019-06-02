@@ -880,6 +880,7 @@
 
     <string name="voice_tag">Insert voice tag</string>
     <string name="add_voice_tag_confirm">Add voice recognition tag</string>
+    <string name="voice_recognition_error">Voice recognition error</string>
 
 
 </resources>

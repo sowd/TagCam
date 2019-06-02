@@ -48,11 +48,16 @@ public class RecognizeSpeech implements RecognitionListener {
     public void onError(int error)
     {
         Log.d(TAG,  "error " +  error);
+
         if( !isRecognizing() ) return ;
 
         setRecordingState(false,null);
         mSpeechRecognizer.destroy();
         mSpeechRecognizer = null ;
+
+        //ImageButton view = main_activity.findViewById(R.id.voice_tag);
+        //view.setImageResource(R.drawable.ic_dictation_on);
+        //main_activity.getPreview().showToast(null ,msg+":"+error);
     }
     public boolean isRecognizing(){ return mSpeechRecognizer!=null;}
     public void interruptRecognition() {
@@ -106,8 +111,16 @@ public class RecognizeSpeech implements RecognitionListener {
             view.setImageResource(R.drawable.ic_dictation_on);
 
             // Show image saving dialog
-            if( strings == null )
+            String dialogTitle ;
+            if( strings == null ) {
                 strings = new ArrayList<String>();
+                strings.add("");
+                dialogTitle = main_activity.getResources().getString(R.string.voice_recognition_error);
+            } else {
+                dialogTitle = main_activity.getResources().getString( R.string.add_voice_tag_confirm );
+            }
+
+            // Finalize
             final ArrayList<String> candidateStrings = strings;
 
             class TagGenerator {
@@ -134,7 +147,7 @@ public class RecognizeSpeech implements RecognitionListener {
                     main_activity, android.R.layout.simple_list_item_1, candidateStrings);
             alertDlgBuilder.setView(R.layout.voicetag_dialog);
 
-            final AlertDialog mAlertDialog = alertDlgBuilder.setTitle(R.string.add_voice_tag_confirm)
+            final AlertDialog mAlertDialog = alertDlgBuilder.setTitle(dialogTitle)
                     //.setMessage(dateStr)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -154,23 +167,24 @@ public class RecognizeSpeech implements RecognitionListener {
             //ImageView previewView = (ImageView)mAlertDialog .findViewById(R.id.imageview_preview);
             //previewView.setImageBitmap(mTagCamFragment.getStoredFileBitmap());
 
-            // ListViewにArrayAdapterを設定する
-            ListView listView = (ListView) mAlertDialog .findViewById(R.id.text_candidates_list);
-            listView.setAdapter(adapter);
+            if( candidateStrings.size()>1 ) {
+                // ListViewにArrayAdapterを設定する
+                ListView listView = (ListView) mAlertDialog.findViewById(R.id.text_candidates_list);
+                listView.setAdapter(adapter);
 
-            // List item click
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final String curName = tagGenerator.descTextBox.getText()+"";
-                    final String newName = tagGenerator.getText(position);
-                    if( curName.equals(newName)) { // Double tap to save and close
-                        tagGenerator.addTagMain();
-                        mAlertDialog.dismiss();
-                    } else
-                        tagGenerator.descTextBox.setText(newName);
-                }
-            });
-
+                // List item click
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        final String curName = tagGenerator.descTextBox.getText() + "";
+                        final String newName = tagGenerator.getText(position);
+                        if (curName.equals(newName)) { // Double tap to save and close
+                            tagGenerator.addTagMain();
+                            mAlertDialog.dismiss();
+                        } else
+                            tagGenerator.descTextBox.setText(newName);
+                    }
+                });
+            }
             tagGenerator.descTextBox = (EditText)mAlertDialog.findViewById(R.id.description_text);
             tagGenerator.descTextBox.setText(tagGenerator.getText(0));
         }

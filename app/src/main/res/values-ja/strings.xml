@@ -357,5 +357,6 @@
 
     <string name="voice_tag">音声認識でタグをつける</string>
     <string name="add_voice_tag_confirm">音声認識タグの追加</string>
+    <string name="voice_recognition_error">認識エラー</string>
 
 </resources>
