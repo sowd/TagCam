@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +49,8 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.util.Xml;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -92,8 +96,19 @@ public class ImageSaver extends Thread {
     public volatile boolean test_queue_blocked;
 
     public static class Request {
+
+        // Very dirty hack to convey new exif field information to ImageSaver.
         public static String exifComment_Static;
         private String exifComment;
+        String getExifCommentStringValue(String key,boolean bDecodeUrlEncode) {
+            if( exifComment != null ) try {
+                JSONObject exifJson = new JSONObject(exifComment);
+                String value = exifJson.getString(key);
+                return !bDecodeUrlEncode ? value : URLDecoder.decode(value, "UTF-8") ;
+            } catch (JSONException | UnsupportedEncodingException e) { e.printStackTrace(); }
+            return null ;
+        }
+
         enum Type {
             JPEG, // also covers WEBP
             RAW,
@@ -1916,6 +1931,7 @@ public class ImageSaver extends Thread {
                     }
                     ypos -= diff_y;
                     String gps_stamp = main_activity.getTextFormatter().getGPSString(preference_stamp_gpsformat, request.preference_units_distance, request.store_location, request.location, request.store_geo_direction, request.geo_direction);
+
                     if( gps_stamp.length() > 0 ) {
                         if( MyDebug.LOG )
                             Log.d(TAG, "stamp with location_string: " + gps_stamp);
@@ -1978,6 +1994,14 @@ public class ImageSaver extends Thread {
                             }
                         }
                     }
+
+                    String transcript = request.getExifCommentStringValue("transcript",true);
+                    if( transcript != null ){
+                            applicationInterface.drawTextWithBackground(canvas, p, transcript, color, Color.BLACK,
+                                    width - offset_x, ypos, MyApplicationInterface.Alignment.ALIGNMENT_BOTTOM, null, draw_shadowed);
+                            ypos -= diff_y;
+                    }
+
                 }
                 if( text_stamp ) {
                     if( MyDebug.LOG )
@@ -2090,6 +2114,11 @@ public class ImageSaver extends Thread {
     private boolean saveSingleImageNow(final Request request, byte [] data, Bitmap bitmap, String filename_suffix, boolean update_thumbnail, boolean share_image, boolean ignore_raw_only) {
         if( MyDebug.LOG )
             Log.d(TAG, "saveSingleImageNow");
+
+
+        if( request.getExifCommentStringValue("transcript",true) != null )
+            filename_suffix = (filename_suffix==null?"":filename_suffix)+"_1_"+request.getExifCommentStringValue("transcript",true);
+
 
         if( request.type != Request.Type.JPEG ) {
             if( MyDebug.LOG )

@@ -822,7 +822,7 @@
                     android:summary="@string/preference_stamp_summary"
                     android:entries="@array/preference_stamp_entries"
                     android:entryValues="@array/preference_stamp_values"
-                    android:defaultValue="preference_stamp_no"
+                    android:defaultValue="preference_stamp_yes"
                     />
     
                 <ListPreference 
@@ -858,7 +858,7 @@
                     android:summary="@string/preference_stamp_geo_address_summary"
                     android:entries="@array/preference_stamp_geo_address_entries"
                     android:entryValues="@array/preference_stamp_geo_address_values"
-                    android:defaultValue="preference_stamp_geo_address_no"
+                    android:defaultValue="preference_stamp_geo_address_prefer"
                     />
 
                 <ListPreference

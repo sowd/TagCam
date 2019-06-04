@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Tag Camera</string>
+    <string name="app_name">Tag Camera</string> <!-- shouldn't be translated -->
     <string name="action_settings">設定</string>
     <string name="action_popup">ポップアップ設定</string>
-    <string name="intro_text">写真を撮るには青いカメラボタンを押してください。ヘルプの参照は「設定」から「オンラインヘルプ」をタップして行います。Open Cameraは無料ですが寄付を受け付けておりますのでご検討ください(リンクまたはオンラインヘルプから参照してください)。\n\nプライバシー方針:位置情報をジオタグのために使用します。位置情報の適用を初めは無効にしています。有効にすると位置情報が保存したファイルに埋め込まれます(位置情報はこのためだけに使用します)。</string>
+    <string name="intro_text">写真を撮るには青いシャッターボタンを押し、次に出てくるプレビュー画面で、必要に応じて音声認識タグなどを挿入したうえで、ディスクボタンを押して保存してください。\n
+        音声認識タグは写真の中のデータ領域(EXIF)にコメントとしても埋め込まれますので、他のアプリからもデータとして取得できます。\n\n
+        Tag Cameraは、Open Cameraというすばらしいオープンソースカメラのソースコード（設計図）を利用して作られています。ほとんどOpen Cameraの機能そのままですので、使い方に関してはOpen Cameraのヘルプや解説記事などを参照してください。\n\n
+        不具合が生じたとき、それがTag Cameraの追加機能によるものなのか、ベースのOpen Cameraによるものなのかは調査が必要です。ひとまずはTag Cameraの開発元に連絡してみてください。
+        Open Cameraオフィシャルのヘルプへの参照は「設定」から「オンラインヘルプ」をタップして行います。Open Cameraは無料ですが寄付を受け付けているようですのでご検討ください(リンクまたはオンラインヘルプから参照してください)。\n\n
+        プライバシー方針:位置情報をジオタグのために使用します。位置情報の適用を初めは無効にしています。有効にすると位置情報が保存したファイルに埋め込まれます(位置情報はこのためだけに使用します)。</string>
     <string name="intro_ok">了解しました (この内容を再度表示しない)</string>
 
-    <string name="on">有効</string> <!-- whether a setting is turned on, e.g., "Auto-stabilise: On" -->
-    <string name="off">無効</string> <!-- whether a setting is turned off, e.g., "Auto-stabilise: Off" -->
+    <string name="on">有効</string> <!-- whether a setting is turned on, e.g., "Auto-level: On" -->
+    <string name="off">無効</string> <!-- whether a setting is turned off, e.g., "Auto-level: Off" -->
     
     <string name="choose_save_location">保存場所を選択する:</string>
     <string name="clear_folder_history">フォルダの履歴を消去する</string>
@@ -42,6 +47,7 @@
     <string name="started_recording_video">録画を開始しました</string>
     <string name="sorry">すみません</string>
     <string name="failed_to_save_photo">保存に失敗しました</string>
+    <string name="failed_to_save_photo_raw">Failed to save RAW photo</string>
     <string name="failed_to_auto_stabilise">回転に失敗しました</string>
     <string name="failed_to_start_camera_preview">プレビューに失敗しました</string>
     <string name="taking_photo">写真を撮ります</string>
@@ -96,7 +102,7 @@
     <string name="preference_timer_beep_summary">タイマーの計測もしくは高速撮影時の間隔の計測で音を鳴らします</string>
     <string name="preference_timer_speak">音声タイマー</string>
     <string name="preference_timer_speak_summary">タイマーの計測もしくは高速撮影時の間隔の計測で(残り1分から)音声を流します</string>
-    <string name="preference_burst_mode">高速撮影</string>
+    <string name="preference_burst_mode">高速撮影</string> <!-- preference is called "burst" for historical reasons, but is more of a repeat mode; also used in popup menu, so shouldn't be too long a string -->
     <string name="preference_burst_interval">撮影間隔</string>
     <string name="preference_screen_camera_controls_more">カメラ制御の詳細設定…</string>
     <string name="preference_touch_capture">タッチして保存する</string>
@@ -106,7 +112,10 @@
     <string name="preference_shutter_sound">シャッター音</string>
     <string name="preference_shutter_sound_summary">撮影時に音を再生する (無効にする場合はAndroid 4.2以上が必要です)</string>
     <string name="preference_volume_keys">音量キー</string>
-
+    <string name="preference_audio_control">音声操作の設定</string>
+    <string name="preference_audio_control_summary">ノイズを検知するか、または音声コマンド（英語で「チーズ！」）を検知すると写真を撮影したり、ビデオを撮影したりします。有効にしたら画面上のマイクボタンを使って録音開始や停止を行ってください。</string> <!-- note that cheese shouldn't be translated, as we listen for this no matter what language is being used -->
+    <string name="preference_audio_noise_control_sensitivity">音声コントロールのマイク感度</string>
+    <string name="preference_audio_noise_control_sensitivity_summary">認識の際に切り捨てるノイズレベルを指定します。</string>
     <string name="preference_save_location">保存場所</string>
     <string name="preference_save_location_summary">写真/ビデオを保存するフォルダを決めます</string>
     <string name="preference_using_saf">ストレージへのフレームワークを使用する</string>
@@ -115,9 +124,11 @@
     <string name="preference_save_photo_prefix_summary">保存する写真のファイル名の手前につける内容を設定します</string>
     <string name="preference_save_video_prefix">保存するビデオの命名ルール</string>
     <string name="preference_save_video_prefix_summary">保存するビデオのファイル名の手前につける内容を設定します</string>
+    <string name="preference_save_zulu_time">ファイル名での時間文字列のフォーマット</string>
     <string name="preference_show_when_locked">ロック画面上でもカメラを表示する</string>
-    <string name="preference_show_when_locked_summary">有効にするとOpen Cameraがロック画面上でも表示されます(ギャラリーを規定のアプリにしているなど、ロックの解除が必要になる場合もあります)</string>
-
+    <string name="preference_show_when_locked_summary">有効にするとTag Cameraがロック画面上でも表示されます(ギャラリーを規定のアプリにしているなど、ロックの解除が必要になる場合もあります)</string>
+    <string name="preference_startup_focus">起動時にオートフォーカスを実行する</string>
+    <string name="preference_startup_focus_summary">アプリ起動時にオートフォーカスを行うかどうかを指定します。もし起動時にフラッシュが転倒してしまうなどの問題がある場合はこのオプションを指定しないでください。</string>
     <string name="preference_lock_video">録画中は画面を固定する</string>
     <string name="preference_lock_video_summary">録画が停止しないように画面を固定します。固定は画面をスワイプすると解除されます。アプリをバックグラウンドに移すか画面を消灯しても録画は停止します。</string>
     <string name="preference_rotate_preview">回転をプレビュー</string>
@@ -138,7 +149,7 @@
     <string name="preference_free_memory_summary">画面上に空きメモリを表示します</string>
     <string name="preference_show_angle">角度を表示する</string>
     <string name="preference_show_angle_summary">画面上に角度を表示します</string>
-    <string name="preference_show_angle_line">角度を線で表示する</string>
+    <string name="preference_show_angle_line">角度を十字線で表示する</string>
     <string name="preference_show_angle_line_summary">画面上に線を表示します</string>
     <string name="preference_angle_highlight_color">角度を色で表示する</string>
     <string name="preference_angle_highlight_color_summary">角度の具合を色で表示します</string>
@@ -156,6 +167,8 @@
     <string name="preference_show_toasts_summary">画面上のメッセージをトースト形式で表示します</string>
     <string name="preference_thumbnail_animation">サムネイルをアニメにする</string>
     <string name="preference_thumbnail_animation_summary">撮影時のサムネイルをアニメにして表示します</string>
+    <string name="preference_take_photo_border">写真撮影時の枠線表示</string>
+    <string name="preference_take_photo_border_summary">写真撮影時に撮影状態を示す枠線を表示します</string>
     <string name="preference_keep_display_on">表示を維持する</string>
     <string name="preference_keep_display_on_summary">有効にすると使用している間は画面が消えなくなります</string>
     <string name="preference_max_brightness">明るさを常に最大にする</string>
@@ -167,15 +180,16 @@
     <string name="preference_screen_location_settings">位置情報の設定…</string>
     <string name="preference_resolution">写真の解像度</string>
     <string name="preference_quality">写真の品質</string>
-    <string name="preference_quality_summary">保存する写真の品質を決めます (90%%の圧縮率を提案します)\n%s</string>
+    <string name="preference_quality_summary">保存する写真の品質を決めます (90%%の圧縮率を提案します)\n%s</string> <!-- '%' is encoded as '%%' - a single % can crash devices, and this isn't picked up by Android Lint! -->
+    <string name="preference_raw">RAW</string>
     <string name="preference_location">位置情報を使用する</string>
     <string name="preference_location_summary">写真/ビデオにジオタグを埋め込みます</string>
     <string name="preference_gps_direction">方角情報を使用する</string>
     <string name="preference_gps_direction_summary">写真にコンパスを埋め込みます</string>
     <string name="preference_require_location">位置情報を要求する</string>
     <string name="preference_require_location_summary">有効にすると位置情報を取得可能な場合のみ写真/ビデオの撮影が動作します</string>
-    <string name="preference_stamp">情報を貼り付ける</string>
-    <string name="preference_stamp_summary">写真に日付と時刻を貼り付けます。GPSが有効であれば位置情報も埋め込みます。\n%s</string>
+    <string name="preference_stamp">スタンプ</string>
+    <string name="preference_stamp_summary">写真に日付と時刻を貼り付けます。音声認識タグがあればそれも貼り付けます。GPSが有効であれば位置情報も埋め込みます。\n%s</string>
     <string name="preference_stamp_dateformat">日付の形式</string>
     <string name="preference_stamp_timeformat">時刻の形式</string>
     <string name="preference_stamp_gpsformat">GPSの形式</string>
@@ -187,6 +201,8 @@
     <string name="preference_stamp_font_color_summary">写真に貼り付ける文字の色を決めます</string>
     <string name="preference_stamp_style">文字の形状</string>
     <string name="preference_stamp_style_summary">写真に貼り付ける文字の形状を決めます</string>
+    <string name="preference_background_photo_saving">バックグラウンドでスレッド実行を行う</string>
+    <string name="preference_background_photo_saving_summary">写真撮影時にスレッドを用いるかどうかを指定します。パフォーマンス向上が期待できます。</string>
     <string name="video_quality">ビデオの解像度</string>
     <string name="preference_force_video_4k">4K UHDビデオ (実験中)</string>
     <string name="preference_force_video_4k_summary">3840x2160での撮影を有効にします - サポートしていない機械ではクラッシュする事もあります!</string>
@@ -200,7 +216,10 @@
     <string name="preference_video_max_duration_summary">指定した時間が経過するとビデオ撮影が自動的に停止します\n%s</string>
     <string name="preference_video_restart">ビデオの最大撮影回数</string>
     <string name="preference_video_restart_summary">最大撮影時間の経過後に指定した回数だけ撮影を繰り返します(有効時のみ)\n%s</string>
-
+    <string name="preference_video_max_filesize">ビデオの最大サイズ</string>
+    <string name="preference_video_max_filesize_summary">最大ファイルサイズを超えると、ビデオ録画は停止するか、またはファイルが分割されます（次のオプションで指定します）。Androidデバイスの多くは2GBや4GBなどの最大ファイルサイズが設定されています。このオプションは、その制限を取り払うことができるわけではありません。\n%s</string>
+    <string name="preference_video_restart_max_filesize">最大ファイルサイズを超えたときにファイルを分割する</string>
+    <string name="preference_video_restart_max_filesize_summary">ファイルサイズが最大値を超えたときに、ファイルを分割します。</string>
     <string name="preference_record_audio">音声録音</string>
     <string name="preference_record_audio_summary">ビデオの撮影時に音声も録音します</string>
     <string name="preference_record_audio_src">オーディオソース</string>
@@ -212,8 +231,9 @@
     
     <string name="preference_category_online">その他の内容</string>
     <string name="preference_online_help">オンラインヘルプ</string>
-    <string name="preference_donate">サポートのために寄付をする</string>
-    <string name="preference_donate_summary">このアプリが気に入りましたら寄付をお願いします。この項目を押すと寄付への窓口が開きます。寄付権を購入する事で寄付ができます。寄付してくれたらありがとう！</string>
+    <string name="preference_online_help_summary">Tag CameraのベースであるOpen Cameraのウェブサイトを開きます。</string>
+    <string name="preference_donate">Open Cameraのサポートのために寄付をする</string>
+    <string name="preference_donate_summary">このアプリのほとんどはOpenCameraプロジェクトの成果になりますので、気に入っていただけましたらOpen Cameraへの寄付をお願いします。この項目を押すと寄付への窓口が開きます。寄付権を購入する事で寄付ができます。寄付してくれたらありがとう！</string>
     <string name="preference_use_camera2">Camera2 APIを使う</string>
     <string name="preference_use_camera2_summary">有効にするとAndroid 5.0以降に搭載のCamera2 APIを使用します。この設定は試験的に提供しています (再起動が必要です)</string>
     <string name="preference_about">このアプリについて</string>
@@ -232,6 +252,10 @@
     <string name="exposure_lock">露出を固定する</string>
     <string name="focus_mode">フォーカス切替</string>
     <string name="flash_mode">フラッシュ切替</string>
+    <string name="switch_to_front_camera">Switch to front camera</string>
+    <string name="switch_to_back_camera">Switch to back camera</string>
+    <string name="switch_to_video">Switch to video mode</string>
+    <string name="switch_to_photo">Switch to photo mode</string>
     <string name="trash">さっきの写真を削除する</string>
     <string name="share">この写真を共有する</string>
     
@@ -245,10 +269,107 @@
 
     <string name="saf_select_save_location">保存先を選択する</string>
     <string name="saf_cancelled">ストレージへのアクセスがキャンセルされました</string>
-    
+    <string name="saf_permission_failed">Unable to save to this folder</string>
+
     <!-- the permission names such as Microphone should match what Android calls them in the App permission settings -->
     <string name="permission_record_audio_not_available">マイクの使用が許可されていません</string>
     <string name="permission_location_not_available">位置情報の使用が許可されていません</string>
+
+    <string name="start_video">ビデオ録画の開始</string>
+    <string name="stop_video">ビデオ録画の停止</string>
+
+    <string name="max_filesize">最大ファイルサイズ</string>
+    <string name="mb_abbreviation">MB</string> <!-- symbol short for megabytes -->
+    <string name="gb_abbreviation">GB</string> <!-- symbol short for gigabytes -->
+
+    <string name="audio_control_start">音声録音の開始</string>
+    <string name="audio_control_stop">音声録音の停止</string>
+    <string name="speech_recognizer_started">\"チーズ\"と言ってください</string> <!-- note that cheese shouldn't be translated, as we listen for this no matter what language is being used -->
+    <string name="audio_listener_started">大きな音をたててください</string>
+
+    <string name="auto_stabilise_info">自由回転機能を用いると、画面を自動的に回転させて切り出したうえで保存しますが、画質が多少劣化します。</string>
+    <string name="raw_info">DNGファイルは完全無圧縮で、未加工のデータを含みます。\n\nギャラリーアプリによってはDNGファイルを認識しません。SnapseedやLightroomを用いるとよいでしょう。\n\nスタンプや自由回転といった機能はDNG以外の形式 (JPEGなど)でのみ使えますのでご了承ください。</string>
+    <string name="hdr_info">HDRモードは、シーンの明るいところと暗いところの差（ダイナミックレンジ）が大きい時に有用です。HDR画像は様々な露出時間で複数の写真を撮影し、それらを統合することで作成されます。\n\n従って、撮影には時間がかかるため動きが激しいシーンの撮影には不向きです。</string>
+
+    <string name="dont_show_again">以後表示しない</string>
+
+    <string name="photo_mode">Photo Mode</string>
+    <string name="photo_mode_standard">Std</string> <!-- keep short, as this shows in the popup menu -->
+    <string name="photo_mode_standard_full">Standard</string>
+    <string name="photo_mode_hdr">HDR</string> <!-- keep short, as this shows in the popup menu -->
+    <string name="photo_mode_expo_bracketing">Expo {}</string> <!-- keep short, as this shows in the popup menu -->
+    <string name="photo_mode_expo_bracketing_full">HDRの露出段階数（ブラケット）</string>
+    <string name="photo_mode_fast_burst">[]]]</string> <!-- keep short, as this shows in the popup menu; shouldn't be translated -->
+    <string name="photo_mode_fast_burst_full">Fast Burst</string>
+    <string name="photo_mode_noise_reduction">NR</string> <!-- keep short, as this shows in the popup menu; probably shouldn't be translated? -->
+    <string name="photo_mode_noise_reduction_full">ノイズ除去</string>
+    <string name="preference_category_stamp">スタンプ</string>
+    <string name="preference_hdr_save_expo">全ての画像をHDRモードでセーブ</string>
+    <string name="preference_hdr_save_expo_summary">これを有効にすると、HDRで写真を撮影した際に統合された3枚の通常の画像も同時にセーブします。これにより、保存時間が長くなります。特に、スタンプや自由回転機能と組み合わせたときに顕著です。</string>
+
+    <string name="no_permission">権限がありません</string>
+    <string name="permission_rationale_title">必要な権限を与える必要があります。</string>
+    <string name="permission_rationale_camera">カメラを使うための権限が必要です。</string>
+    <string name="permission_rationale_storage">画像を保存するためのストレージ権限が必要です。</string>
+    <string name="permission_rationale_record_audio">音声コントロールの設定に伴い、動画と音声を入力するための権限が必要です。</string>
+    <string name="permission_rationale_location">画像や動画に位置情報を埋め込むための権限が必要です。またBluetooth LE(BLE) リモコンに接続する際にもこの権限が必要です。</string>
+
+    <string name="preference_category_photo_debugging">Debugging options</string>
+    <string name="preference_category_video_debugging">Debugging options</string>
+    <string name="preference_camera2_fake_flash">Use alternative flash method</string>
+    <string name="preference_camera2_fake_flash_summary">Enable this if your device has buggy flash behaviour with Camera2 API</string>
+
+    <string name="preference_expo_bracketing_n_images">露出ブラケット</string><!-- Exposure Bracketing -->
+    <string name="preference_expo_bracketing_n_images_summary">露出ブラケットに用いる画像数\n%s</string><!-- Number of images for exposure bracketing mode -->
+    <string name="preference_expo_bracketing_stops">露出ブラケットの段階数(Stops)</string><!-- Exposure Bracketing Stops -->
+    <string name="preference_expo_bracketing_stops_summary">画像のコントラスト演算を行う段階数\n%s</string><!-- How many stops to subtract/add for the darkest/brightest image -->
+
+    <string name="preference_nr_save">Noise Reduction original images</string>
+    <string name="preference_nr_save_summary">Whether to save original images in noise reduction mode. Note this can make saving photos much slower.\n%s</string>
+
+    <string name="preference_nr_save_no">Don\'t save original images</string>
+    <string name="preference_nr_save_single">Save single original image</string>
+    <string name="preference_nr_save_all">Save all original images (slow)</string>
+
+    <string name="seconds_abbreviation">s</string> <!-- short for seconds -->
+
+    <string name="video_no_free_space">動画を保存するための容量が足りません</string>
+    <string name="video_power_critical">電池の残量が少ないため、動画の録画を停止しました。</string>
+    <string name="preference_video_low_power_check">電池残量のチェック</string>
+    <string name="preference_video_low_power_check_summary">電池残量が少ない時に動画の録画を停止します。これによって、急な電源断で保存される動画に障害が起こるのを防ぎます。</string>
+
+    <string name="dark">Dark</string> <!-- exposure compensation dark -->
+    <string name="bright">Bright</string> <!-- exposure compensation bright -->
+    <string name="exposure_shutter_speed">シャッター速度</string>
+
+    <string name="camera_error">カメラの深刻なエラー</string>
+
+    <string name="preference_camera2_fast_burst">Enable fast HDR/expo burst</string>
+    <string name="preference_camera2_fast_burst_summary">Allows faster capture of the HDR/expo shots. Disable this if your device has problems when taking photos with HDR or Expo photo modes.</string>
+
+    <string name="camera">カメラ</string>
+    <string name="record_video">ビデオ録画</string>
+    <string name="selfie">自撮り</string>
+
+    <string name="preference_front_camera_mirror">手前のカメラの鏡像化</string>
+    <string name="preference_front_camera_mirror_summary">手前のカメラ映像を左右反転し、鏡に映ったようにします\n%s</string>
+
+    <string name="preference_calibrate_level">自由回転の補正</string>
+    <string name="preference_calibrate_level_summary">自由回転機能が正しく働くためのセンサーの調整を行います。</string>
+    <string name="preference_calibrate_level_dialog">端末を水平な場所におき、「補正」ボタンを押してください\n\n補正情報を削除するには「リセット」ボタンを押してください。\n\nバックボタンを押すとキャンセルです。</string>
+    <string name="preference_calibrate_level_calibrate">補正</string>
+    <string name="preference_calibrate_level_reset">リセット</string>
+    <string name="preference_calibrate_level_calibrated">補正完了しました。</string>
+    <string name="preference_calibrate_level_calibration_reset">補正情報をリセットしました。</string>
+
+    <string name="photo_mode_dro">DRO</string> <!-- keep short, as this shows in the popup menu -->
+
+    <string name="preference_show_pitch_lines">角度を複数の線で表示する</string><!-- Show pitch lines -->
+    <string name="preference_show_pitch_lines_summary">カメラが向いている角度を水平な複数の先でわかりやすく表示します</string><!-- Display horizontal pitch lines -->
+    <string name="preference_show_geo_direction_lines">方角を方向線で表示します</string><!-- Show compass direction lines -->
+    <string name="preference_show_geo_direction_lines_summary">コンパスから得られる方角情報を線で表示します</string><!-- Display compass direction lines -->
+    <string name="preference_video_subtitle">動画テロップ</string><!-- Video subtitles -->
+    <string name="preference_video_subtitle_summary">日時を保存するためのテロップファイル（subtitles (.SRT)）を作成します。一・方向データを有効にしていれば、その情報も保存されます\n%s</string>
 
     <string name="duration_unlimited">制限なし</string>
     <string name="duration_3s">3秒</string>
@@ -274,7 +395,84 @@
     <string name="duration_30m">30分</string>
     <string name="duration_45m">45分</string>
     <string name="duration_1h">1時間</string>
+
+    <string name="preference_show_take_photo">シャッターボタンの表示</string>
+    <string name="preference_show_take_photo_summary">写真や動画を撮影するシャッターボタンを消すことができます。これは、シャッターボタンが端末に存在するときや、BLEリモコンで撮影が可能な時などに有用です。音量調節ボタンをシャッターボタンに割り当てることもできます。</string>
+
+    <string name="video_pause">動画撮影中断</string>
+    <string name="video_resume">動画撮影再開</string>
+    <string name="pause_video">ビデオ撮影の中断</string>
+    <string name="resume_video">動画撮影の再開</string>
+
+    <string name="capturing">取り込み中…</string>
+
+    <string name="audio_listener_failed">音声録音機能の初期化に失敗</string>
+    <string name="failed_to_process_hdr">HDR画像の作成に失敗しました</string>
+
+    <string name="white_balance_auto">Auto</string>
+    <string name="white_balance_cloudy">Cloudy</string>
+    <string name="white_balance_daylight">Daylight</string>
+    <string name="white_balance_fluorescent">Fluorescent</string>
+    <string name="white_balance_incandescent">Incandescent</string>
+    <string name="white_balance_shade">Shade</string>
+    <string name="white_balance_twilight">Twilight</string>
+    <string name="white_balance_warm">Warm</string>
+    <string name="white_balance_manual">Manual</string>
+
+    <string name="scene_mode_action">Action</string>
+    <string name="scene_mode_barcode">Barcode</string>
+    <string name="scene_mode_beach">Beach</string>
+    <string name="scene_mode_candlelight">Candlelight</string>
+    <string name="scene_mode_auto">Auto</string>
+    <string name="scene_mode_fireworks">Fireworks</string>
+    <string name="scene_mode_landscape">Landscape</string>
+    <string name="scene_mode_night">Night</string>
+    <string name="scene_mode_night_portrait">Night portrait</string>
+    <string name="scene_mode_party">Party</string>
+    <string name="scene_mode_portrait">Portrait</string>
+    <string name="scene_mode_snow">Snow</string>
+    <string name="scene_mode_sports">Sports</string>
+    <string name="scene_mode_steady_photo">Steady photo</string>
+    <string name="scene_mode_sunset">Sunset</string>
+    <string name="scene_mode_theatre">Theatre</string>
+
+    <string name="color_effect_aqua">Aqua</string>
+    <string name="color_effect_blackboard">Blackboard</string>
+    <string name="color_effect_mono">Mono</string>
+    <string name="color_effect_negative">Negative</string>
+    <string name="color_effect_none">None</string>
+    <string name="color_effect_posterize">Posterize</string>
+    <string name="color_effect_sepia">Sepia</string>
+    <string name="color_effect_solarize">Solarize</string>
+    <string name="color_effect_whiteboard">Whiteboard</string>
+
+    <string name="whats_new">更新情報:</string>
+    <string name="donate">寄付</string>
+
+    <!-- for accessibility, these strings for face detection will typically be spoken, e.g., through Google Talkback -->
+    <string name="face_detected">顔</string>
+    <string name="faces_detected">顔</string>
+    <string name="left_of_screen">画面左側</string>
+    <string name="right_of_screen">画面右側</string>
+    <string name="top_of_screen">画面上部</string>
+    <string name="bottom_of_screen">画面下部</string>
+    <string name="centre_of_screen">画面中心</string>
+
+    <string name="high_speed">高速</string> <!-- in the sense of high speed video frame rates -->
+
     <string name="preference_video_fps_default">デフォルト</string>
+
+    <string name="preference_category_exif_tags">Custom EXIF tags</string>
+    <string name="preference_exif_artist">Artist</string>
+    <string name="preference_exif_artist_summary">Text to store in the image metadata for the "artist" tag  (JPEG format only). (Leave blank for none.)</string>
+    <string name="preference_exif_copyright">Copyright</string>
+    <string name="preference_exif_copyright_summary">Text to store in the image metadata for the "copyright" tag  (JPEG format only). (Leave blank for none.)</string>
+
+    <string name="processing">Processing…</string>
+
+    <string name="preference_raw_no">No</string>
+    <string name="preference_raw_yes">Standard and DNG (RAW)</string>
+    <string name="preference_raw_only">DNG (RAW) only</string>
 
     <string name="preference_stamp_dateformat_default">デフォルト</string>
     <string name="preference_stamp_dateformat_yyyymmdd">年-月-日</string>
@@ -282,11 +480,86 @@
     <string name="preference_stamp_dateformat_mmddyyyy">月/日/年</string>
     <string name="preference_stamp_dateformat_none">なし</string>
 
+    <string name="preference_fast_burst_n_images">Number of photos</string>
+    <string name="preference_fast_burst_n_images_entries_2">2</string>
+    <string name="preference_fast_burst_n_images_entries_3">3</string>
+    <string name="preference_fast_burst_n_images_entries_4">4</string>
+    <string name="preference_fast_burst_n_images_entries_5">5</string>
+    <string name="preference_fast_burst_n_images_entries_6">6</string>
+    <string name="preference_fast_burst_n_images_entries_8">8</string>
+    <string name="preference_fast_burst_n_images_entries_10">10</string>
+    <string name="preference_fast_burst_n_images_entries_12">12</string>
+    <string name="preference_fast_burst_n_images_entries_15">15</string>
+    <string name="preference_fast_burst_n_images_entries_20">20</string>
+
+    <string name="preference_focus_bracketing_n_images">Number of photos</string>
+    <string name="preference_focus_bracketing_n_images_entries_2">2</string>
+    <string name="preference_focus_bracketing_n_images_entries_3">3</string>
+    <string name="preference_focus_bracketing_n_images_entries_4">4</string>
+    <string name="preference_focus_bracketing_n_images_entries_5">5</string>
+    <string name="preference_focus_bracketing_n_images_entries_6">6</string>
+    <string name="preference_focus_bracketing_n_images_entries_8">8</string>
+    <string name="preference_focus_bracketing_n_images_entries_10">10</string>
+    <string name="preference_focus_bracketing_n_images_entries_12">12</string>
+    <string name="preference_focus_bracketing_n_images_entries_15">15</string>
+    <string name="preference_focus_bracketing_n_images_entries_20">20</string>
+    <string name="preference_focus_bracketing_n_images_entries_25">25</string>
+    <string name="preference_focus_bracketing_n_images_entries_30">30</string>
+    <string name="preference_focus_bracketing_n_images_entries_40">40</string>
+    <string name="preference_focus_bracketing_n_images_entries_50">50</string>
+    <string name="preference_focus_bracketing_n_images_entries_100">100</string>
+    <string name="preference_focus_bracketing_n_images_entries_150">150</string>
+    <string name="preference_focus_bracketing_n_images_entries_200">200</string>
+
+    <string name="preference_video_capture_rate">Speed</string>
+    <string name="preference_video_capture_rate_normal">Normal</string>
+    <string name="slow_motion_enabled">Slow motion enabled</string>
+    <string name="slow_motion_disabled">Slow motion disabled</string>
+
     <string name="flash_off">オフ</string>
     <string name="flash_auto">自動</string>
     <string name="flash_on">オン</string>
     <string name="flash_torch">懐中電灯</string>
     <string name="flash_red_eye">赤目軽減</string>
+    <string name="flash_frontscreen_auto">Screen Flash Auto</string>
+    <string name="flash_frontscreen_on">Screen Flash On</string>
+    <string name="flash_frontscreen_torch">Screen Torch</string>
+
+    <string name="preference_antibanding">Anti-banding</string>
+    <string name="preference_antibanding_summary">Algorithms to help with light flickering.\n%s</string>
+    <string name="anti_banding_auto">Auto</string>
+    <string name="anti_banding_50hz">50Hz</string>
+    <string name="anti_banding_60hz">60Hz</string>
+    <string name="anti_banding_off">Off</string>
+
+    <string name="preference_ghost_image">ゴースト画像</string><!-- Ghost image -->
+    <string name="preference_ghost_image_summary">画像位置の調整のため、他の画像を半透明で重ねて表示します\n%s</string>
+    <string name="preference_ghost_image_off">オフ</string>
+    <string name="preference_ghost_image_last">最後に撮影した写真</string>
+    <string name="preference_ghost_image_selected">選択した画像</string>
+
+    <string name="open_files_saf_exception_ghost">このデバイスではファイル選択ダイアログが出せないので、ゴースト画像オプションは使えません。</string>
+    <string name="saf_permission_failed_open_image">画像を開くことができません</string>
+
+    <string name="preference_camera2_photo_video_recording">動画撮影中の写真撮影を可能にする</string>
+    <string name="preference_camera2_photo_video_recording_summary">動画を撮影しながら静止画も撮影できるようになります。ただし、Camera2 APIを用いているときに不具合が起こった場合はこのオプションを無効にしてください。</string>
+
+    <string name="preference_video_log">Video flat (log) profile</string>
+    <string name="preference_video_log_summary">Enable a flat (log) profile for video mode\n%s</string>
+    <string name="preference_video_log_off">Off</string>
+    <string name="preference_video_log_fine">Fine</string>
+    <string name="preference_video_log_low">Low</string>
+    <string name="preference_video_log_medium">Medium</string>
+    <string name="preference_video_log_strong">Strong</string>
+    <string name="preference_video_log_extra_strong">Extra strong</string>
+    <string name="video_log">Log profile</string>
+
+    <string name="preference_record_audio_src_camcorder">カムコーダ設定</string>
+    <string name="preference_record_audio_src_mic">外部マイク（あれば）</string>
+    <string name="preference_record_audio_src_default">既定の音声ソース</string>
+    <string name="preference_record_audio_src_voice_communication">音声呼び出し(voice call)に最適化</string>
+    <string name="preference_record_audio_src_voice_recognition">音声認識に最適化</string>
+    <string name="preference_record_audio_src_unprocessed">無加工</string>
 
     <string name="preference_video_bitrate_default">デフォルト</string>
     <string name="preference_video_bitrate_100000">100kbps</string>
@@ -312,16 +585,78 @@
     <string name="preference_video_bitrate_80000000">80Mbps</string>
     <string name="preference_video_bitrate_90000000">90Mbps</string>
     <string name="preference_video_bitrate_100000000">100Mbps</string>
+    <string name="preference_video_bitrate_150000000">150Mbps</string>
+    <string name="preference_video_bitrate_200000000">200Mbps</string>
 
-    <string name="preference_burst_mode_off">なし</string>
+    <string name="no_burst">no burst</string> <!-- string for burst mode not being supported for a resolution -->
+
+    <string name="preference_show_video_max_amp">音声レベルメーターを表示</string>
+    <string name="preference_show_video_max_amp_summary">動画録画時に音声のレベルメーターを表示するかどうかを設定します</string>
+
+    <string name="photo_mode_focus_bracketing">Focus {}</string> <!-- keep short, as this shows in the popup menu -->
+    <string name="photo_mode_focus_bracketing_full">Focus Bracketing</string>
+
+    <string name="focus_bracketing_source_distance">Focus bracketing source distance</string>
+    <string name="focus_bracketing_target_distance">Focus bracketing target distance</string>
+
+    <string name="focus_bracketing_add_infinity">Add infinite distance</string>
+
+    <string name="magnetic_accuracy_title">Compass direction</string>
+    <string name="magnetic_accuracy_info">Your device\'s compass needs calibrating to improve its accuracy. This can be done by moving your phone in a figure of 8 motion.\n\nCurrent accuracy:</string>
+
+    <string name="accuracy_unreliable">Unreliable</string>
+    <string name="accuracy_low">Low</string>
+    <string name="accuracy_medium">Medium</string>
+    <string name="accuracy_high">High</string>
+    <string name="accuracy_unknown">Unknown</string>
+
+    <string name="preference_units_distance">距離の単位</string>
+    <string name="preference_units_distance_summary">GPS測位による高度表示に使う長さの単位です。スタンプや動画の字幕に使われます\n%s</string>
+    <string name="preference_units_distance_m">メートル</string>
+    <string name="preference_units_distance_ft">フィート</string>
+    <string name="feet_abbreviation">ft</string> <!-- symbol short for feet -->
+
+    <string name="preference_show_whats_new">更新情報ダイアログの表示</string>
+    <string name="preference_show_whats_new_summary">アプリが更新されたときに、更新情報ダイアログを表示します。</string>
+
+    <string name="preference_edge_mode">Edge mode algorithm</string>
+    <string name="preference_edge_mode_summary">Algorithm that the camera driver should use for applying edge enhancement. Edge enhancement improves sharpness and details in the captured image. (This setting is ignored in NR photo mode.)\n%s</string>
+
+    <string name="preference_screen_processing_settings">Processingの設定…</string>
+
+    <string name="preference_noise_reduction_mode">Noise reduction algorithm</string>
+    <string name="preference_noise_reduction_mode_summary">Algorithm that the camera driver should use for applying noise reduction. The noise reduction algorithm attempts to improve image quality by removing excessive noise added by the capture process, especially in dark conditions. (Note that this is not related to the Noise Reduction photo mode, and in fact this setting is ignored in NR photo mode.)\n%s</string>
+    <string name="noise_reduction_mode_default">Default</string>
+    <string name="noise_reduction_mode_off">Off</string>
+    <string name="noise_reduction_mode_minimal">Minimal</string>
+    <string name="noise_reduction_mode_fast">Fast</string>
+    <string name="noise_reduction_mode_high_quality">High Quality</string>
+
+    <string name="preference_focus_assist">Focus assist</string>
+    <string name="preference_focus_assist_summary">Whether to zoom in when adjusting manual focus distance\n%s</string>
+    <string name="preference_focus_assist_off">Off</string>
+    <string name="preference_focus_assist_2x">2x</string>
+    <string name="preference_focus_assist_4x">4x</string>
+
+    <string name="exposure_compensation_zoom">Increase or decrease exposure compensation</string>
+
+    <string name="previous">Previous</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) for "<" button on popup menu -->
+    <string name="next">Next</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) for ">" button on popup menu -->
+
+    <string name="preference_burst_mode_off">Off</string>
     <string name="preference_burst_mode_2x">2倍</string>
     <string name="preference_burst_mode_3x">3倍</string>
     <string name="preference_burst_mode_4x">4倍</string>
     <string name="preference_burst_mode_5x">5倍</string>
     <string name="preference_burst_mode_10x">10倍</string>
+    <string name="preference_burst_mode_20x">20x</string>
+    <string name="preference_burst_mode_30x">30x</string>
+    <string name="preference_burst_mode_40x">40x</string>
+    <string name="preference_burst_mode_50x">50x</string>
     <string name="preference_burst_mode_unlimited">無制限</string>
 
     <string name="preference_burst_interval_no_delay">なし</string>
+    <string name="preference_burst_interval_0_5s">0.5s</string>
     <string name="preference_burst_interval_1s">1秒</string>
     <string name="preference_burst_interval_2s">2秒</string>
     <string name="preference_burst_interval_3s">3秒</string>
@@ -339,6 +674,18 @@
     <string name="preference_burst_interval_1h">1時間</string>
     <string name="preference_burst_interval_2h">2時間</string>
 
+    <string name="preference_video_max_filesize_default">Device default</string>
+    <string name="preference_video_max_filesize_100mb">100MB</string>
+    <string name="preference_video_max_filesize_200mb">200MB</string>
+    <string name="preference_video_max_filesize_300mb">300MB</string>
+    <string name="preference_video_max_filesize_500mb">500MB</string>
+    <string name="preference_video_max_filesize_1gb">1GB</string>
+    <string name="preference_video_max_filesize_2gb">2GB</string>
+    <string name="preference_video_max_filesize_5gb">5GB</string>
+    <string name="preference_video_max_filesize_9gb">9GB</string>
+
+    <string name="cancelled_focus_bracketing">Cancelled focus bracketing</string>
+
     <string name="preference_crop_guide_none">なし</string>
     <string name="preference_crop_guide_1">1.00 (1対1)</string>
     <string name="preference_crop_guide_1_25">1.25 (5対4)</string>
@@ -352,11 +699,186 @@
     <string name="preference_crop_guide_2_35">2.35 (47対20)</string>
     <string name="preference_crop_guide_2_4">2.4 (12対5)</string>
 
+    <string name="preference_audio_noise_control_sensitivity_3">+3 (high sensitivity)</string>
+    <string name="preference_audio_noise_control_sensitivity_2">+2</string>
+    <string name="preference_audio_noise_control_sensitivity_1">+1</string>
+    <string name="preference_audio_noise_control_sensitivity_0">0 (default)</string>
+    <string name="preference_audio_noise_control_sensitivity_m1">-1</string>
+    <string name="preference_audio_noise_control_sensitivity_m2">-2</string>
+    <string name="preference_audio_noise_control_sensitivity_m3">-3 (low sensitivity)</string>
+
+    <string name="preference_hdr_contrast_enhancement">HDRでコントラストを強調</string>
+    <string name="preference_hdr_contrast_enhancement_summary">HDRでコントラスト強調をどのタイミングで行うかの設定です。明るいところ、暗いところの差（ダイナミックレンジ）が大きい時に効果的です。また、「HDRらしい」はっきりした見た目になります。\n%s</string>
+    <string name="preference_hdr_contrast_enhancement_off">無効</string>
+    <string name="preference_hdr_contrast_enhancement_smart">自動判定</string>
+    <string name="preference_hdr_contrast_enhancement_always">常時</string>
+
+    <string name="preference_video_output_format">Video format</string>
+    <string name="preference_video_output_format_summary">Video and audio file format and codecs\n%s</string>
+
+    <string name="preference_video_output_format_default">Default</string>
+    <string name="preference_video_output_format_mpeg4_h264">MPEG4 H264</string>
+    <string name="preference_video_output_format_mpeg4_hevc">MPEG4 HEVC</string>
+    <string name="preference_video_output_format_3gpp">3GPP</string>
+    <string name="preference_video_output_format_webm">WebM (audio not supported)</string>
+
+    <string name="preference_screen_settings_manager">設定の保存マネージャ</string>
+
+    <string name="preference_save_settings">設定を保存する</string>
+    <string name="preference_save_settings_summary">設定をファイルに書き出す</string>
+    <string name="preference_save_settings_filename">書き出すファイル名</string>
+
+    <string name="preference_restore_settings">設定の回復</string>
+    <string name="preference_restore_settings_summary">過去に保存した設定を回復します。現在の設定は上書きされます。</string>
+    <string name="preference_restore_settings_question">ここでは過去の保存した設定を読み込みます。現在の設定は失われますので注意してください。</string>
+
+    <string name="saved_settings">設定を保存しました。</string>
+    <string name="save_settings_failed">設定の保存に失敗しました</string>
+    <string name="restore_settings_failed">設定の回復に失敗しました。</string>
+    <string name="open_files_saf_exception_generic">お使いの端末にはファイルダイアログがないため、このオプションは使えません。</string>
+
+    <string name="preference_image_format">画像の形式</string>
+    <string name="preference_image_format_jpeg">JPEG</string>
+    <string name="preference_image_format_webp">WebP</string>
+    <string name="preference_image_format_png">PNG</string>
+
+    <string name="preference_nr_mode">NR Mode</string>
+    <string name="preference_nr_mode_normal">Normal</string>
+    <string name="preference_nr_mode_low_light">Low light</string>
+
     <string name="preference_ui_placement_left">左利き用</string>
     <string name="preference_ui_placement_right">右利き用</string>
+    <string name="preference_ui_placement_top">ボタンは画面の上（ポートレート）</string>
+
+    <string name="preference_show_face_detection">顔認識ボタンの表示</string>
+    <string name="preference_show_face_detection_summary">顔認識を有効化するボタンをプレビュー画面に設置します</string>
+    <string name="face_detection_enable">顔認識有効化</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
+    <string name="face_detection_disable">顔認識無効化</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
+    <string name="face_detection_enabled">顔認識機能が有効化されました</string>
+    <string name="face_detection_disabled">顔認識機能が無効化されました</string>
+
+    <string name="preference_show_auto_level">自由回転ボタンの表示</string>
+    <string name="preference_show_auto_level_summary">自由回転を有効化・無効化するボタンをプレビュー画面に設置します。自由回転が有効化されると、写真は重力の方向に応じて回転されてから保存されます。</string>
+    <string name="auto_level_enable">自由回転を有効化</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
+    <string name="auto_level_disable">自由回転を無効化</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
+
+    <string name="preference_show_stamp">スタンプボタンの表示</string>
+    <string name="preference_show_stamp_summary">写真に日付や場所情報などを書き込む機能の有効化・無効化ボタンをプレビュー画面に設置します</string>
+    <string name="stamp_enable">Enable photo stamp</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
+    <string name="stamp_disable">Disable photo stamp</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
+    <string name="stamp_enabled">Photo stamp enabled</string>
+    <string name="stamp_disabled">Photo stamp disabled</string>
+
+    <string name="preference_show_textstamp">自作スタンプボタンの表示</string>
+    <string name="preference_show_textstamp_summary">任意のテキストを画像に挿入する設定を行うボタンをプレビュー画面に設置します。</string>
+
+    <string name="preference_show_white_balance_lock">自動ホワイトバランスボタンの表示</string>
+    <string name="preference_show_white_balance_lock_summary">自動ホワイトバランスを有効化・無効化するボタンをプレビュー画面に設置します。</string>
+    <string name="white_balance_lock">Lock white balance</string>
+    <string name="white_balance_unlock">Unlock white balance</string>
+    <string name="white_balance_locked">White balance locked</string>
+    <string name="white_balance_unlocked">White balance unlocked</string>
+
+    <string name="preference_show_exposure_lock">自動露出ボタンの表示</string>
+    <string name="preference_show_exposure_lock_summary">自動露出を有効化・無効化するボタンをプレビュー画面に設置します。</string>
+    <string name="exposure_unlock">Unlock exposure</string>
+
+    <string name="preference_nr_mode_low_light_message">Low light mode: please hold the camera steady</string>
+
+    <string name="photo_mode_panorama">Pano</string> <!-- keep short, as this shows in the popup menu; probably shouldn't be translated? -->
+    <string name="photo_mode_panorama_full">Panorama</string>
+
+    <string name="preference_screen_remote_control">Bluetooth LE(BLE)リモコン設定…</string>
+    <string name="preference_enable_remote">BLEリモコンを有効化</string>
+    <string name="preference_enable_remote_summary">BLEのコントロール機器を有効化する</string>
+    <string name="preference_remote_type">リモコン機器の種類</string>
+
+    <string name="ble_not_supported">BLEは使えません。</string>
+    <string name="scan_ble">BLE装置をスキャンします</string>
+    <string name="bluetooth_not_supported">Bluetoothがサポートされていません。</string>
+    <string name="unknown_device">未知の装置</string>
+    <string name="preference_remote_disconnect_screen_dim">リモコン接続が切れたら画面を暗くする</string>
+    <string name="preference_remote_disconnect_screen_dim_summary">ヒント: カメラ起動時のデフォルトの画像の明るさを一番暗い設定にする</string>
+    <string name="preference_water_type">Use Saltwater for depth calculations</string>
+    <string name="preference_water_type_summary">For underwater housings, improves accuracy if correct water type is selected.</string>
+    <string name="remote_connected">リモコンが接続されました</string>
+
+    <string name="preference_remote_type_kraken">Kraken Smart Housing</string>
+
+    <string name="preference_stamp_geo_address">住所を用いる</string>
+    <string name="preference_stamp_geo_address_summary">可能であれば、スタンプにGPSから調べた住所を表示します。インターネット接続が必要です。\n%s</string>
+    <string name="preference_stamp_geo_address_both">住所と緯度経度の両方を表示</string>
+    <string name="preference_stamp_geo_address_prefer">住所があれば住所を表示</string>
+    <string name="preference_stamp_geo_address_no">住所は表示しない</string>
+
+    <string name="preference_show_store_location">位置情報保存ボタンの表示</string>
+    <string name="preference_show_store_location_summary">位置情報保存（ジオタグ）を有効化・無効化するボタンをプレビュー画面に設置します。</string>
+    <string name="preference_location_enable">Store location data</string>
+    <string name="preference_location_disable">Stop storing location data</string>
+
+    <string name="preference_histogram">Show a histogram</string>
+    <string name="preference_histogram_summary">Whether to display histogram of the colors shown on-screen\n%s</string>
+    <string name="preference_histogram_off">Off</string>
+    <string name="preference_histogram_rgb">RGB Colors</string>
+    <string name="preference_histogram_luminance">Luminance</string>
+    <string name="preference_histogram_value">Value (Maximum)</string>
+    <string name="preference_histogram_intensity">Intensity (Average)</string>
+    <string name="preference_histogram_lightness">Lightness (Average of min-max)</string>
+
+    <string name="preference_zebra_stripes">Show zebra stripes</string>
+    <string name="preference_zebra_stripes_summary">If this option is enabled, zebra stripes will be drawn on-screen showing where the camera preview is over exposed.\n%s</string>
+    <string name="preference_zebra_stripes_off">Off</string>
+    <string name="preference_zebra_stripes_70pc">70%</string> <!-- shouldn't escape %, not needed when shown in ListPreference -->
+    <string name="preference_zebra_stripes_80pc">80%</string> <!-- shouldn't escape %, not needed when shown in ListPreference -->
+    <string name="preference_zebra_stripes_90pc">90%</string> <!-- shouldn't escape %, not needed when shown in ListPreference -->
+    <string name="preference_zebra_stripes_100pc">100%</string> <!-- shouldn't escape %, not needed when shown in ListPreference -->
+
+    <string name="preference_focus_peaking">Focus peaking</string>
+    <string name="preference_focus_peaking_summary">If this option is enabled, highlights will be shown on in-focus edges (contours). This is primarily useful for manual focus, and can be used to help determine which regions of the image are in focus.\n%s</string>
+    <string name="preference_focus_peaking_off">Off</string>
+    <string name="preference_focus_peaking_on">On</string>
+    <string name="preference_focus_peaking_color">Focus peaking color</string>
+    <string name="preference_focus_peaking_color_summary">Which color to use for highlighting the in-focus edges\n%s</string>
+
+    <string name="remaining">Remaining</string> <!-- images remaining for "processing" -->
+
+    <string name="preference_preview">プレビュー画面の設定…</string>
+
+    <string name="cycle_flash">フラッシュモードを変更</string>
+    <string name="preference_show_cycle_flash">フラッシュボタンの表示</string>
+    <string name="preference_show_cycle_flash_summary">フラッシュモードを切り替えるボタンをプレビュー画面に設置します。これを指定しない場合はポップアップメニューで設定することになります。</string>
+
+    <string name="preference_raw_expo_bracketing">Allow RAW for expo bracketing</string>
+    <string name="preference_raw_expo_bracketing_summary">Whether the RAW option should also apply for expo bracketing photo mode (or for HDR mode when \"Save all images for HDR mode\" is enabled). If this option is disabled, only JPEGs will be saved in those photo modes.</string>
+
+    <string name="preference_raw_focus_bracketing">Allow RAW for focus bracketing</string>
+    <string name="preference_raw_focus_bracketing_summary">Whether the RAW option should also apply for focus bracketing photo mode. If this option is disabled, only JPEGs will be saved in focus bracketing photo modes.</string>
+
+    <string name="cycle_raw">Cycle RAW modes</string>
+    <string name="preference_show_cycle_raw">Show RAW icon</string>
+    <string name="preference_show_cycle_raw_summary">Whether to show an on-screen icon for cycling through the RAW modes</string>
+
+    <string name="bluetooth_current_remote">Current remote:</string>
+    <string name="bluetooth_scan">Scan</string>
+
+    <!-- There's no point translating the What's New text - it'll be updated constantly, and change each version -->
+    <string name="whats_new_text">
+        [画面上の表示設定⇒更新情報ダイアログの表示のチェックを外すことで、この表示を無効化できます。]
+        \n\n<b>v0.0.10:</b>\n\n
+        <ul>
+            <li>オープンソースプロジェクトであるOpen Cameraのソースコードを利用することで、大幅にカメラ機能が改善しました。
+                デフォルト値を変更し、音声認識タグの入力や画像への文字列埋め込みが最初から使えるようになっています。\n</li>
+            <li>文字列リソースも一部日本語化しました。\n</li>
+            <li>写真撮影後画面を一時停止する設定にした場合、オリジナルのコードでは撮影直後に一旦画像が保存されますが、
+                Tag Cameraではこの段階では保存せず、一時停止画面で明示的に保存ボタンを押したときのみ保存するようにしました。\n</li>
+            <li>音声認識タグは、この一旦停止中の画面で画面上のマイクボタンを押すことで画像に挿入できます。</li>
+        </ul>
+    </string>
 
     <string name="voice_tag">音声認識でタグをつける</string>
     <string name="add_voice_tag_confirm">音声認識タグの追加</string>
     <string name="voice_recognition_error">認識エラー</string>
 
+
 </resources>
+

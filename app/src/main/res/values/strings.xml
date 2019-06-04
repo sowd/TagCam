@@ -859,22 +859,15 @@
 
     <!-- There's no point translating the What's New text - it'll be updated constantly, and change each version -->
     <string name="whats_new_text">
-        [This dialog is shown when Open Camera is updated. You can disable it under
+        [This dialog is shown when Tag Camera is updated. You can disable it under
         Settings/On screen GUI/Show What\'s New dialog.]
         \n\n<b>v1.46:</b>\n\n
         <ul>
-            <li>New features when Settings/\"Use Camera2 API\" is enabled: histogram, zebra stripes, focus peaking (see
-                Settings/\"Camera preview\"/).\n</li>
-            <li>RAW now supported for expo and focus bracketing on higher end devices (see Settings/Photo settings/ to
-                disable).\n</li>
-            <li>New Settings/Photo settings/\"Use addresses\" to display GPS coordinates as an address.\n</li>
-            <li>More on-screen icons under Settings/On screen GUI/.\n</li>
-            <li>Support for remote control via bluetooth/USB keyboards and Kraken Smart Housing (thanks to Edouard Lafargue).\n</li>
-            <li>Improved DRO algorithm for some scenes.\n</li>
-            <li>Noise Reduction \"NR Mode\" is now saved.\n</li>
-            <li>Some settings now moved from \"On screen GUI\" to \"Camera preview\".\n</li>
-            <li>Corrected display of free space with using external SD cards with Storage Access Framework.\n</li>
-            <li>Other improvements and bug fixes.\n</li>
+            <li>Forked from Open Camera and added voice recognition function. The developer of Open Camera is a God. Thank you very much!\n</li>
+            <li>When paused after shooting, file is not immediately saved. It happens when save button is pressed.</li>
+            <li>When paused, voice recognition can be fired to add transcription tag. Transcripted text is embeded into exif comment, file name, and image text area (if enabled.)\n</li>
+            <li>Default settings are changed.\n</li>
+            <li>Japanese string resources are slightly updated.\n</li>
         </ul>
     </string>
 

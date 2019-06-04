@@ -551,6 +551,8 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
     }
 
     public boolean touchEvent(MotionEvent event) {
+        if( mDelayedImageSaver.isWaitingForSave() ) return true;
+
         if( MyDebug.LOG )
             Log.d(TAG, "touch event at : " + event.getX() + " , " + event.getY() + " at time " + event.getEventTime());
         if( gestureDetector.onTouchEvent(event) ) {
@@ -5930,7 +5932,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             showToast(null, "Tag "+tagKey+": \""+_tagValue+"\" Added.");
         }
 
-        public void saveImage(boolean bRestartPreviewAfterSaving){
+        public void saveImage(boolean bEndPauseAfterSaving){
             if( ImageSaver.Request.exifComment_Static != null) // Make it a JSON formatted str
                 ImageSaver.Request.exifComment_Static = "{\n"+ImageSaver.Request.exifComment_Static +"}";
 
@@ -5964,7 +5966,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
 
             onEnterPauseMode(false);
 
-            if( bRestartPreviewAfterSaving ){
+            if( bEndPauseAfterSaving ){
                 if( !is_preview_started ) {
                     // we need to restart the preview; and we do this in the callback, as we need to restart after saving the image
                     // (otherwise this can fail, at least on Nexus 7)
@@ -5977,16 +5979,13 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         public void onEnterPauseMode(boolean bAsSaveButton){
             // Temporarily replace photo shoot icon by save button
             MainActivity main_activity = (MainActivity)applicationInterface.getContext();
-            ImageButton view = main_activity.findViewById(R.id.take_photo);
-            if( bAsSaveButton ) { // Enter
-                view.setImageResource(R.drawable.ic_save_white_48dp);
-            } else { // Exit
+            if( !bAsSaveButton ) { // Enter
                 if(main_activity.mRecognizeSpeech!=null){
                     main_activity.mRecognizeSpeech.interruptRecognition();
                 }
                 clearTempImages();
-                view.setImageResource(R.drawable.take_photo_selector);
             }
+            main_activity.getMainUI().setTakePhotoIcon();
         }
     };
     public DelayedImageSaver mDelayedImageSaver = new DelayedImageSaver();
@@ -6998,6 +6997,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             }
         }
         else {
+            if( !mDelayedImageSaver.isWaitingForSave() )
             this.openCamera();
         }
     }
