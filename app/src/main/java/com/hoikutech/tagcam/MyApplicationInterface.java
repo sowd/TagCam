@@ -528,7 +528,7 @@ public class MyApplicationInterface extends BasicApplicationInterface {
 
     @Override
     public boolean getFaceDetectionPref() {
-        return sharedPreferences.getBoolean(PreferenceKeys.FaceDetectionPreferenceKey, false);
+        return sharedPreferences.getBoolean(PreferenceKeys.FaceDetectionPreferenceKey, true);
     }
 
     /** Returns whether the current fps preference is one that requires a "high speed" video size/
