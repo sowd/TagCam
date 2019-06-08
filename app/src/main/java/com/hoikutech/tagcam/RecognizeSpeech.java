@@ -180,6 +180,7 @@ public class RecognizeSpeech implements RecognitionListener {
                         if (curName.equals(newName)) { // Double tap to save and close
                             tagGenerator.addTagMain();
                             mAlertDialog.dismiss();
+                            main_activity.mRecognizeSpeech = null ;
                         } else
                             tagGenerator.descTextBox.setText(newName);
                     }

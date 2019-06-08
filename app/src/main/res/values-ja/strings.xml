@@ -314,22 +314,22 @@
     <string name="permission_rationale_record_audio">音声コントロールの設定に伴い、動画と音声を入力するための権限が必要です。</string>
     <string name="permission_rationale_location">画像や動画に位置情報を埋め込むための権限が必要です。またBluetooth LE(BLE) リモコンに接続する際にもこの権限が必要です。</string>
 
-    <string name="preference_category_photo_debugging">Debugging options</string>
-    <string name="preference_category_video_debugging">Debugging options</string>
-    <string name="preference_camera2_fake_flash">Use alternative flash method</string>
-    <string name="preference_camera2_fake_flash_summary">Enable this if your device has buggy flash behaviour with Camera2 API</string>
+    <string name="preference_category_photo_debugging">デバッグオプション</string>
+    <string name="preference_category_video_debugging">デバッグオプション</string>
+    <string name="preference_camera2_fake_flash">別の種類のフラッシュを使用</string>
+    <string name="preference_camera2_fake_flash_summary">もしCamera 2 APIを使っていてフラッシュの挙動がおかしい場合はこれを有効にしてください。</string>
 
     <string name="preference_expo_bracketing_n_images">露出ブラケット</string><!-- Exposure Bracketing -->
     <string name="preference_expo_bracketing_n_images_summary">露出ブラケットに用いる画像数\n%s</string><!-- Number of images for exposure bracketing mode -->
     <string name="preference_expo_bracketing_stops">露出ブラケットの段階数(Stops)</string><!-- Exposure Bracketing Stops -->
     <string name="preference_expo_bracketing_stops_summary">画像のコントラスト演算を行う段階数\n%s</string><!-- How many stops to subtract/add for the darkest/brightest image -->
 
-    <string name="preference_nr_save">Noise Reduction original images</string>
-    <string name="preference_nr_save_summary">Whether to save original images in noise reduction mode. Note this can make saving photos much slower.\n%s</string>
+    <string name="preference_nr_save">元画像のノイズ除去</string>
+    <string name="preference_nr_save_summary">元画像の保存時にノイズ除去を行うかどうかを指定します。行う場合、保存にかかる時間は長くなります。\n%s</string>
 
-    <string name="preference_nr_save_no">Don\'t save original images</string>
-    <string name="preference_nr_save_single">Save single original image</string>
-    <string name="preference_nr_save_all">Save all original images (slow)</string>
+    <string name="preference_nr_save_no">元画像は保存しない</string> <!-- Don\'t save original images -->
+    <string name="preference_nr_save_single">元画像を一枚だけ保存する</string> <!-- Save single original image -->
+    <string name="preference_nr_save_all">元画像をすべて保存する（遅いです）</string>
 
     <string name="seconds_abbreviation">s</string> <!-- short for seconds -->
 
@@ -338,14 +338,14 @@
     <string name="preference_video_low_power_check">電池残量のチェック</string>
     <string name="preference_video_low_power_check_summary">電池残量が少ない時に動画の録画を停止します。これによって、急な電源断で保存される動画に障害が起こるのを防ぎます。</string>
 
-    <string name="dark">Dark</string> <!-- exposure compensation dark -->
-    <string name="bright">Bright</string> <!-- exposure compensation bright -->
+    <string name="dark">暗い</string> <!-- exposure compensation dark -->
+    <string name="bright">明るい</string> <!-- exposure compensation bright -->
     <string name="exposure_shutter_speed">シャッター速度</string>
 
     <string name="camera_error">カメラの深刻なエラー</string>
 
-    <string name="preference_camera2_fast_burst">Enable fast HDR/expo burst</string>
-    <string name="preference_camera2_fast_burst_summary">Allows faster capture of the HDR/expo shots. Disable this if your device has problems when taking photos with HDR or Expo photo modes.</string>
+    <string name="preference_camera2_fast_burst">高速HDR/expo バーストモードを有効にする</string> <!-- Enable fast HDR/expo burst -->
+    <string name="preference_camera2_fast_burst_summary">HDR/expo撮影の時、画像の取得が速くなります。HDRやExpoモードの時に問題が起こった場合は無効にしてください。</string>
 
     <string name="camera">カメラ</string>
     <string name="record_video">ビデオ録画</string>
@@ -409,42 +409,42 @@
     <string name="audio_listener_failed">音声録音機能の初期化に失敗</string>
     <string name="failed_to_process_hdr">HDR画像の作成に失敗しました</string>
 
-    <string name="white_balance_auto">Auto</string>
-    <string name="white_balance_cloudy">Cloudy</string>
-    <string name="white_balance_daylight">Daylight</string>
-    <string name="white_balance_fluorescent">Fluorescent</string>
+    <string name="white_balance_auto">自動</string>
+    <string name="white_balance_cloudy">曇り</string>
+    <string name="white_balance_daylight">日中</string>
+    <string name="white_balance_fluorescent">蛍光</string>
     <string name="white_balance_incandescent">Incandescent</string>
-    <string name="white_balance_shade">Shade</string>
-    <string name="white_balance_twilight">Twilight</string>
-    <string name="white_balance_warm">Warm</string>
-    <string name="white_balance_manual">Manual</string>
+    <string name="white_balance_shade">日陰</string>
+    <string name="white_balance_twilight">薄明り</string>
+    <string name="white_balance_warm">暖色</string>
+    <string name="white_balance_manual">手動</string>
 
-    <string name="scene_mode_action">Action</string>
-    <string name="scene_mode_barcode">Barcode</string>
-    <string name="scene_mode_beach">Beach</string>
-    <string name="scene_mode_candlelight">Candlelight</string>
-    <string name="scene_mode_auto">Auto</string>
-    <string name="scene_mode_fireworks">Fireworks</string>
-    <string name="scene_mode_landscape">Landscape</string>
-    <string name="scene_mode_night">Night</string>
-    <string name="scene_mode_night_portrait">Night portrait</string>
-    <string name="scene_mode_party">Party</string>
-    <string name="scene_mode_portrait">Portrait</string>
-    <string name="scene_mode_snow">Snow</string>
-    <string name="scene_mode_sports">Sports</string>
+    <string name="scene_mode_action">アクション</string>
+    <string name="scene_mode_barcode">バーコード</string>
+    <string name="scene_mode_beach">海岸</string>
+    <string name="scene_mode_candlelight">ろうそくの光</string>
+    <string name="scene_mode_auto">自動</string>
+    <string name="scene_mode_fireworks">花火</string>
+    <string name="scene_mode_landscape">風景</string>
+    <string name="scene_mode_night">夜間</string>
+    <string name="scene_mode_night_portrait">夜間の人物</string>
+    <string name="scene_mode_party">パーティー</string>
+    <string name="scene_mode_portrait">人物</string>
+    <string name="scene_mode_snow">雪</string>
+    <string name="scene_mode_sports">スポーツ</string>
     <string name="scene_mode_steady_photo">Steady photo</string>
-    <string name="scene_mode_sunset">Sunset</string>
-    <string name="scene_mode_theatre">Theatre</string>
+    <string name="scene_mode_sunset">夕日</string>
+    <string name="scene_mode_theatre">映画館</string>
 
-    <string name="color_effect_aqua">Aqua</string>
-    <string name="color_effect_blackboard">Blackboard</string>
-    <string name="color_effect_mono">Mono</string>
-    <string name="color_effect_negative">Negative</string>
-    <string name="color_effect_none">None</string>
-    <string name="color_effect_posterize">Posterize</string>
-    <string name="color_effect_sepia">Sepia</string>
-    <string name="color_effect_solarize">Solarize</string>
-    <string name="color_effect_whiteboard">Whiteboard</string>
+    <string name="color_effect_aqua">水中</string>
+    <string name="color_effect_blackboard">黒板</string>
+    <string name="color_effect_mono">白黒</string>
+    <string name="color_effect_negative">色反転</string>
+    <string name="color_effect_none">何もしない</string>
+    <string name="color_effect_posterize">ポスタライズ</string>
+    <string name="color_effect_sepia">セピア調</string>
+    <string name="color_effect_solarize">ソラライズ</string><!-- Solarize -->
+    <string name="color_effect_whiteboard">ホワイトボード</string>
 
     <string name="whats_new">更新情報:</string>
     <string name="donate">寄付</string>
@@ -462,17 +462,17 @@
 
     <string name="preference_video_fps_default">デフォルト</string>
 
-    <string name="preference_category_exif_tags">Custom EXIF tags</string>
-    <string name="preference_exif_artist">Artist</string>
-    <string name="preference_exif_artist_summary">Text to store in the image metadata for the "artist" tag  (JPEG format only). (Leave blank for none.)</string>
-    <string name="preference_exif_copyright">Copyright</string>
-    <string name="preference_exif_copyright_summary">Text to store in the image metadata for the "copyright" tag  (JPEG format only). (Leave blank for none.)</string>
+    <string name="preference_category_exif_tags">カスタムEXIFタグ</string>
+    <string name="preference_exif_artist">撮影者</string>
+    <string name="preference_exif_artist_summary">画像の"artist"情報として埋め込まれます (JPEGのみ)。特になければ空欄にしてください。</string>
+    <string name="preference_exif_copyright">コピーライト</string>
+    <string name="preference_exif_copyright_summary">画像の"copyright"情報として埋め込まれます(JPEG format only)。特になければ空欄にしてください。</string>
 
     <string name="processing">Processing…</string>
 
-    <string name="preference_raw_no">No</string>
-    <string name="preference_raw_yes">Standard and DNG (RAW)</string>
-    <string name="preference_raw_only">DNG (RAW) only</string>
+    <string name="preference_raw_no">なし</string>
+    <string name="preference_raw_yes">標準＆DNG (RAW)</string><!-- Standard and DNG (RAW) -->
+    <string name="preference_raw_only">DNG (RAW) のみ</string>
 
     <string name="preference_stamp_dateformat_default">デフォルト</string>
     <string name="preference_stamp_dateformat_yyyymmdd">年-月-日</string>
@@ -480,7 +480,7 @@
     <string name="preference_stamp_dateformat_mmddyyyy">月/日/年</string>
     <string name="preference_stamp_dateformat_none">なし</string>
 
-    <string name="preference_fast_burst_n_images">Number of photos</string>
+    <string name="preference_fast_burst_n_images">画像の数</string>
     <string name="preference_fast_burst_n_images_entries_2">2</string>
     <string name="preference_fast_burst_n_images_entries_3">3</string>
     <string name="preference_fast_burst_n_images_entries_4">4</string>
@@ -492,7 +492,7 @@
     <string name="preference_fast_burst_n_images_entries_15">15</string>
     <string name="preference_fast_burst_n_images_entries_20">20</string>
 
-    <string name="preference_focus_bracketing_n_images">Number of photos</string>
+    <string name="preference_focus_bracketing_n_images">画像の数</string>
     <string name="preference_focus_bracketing_n_images_entries_2">2</string>
     <string name="preference_focus_bracketing_n_images_entries_3">3</string>
     <string name="preference_focus_bracketing_n_images_entries_4">4</string>
@@ -511,23 +511,23 @@
     <string name="preference_focus_bracketing_n_images_entries_150">150</string>
     <string name="preference_focus_bracketing_n_images_entries_200">200</string>
 
-    <string name="preference_video_capture_rate">Speed</string>
-    <string name="preference_video_capture_rate_normal">Normal</string>
-    <string name="slow_motion_enabled">Slow motion enabled</string>
-    <string name="slow_motion_disabled">Slow motion disabled</string>
+    <string name="preference_video_capture_rate">速度</string>
+    <string name="preference_video_capture_rate_normal">通常</string>
+    <string name="slow_motion_enabled">スローモーションを有効化</string>
+    <string name="slow_motion_disabled">スローモーションを無効化</string>
 
     <string name="flash_off">オフ</string>
     <string name="flash_auto">自動</string>
     <string name="flash_on">オン</string>
     <string name="flash_torch">懐中電灯</string>
     <string name="flash_red_eye">赤目軽減</string>
-    <string name="flash_frontscreen_auto">Screen Flash Auto</string>
-    <string name="flash_frontscreen_on">Screen Flash On</string>
-    <string name="flash_frontscreen_torch">Screen Torch</string>
+    <string name="flash_frontscreen_auto">画面のフラッシュは自動</string><!-- Screen Flash Auto -->
+    <string name="flash_frontscreen_on">画面のフラッシュは常にオン</string><!-- Screen Flash On -->
+    <string name="flash_frontscreen_torch">画面にタッチ</string><!-- Screen Torch -->
 
-    <string name="preference_antibanding">Anti-banding</string>
-    <string name="preference_antibanding_summary">Algorithms to help with light flickering.\n%s</string>
-    <string name="anti_banding_auto">Auto</string>
+    <string name="preference_antibanding">帯域制限（Anti-banding）</string>
+    <string name="preference_antibanding_summary">証明のちらつきを抑えるアルゴリズム\n%s</string><!-- Algorithms to help with light flickering. -->
+    <string name="anti_banding_auto">自動</string>
     <string name="anti_banding_50hz">50Hz</string>
     <string name="anti_banding_60hz">60Hz</string>
     <string name="anti_banding_off">Off</string>
@@ -544,15 +544,15 @@
     <string name="preference_camera2_photo_video_recording">動画撮影中の写真撮影を可能にする</string>
     <string name="preference_camera2_photo_video_recording_summary">動画を撮影しながら静止画も撮影できるようになります。ただし、Camera2 APIを用いているときに不具合が起こった場合はこのオプションを無効にしてください。</string>
 
-    <string name="preference_video_log">Video flat (log) profile</string>
-    <string name="preference_video_log_summary">Enable a flat (log) profile for video mode\n%s</string>
-    <string name="preference_video_log_off">Off</string>
-    <string name="preference_video_log_fine">Fine</string>
-    <string name="preference_video_log_low">Low</string>
-    <string name="preference_video_log_medium">Medium</string>
-    <string name="preference_video_log_strong">Strong</string>
-    <string name="preference_video_log_extra_strong">Extra strong</string>
-    <string name="video_log">Log profile</string>
+    <string name="preference_video_log">動画の線形（log）プロファイル</string><!-- Video flat (log) profile -->
+    <string name="preference_video_log_summary">動画の線形（log）プロファイルを有効化\n%s</string><!-- Enable a flat (log) profile for video mode -->
+    <string name="preference_video_log_off">オフ</string>
+    <string name="preference_video_log_fine">精細</string><!-- Fine -->
+    <string name="preference_video_log_low">弱く</string><!-- Low -->
+    <string name="preference_video_log_medium">普通</string><!-- Medium -->
+    <string name="preference_video_log_strong">強く</string><!-- Strong -->
+    <string name="preference_video_log_extra_strong">非常に強く</string>
+    <string name="video_log">Logプロファイル</string><!-- Log profile -->
 
     <string name="preference_record_audio_src_camcorder">カムコーダ設定</string>
     <string name="preference_record_audio_src_mic">外部マイク（あれば）</string>
@@ -593,22 +593,22 @@
     <string name="preference_show_video_max_amp">音声レベルメーターを表示</string>
     <string name="preference_show_video_max_amp_summary">動画録画時に音声のレベルメーターを表示するかどうかを設定します</string>
 
-    <string name="photo_mode_focus_bracketing">Focus {}</string> <!-- keep short, as this shows in the popup menu -->
-    <string name="photo_mode_focus_bracketing_full">Focus Bracketing</string>
+    <string name="photo_mode_focus_bracketing">ピント {}</string><!-- Focus --> <!-- keep short, as this shows in the popup menu -->
+    <string name="photo_mode_focus_bracketing_full">ブラケット</string><!-- Focus Bracketing -->
 
-    <string name="focus_bracketing_source_distance">Focus bracketing source distance</string>
-    <string name="focus_bracketing_target_distance">Focus bracketing target distance</string>
+    <string name="focus_bracketing_source_distance">ブラケット（ソースの距離）</string><!-- Focus bracketing source distance -->
+    <string name="focus_bracketing_target_distance">ブラケット（ターゲットの距離）</string><!-- Focus bracketing target distance -->
 
-    <string name="focus_bracketing_add_infinity">Add infinite distance</string>
+    <string name="focus_bracketing_add_infinity">無限遠を追加</string><!-- Add infinite distance -->
 
-    <string name="magnetic_accuracy_title">Compass direction</string>
-    <string name="magnetic_accuracy_info">Your device\'s compass needs calibrating to improve its accuracy. This can be done by moving your phone in a figure of 8 motion.\n\nCurrent accuracy:</string>
+    <string name="magnetic_accuracy_title">コンパスの向き</string><!-- Compass direction -->
+    <string name="magnetic_accuracy_info">コンパスの精度を上げるには補正が必要です。補正には端末を８の字に動かしてください。\n\n現在の精度:</string>
 
-    <string name="accuracy_unreliable">Unreliable</string>
-    <string name="accuracy_low">Low</string>
-    <string name="accuracy_medium">Medium</string>
-    <string name="accuracy_high">High</string>
-    <string name="accuracy_unknown">Unknown</string>
+    <string name="accuracy_unreliable">未補正</string><!-- Unreliable -->
+    <string name="accuracy_low">低精度</string>
+    <string name="accuracy_medium">普通</string>
+    <string name="accuracy_high">高精度</string>
+    <string name="accuracy_unknown">不明</string>
 
     <string name="preference_units_distance">距離の単位</string>
     <string name="preference_units_distance_summary">GPS測位による高度表示に使う長さの単位です。スタンプや動画の字幕に使われます\n%s</string>
@@ -619,44 +619,46 @@
     <string name="preference_show_whats_new">更新情報ダイアログの表示</string>
     <string name="preference_show_whats_new_summary">アプリが更新されたときに、更新情報ダイアログを表示します。</string>
 
-    <string name="preference_edge_mode">Edge mode algorithm</string>
-    <string name="preference_edge_mode_summary">Algorithm that the camera driver should use for applying edge enhancement. Edge enhancement improves sharpness and details in the captured image. (This setting is ignored in NR photo mode.)\n%s</string>
+    <string name="preference_edge_mode">輪郭モード</string><!-- Edge mode algorithm -->
+    <string name="preference_edge_mode_summary">輪郭を強調します。輪郭を強調すると写真がハッキリし、細部がわかりやすくなります。（NR写真モードでは無視されます）\n%s</string>
+    <!-- Algorithm that the camera driver should use for applying edge enhancement. Edge enhancement improves sharpness and details in the captured image. (This setting is ignored in NR photo mode.) -->
 
-    <string name="preference_screen_processing_settings">Processingの設定…</string>
+    <string name="preference_screen_processing_settings">画面Processingの設定…</string>
 
-    <string name="preference_noise_reduction_mode">Noise reduction algorithm</string>
-    <string name="preference_noise_reduction_mode_summary">Algorithm that the camera driver should use for applying noise reduction. The noise reduction algorithm attempts to improve image quality by removing excessive noise added by the capture process, especially in dark conditions. (Note that this is not related to the Noise Reduction photo mode, and in fact this setting is ignored in NR photo mode.)\n%s</string>
-    <string name="noise_reduction_mode_default">Default</string>
-    <string name="noise_reduction_mode_off">Off</string>
-    <string name="noise_reduction_mode_minimal">Minimal</string>
-    <string name="noise_reduction_mode_fast">Fast</string>
-    <string name="noise_reduction_mode_high_quality">High Quality</string>
+    <string name="preference_noise_reduction_mode">ノイズ低減手法</string><!-- Noise reduction algorithm -->
+    <string name="preference_noise_reduction_mode_summary">ノイズを低減します。とりわけ暗いシーンでのノイズを取り除きます。（この設定はNR写真モードでは無視されます。）\n%s</string>
+    <!-- Algorithm that the camera driver should use for applying noise reduction. The noise reduction algorithm attempts to improve image quality by removing excessive noise added by the capture process, especially in dark conditions. (Note that this is not related to the Noise Reduction photo mode, and in fact this setting is ignored in NR photo mode.) -->
+    <string name="noise_reduction_mode_default">規定</string>
+    <string name="noise_reduction_mode_off">無効</string>
+    <string name="noise_reduction_mode_minimal">最小限</string>
+    <string name="noise_reduction_mode_fast">高速</string>
+    <string name="noise_reduction_mode_high_quality">高品質</string>
 
-    <string name="preference_focus_assist">Focus assist</string>
-    <string name="preference_focus_assist_summary">Whether to zoom in when adjusting manual focus distance\n%s</string>
-    <string name="preference_focus_assist_off">Off</string>
-    <string name="preference_focus_assist_2x">2x</string>
-    <string name="preference_focus_assist_4x">4x</string>
+    <string name="preference_focus_assist">ピント調整補助</string><!-- Focus assist -->
+    <string name="preference_focus_assist_summary">手動でピントの合う距離を調整するときに、画像を拡大するかどうかの設定です。\n%s</string><!-- Whether to zoom in when adjusting manual focus distance -->
+    <string name="preference_focus_assist_off">無効</string>
+    <string name="preference_focus_assist_2x">2倍</string>
+    <string name="preference_focus_assist_4x">4倍</string>
 
-    <string name="exposure_compensation_zoom">Increase or decrease exposure compensation</string>
+    <string name="exposure_compensation_zoom">露出補正の強化</string><!-- Increase or decrease exposure compensation -->
 
-    <string name="previous">Previous</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) for "<" button on popup menu -->
-    <string name="next">Next</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) for ">" button on popup menu -->
+    <string name="previous">前</string> <!-- "Previous" for "ContentDescription" (used for accessibility, e.g., Google Talkback) for "<" button on popup menu -->
+    <string name="next">次</string> <!-- "Next" for "ContentDescription" (used for accessibility, e.g., Google Talkback) for ">" button on popup menu -->
 
-    <string name="preference_burst_mode_off">Off</string>
+    <string name="preference_burst_mode_off">無効</string>
     <string name="preference_burst_mode_2x">2倍</string>
     <string name="preference_burst_mode_3x">3倍</string>
     <string name="preference_burst_mode_4x">4倍</string>
     <string name="preference_burst_mode_5x">5倍</string>
     <string name="preference_burst_mode_10x">10倍</string>
-    <string name="preference_burst_mode_20x">20x</string>
-    <string name="preference_burst_mode_30x">30x</string>
-    <string name="preference_burst_mode_40x">40x</string>
-    <string name="preference_burst_mode_50x">50x</string>
+    <string name="preference_burst_mode_20x">20倍</string>
+    <string name="preference_burst_mode_30x">30倍</string>
+    <string name="preference_burst_mode_40x">40倍</string>
+    <string name="preference_burst_mode_50x">50倍</string>
     <string name="preference_burst_mode_unlimited">無制限</string>
 
     <string name="preference_burst_interval_no_delay">なし</string>
-    <string name="preference_burst_interval_0_5s">0.5s</string>
+    <string name="preference_burst_interval_0_5s">0.5秒</string>
     <string name="preference_burst_interval_1s">1秒</string>
     <string name="preference_burst_interval_2s">2秒</string>
     <string name="preference_burst_interval_3s">3秒</string>
@@ -674,7 +676,7 @@
     <string name="preference_burst_interval_1h">1時間</string>
     <string name="preference_burst_interval_2h">2時間</string>
 
-    <string name="preference_video_max_filesize_default">Device default</string>
+    <string name="preference_video_max_filesize_default">デバイスの規定値</string><!-- Device default -->
     <string name="preference_video_max_filesize_100mb">100MB</string>
     <string name="preference_video_max_filesize_200mb">200MB</string>
     <string name="preference_video_max_filesize_300mb">300MB</string>
@@ -684,7 +686,7 @@
     <string name="preference_video_max_filesize_5gb">5GB</string>
     <string name="preference_video_max_filesize_9gb">9GB</string>
 
-    <string name="cancelled_focus_bracketing">Cancelled focus bracketing</string>
+    <string name="cancelled_focus_bracketing">ピントのブラケットキャンセル</string><!-- Cancelled focus bracketing -->
 
     <string name="preference_crop_guide_none">なし</string>
     <string name="preference_crop_guide_1">1.00 (1対1)</string>
@@ -699,13 +701,13 @@
     <string name="preference_crop_guide_2_35">2.35 (47対20)</string>
     <string name="preference_crop_guide_2_4">2.4 (12対5)</string>
 
-    <string name="preference_audio_noise_control_sensitivity_3">+3 (high sensitivity)</string>
+    <string name="preference_audio_noise_control_sensitivity_3">+3 (高感度)</string><!-- high sensitivity -->
     <string name="preference_audio_noise_control_sensitivity_2">+2</string>
     <string name="preference_audio_noise_control_sensitivity_1">+1</string>
-    <string name="preference_audio_noise_control_sensitivity_0">0 (default)</string>
+    <string name="preference_audio_noise_control_sensitivity_0">0 (規定値)</string>
     <string name="preference_audio_noise_control_sensitivity_m1">-1</string>
     <string name="preference_audio_noise_control_sensitivity_m2">-2</string>
-    <string name="preference_audio_noise_control_sensitivity_m3">-3 (low sensitivity)</string>
+    <string name="preference_audio_noise_control_sensitivity_m3">-3 (低感度)</string><!-- low sinsitivity -->
 
     <string name="preference_hdr_contrast_enhancement">HDRでコントラストを強調</string>
     <string name="preference_hdr_contrast_enhancement_summary">HDRでコントラスト強調をどのタイミングで行うかの設定です。明るいところ、暗いところの差（ダイナミックレンジ）が大きい時に効果的です。また、「HDRらしい」はっきりした見た目になります。\n%s</string>
@@ -713,14 +715,14 @@
     <string name="preference_hdr_contrast_enhancement_smart">自動判定</string>
     <string name="preference_hdr_contrast_enhancement_always">常時</string>
 
-    <string name="preference_video_output_format">Video format</string>
-    <string name="preference_video_output_format_summary">Video and audio file format and codecs\n%s</string>
+    <string name="preference_video_output_format">動画フォーマット</string>
+    <string name="preference_video_output_format_summary">動画と音声のフォーマットとコーデック\n%s</string><!-- Video and audio file format and codecs -->
 
-    <string name="preference_video_output_format_default">Default</string>
+    <string name="preference_video_output_format_default">規定値</string>
     <string name="preference_video_output_format_mpeg4_h264">MPEG4 H264</string>
     <string name="preference_video_output_format_mpeg4_hevc">MPEG4 HEVC</string>
     <string name="preference_video_output_format_3gpp">3GPP</string>
-    <string name="preference_video_output_format_webm">WebM (audio not supported)</string>
+    <string name="preference_video_output_format_webm">WebM (音声なし)</string>
 
     <string name="preference_screen_settings_manager">設定の保存マネージャ</string>
 
@@ -742,9 +744,9 @@
     <string name="preference_image_format_webp">WebP</string>
     <string name="preference_image_format_png">PNG</string>
 
-    <string name="preference_nr_mode">NR Mode</string>
-    <string name="preference_nr_mode_normal">Normal</string>
-    <string name="preference_nr_mode_low_light">Low light</string>
+    <string name="preference_nr_mode">NR モード</string>
+    <string name="preference_nr_mode_normal">通常</string><!-- Normal -->
+    <string name="preference_nr_mode_low_light">低照度</string><!-- Low light -->
 
     <string name="preference_ui_placement_left">左利き用</string>
     <string name="preference_ui_placement_right">右利き用</string>
@@ -764,29 +766,29 @@
 
     <string name="preference_show_stamp">スタンプボタンの表示</string>
     <string name="preference_show_stamp_summary">写真に日付や場所情報などを書き込む機能の有効化・無効化ボタンをプレビュー画面に設置します</string>
-    <string name="stamp_enable">Enable photo stamp</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
-    <string name="stamp_disable">Disable photo stamp</string> <!-- for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
-    <string name="stamp_enabled">Photo stamp enabled</string>
-    <string name="stamp_disabled">Photo stamp disabled</string>
+    <string name="stamp_enable">スタンプ有効</string> <!--"Enable photo stamp" for "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
+    <string name="stamp_disable">スタンプ無効</string> <!-- "Disable photo stampfor "ContentDescription" (used for accessibility, e.g., Google Talkback) -->
+    <string name="stamp_enabled">スタンプが有効化されました</string><!-- Photo stamp enabled -->
+    <string name="stamp_disabled">スタンプが無効化されました</string><!-- Photo stamp disabled -->
 
     <string name="preference_show_textstamp">自作スタンプボタンの表示</string>
     <string name="preference_show_textstamp_summary">任意のテキストを画像に挿入する設定を行うボタンをプレビュー画面に設置します。</string>
 
     <string name="preference_show_white_balance_lock">自動ホワイトバランスボタンの表示</string>
     <string name="preference_show_white_balance_lock_summary">自動ホワイトバランスを有効化・無効化するボタンをプレビュー画面に設置します。</string>
-    <string name="white_balance_lock">Lock white balance</string>
-    <string name="white_balance_unlock">Unlock white balance</string>
-    <string name="white_balance_locked">White balance locked</string>
-    <string name="white_balance_unlocked">White balance unlocked</string>
+    <string name="white_balance_lock">ホワイトバランスの固定</string><!-- Lock white balance -->
+    <string name="white_balance_unlock">ホワイトバランスの固定解除</string><!-- Unlock white balance -->
+    <string name="white_balance_locked">ホワイトバランスが固定されました</string><!-- White balance locked -->
+    <string name="white_balance_unlocked">ホワイトバランスが解除されました</string><!-- White balance unlocked -->
 
     <string name="preference_show_exposure_lock">自動露出ボタンの表示</string>
     <string name="preference_show_exposure_lock_summary">自動露出を有効化・無効化するボタンをプレビュー画面に設置します。</string>
-    <string name="exposure_unlock">Unlock exposure</string>
+    <string name="exposure_unlock">露出の固定解除</string><!-- Unlock exposure -->
 
-    <string name="preference_nr_mode_low_light_message">Low light mode: please hold the camera steady</string>
+    <string name="preference_nr_mode_low_light_message">暗いシーンです。カメラをしっかり固定してください。</string><!-- Low light mode: please hold the camera steady -->
 
-    <string name="photo_mode_panorama">Pano</string> <!-- keep short, as this shows in the popup menu; probably shouldn't be translated? -->
-    <string name="photo_mode_panorama_full">Panorama</string>
+    <string name="photo_mode_panorama">パノラマ</string> <!-- "Pano" keep short, as this shows in the popup menu; probably shouldn't be translated? -->
+    <string name="photo_mode_panorama_full">パノラマ</string><!-- Panorama -->
 
     <string name="preference_screen_remote_control">Bluetooth LE(BLE)リモコン設定…</string>
     <string name="preference_enable_remote">BLEリモコンを有効化</string>
@@ -816,31 +818,32 @@
     <string name="preference_location_enable">Store location data</string>
     <string name="preference_location_disable">Stop storing location data</string>
 
-    <string name="preference_histogram">Show a histogram</string>
-    <string name="preference_histogram_summary">Whether to display histogram of the colors shown on-screen\n%s</string>
-    <string name="preference_histogram_off">Off</string>
-    <string name="preference_histogram_rgb">RGB Colors</string>
-    <string name="preference_histogram_luminance">Luminance</string>
-    <string name="preference_histogram_value">Value (Maximum)</string>
-    <string name="preference_histogram_intensity">Intensity (Average)</string>
-    <string name="preference_histogram_lightness">Lightness (Average of min-max)</string>
+    <string name="preference_histogram">ヒストグラム表示</string><!-- Show a histogram -->
+    <string name="preference_histogram_summary">色のヒストグラムをスクリーンに表示するかどうかの設定です。\n%s</string><!-- Whether to display histogram of the colors shown on-screen -->
+    <string name="preference_histogram_off">オフ</string>
+    <string name="preference_histogram_rgb">RGBカラー</string>
+    <string name="preference_histogram_luminance">るみナンス（Luminance）</string>
+    <string name="preference_histogram_value">最大値</string><!-- Value (Maximum) -->
+    <string name="preference_histogram_intensity">照度（平均）</string><!-- Intensity (Average) -->
+    <string name="preference_histogram_lightness">明るさ（最大値と最小値の中間）</string><!-- Lightness (Average of min-max) -->
 
-    <string name="preference_zebra_stripes">Show zebra stripes</string>
-    <string name="preference_zebra_stripes_summary">If this option is enabled, zebra stripes will be drawn on-screen showing where the camera preview is over exposed.\n%s</string>
-    <string name="preference_zebra_stripes_off">Off</string>
+    <string name="preference_zebra_stripes">縦縞の表示</string><!-- Show zebra stripes -->
+    <string name="preference_zebra_stripes_summary">プレビュー画面が露出過多の時に縦縞を表示します。\n%s</string><!-- If this option is enabled, zebra stripes will be drawn on-screen showing where the camera preview is over exposed. -->
+    <string name="preference_zebra_stripes_off">無効</string>
     <string name="preference_zebra_stripes_70pc">70%</string> <!-- shouldn't escape %, not needed when shown in ListPreference -->
     <string name="preference_zebra_stripes_80pc">80%</string> <!-- shouldn't escape %, not needed when shown in ListPreference -->
     <string name="preference_zebra_stripes_90pc">90%</string> <!-- shouldn't escape %, not needed when shown in ListPreference -->
     <string name="preference_zebra_stripes_100pc">100%</string> <!-- shouldn't escape %, not needed when shown in ListPreference -->
 
-    <string name="preference_focus_peaking">Focus peaking</string>
-    <string name="preference_focus_peaking_summary">If this option is enabled, highlights will be shown on in-focus edges (contours). This is primarily useful for manual focus, and can be used to help determine which regions of the image are in focus.\n%s</string>
-    <string name="preference_focus_peaking_off">Off</string>
-    <string name="preference_focus_peaking_on">On</string>
-    <string name="preference_focus_peaking_color">Focus peaking color</string>
-    <string name="preference_focus_peaking_color_summary">Which color to use for highlighting the in-focus edges\n%s</string>
+    <string name="preference_focus_peaking">ピントの可視化</string><!-- Focus peaking -->
+    <string name="preference_focus_peaking_summary">ピントの合った輪郭を強調表示します。手動でピントを合わせる場合に、画像内のどこにピントが合っているかわかりやすくなります。\n%s</string>
+    <!-- If this option is enabled, highlights will be shown on in-focus edges (contours). This is primarily useful for manual focus, and can be used to help determine which regions of the image are in focus. -->
+    <string name="preference_focus_peaking_off">無効</string>
+    <string name="preference_focus_peaking_on">有効</string>
+    <string name="preference_focus_peaking_color">強調表示色</string><!-- Focus peaking color -->
+    <string name="preference_focus_peaking_color_summary">強調表示に用いる色を指定します。\n%s</string><!-- Which color to use for highlighting the in-focus edges -->
 
-    <string name="remaining">Remaining</string> <!-- images remaining for "processing" -->
+    <string name="remaining">その他</string> <!-- "Remaining" images remaining for "processing" -->
 
     <string name="preference_preview">プレビュー画面の設定…</string>
 
@@ -848,30 +851,41 @@
     <string name="preference_show_cycle_flash">フラッシュボタンの表示</string>
     <string name="preference_show_cycle_flash_summary">フラッシュモードを切り替えるボタンをプレビュー画面に設置します。これを指定しない場合はポップアップメニューで設定することになります。</string>
 
-    <string name="preference_raw_expo_bracketing">Allow RAW for expo bracketing</string>
-    <string name="preference_raw_expo_bracketing_summary">Whether the RAW option should also apply for expo bracketing photo mode (or for HDR mode when \"Save all images for HDR mode\" is enabled). If this option is disabled, only JPEGs will be saved in those photo modes.</string>
+    <string name="preference_raw_expo_bracketing">露出ブラケット対象にRAW画像も含める</string><!-- Allow RAW for expo bracketing -->
+    <string name="preference_raw_expo_bracketing_summary">露出ブラケットモード、またはすべての写真をHDRモードで保存する設定にしているHDR画像も、露出ブラケットモードの対象とします。（通常のモードではJPEG画像のみに適用されます）</string>
+    <!-- Whether the RAW option should also apply for expo bracketing photo mode (or for HDR mode when \"Save all images for HDR mode\" is enabled). If this option is disabled, only JPEGs will be saved in those photo modes. -->
 
-    <string name="preference_raw_focus_bracketing">Allow RAW for focus bracketing</string>
-    <string name="preference_raw_focus_bracketing_summary">Whether the RAW option should also apply for focus bracketing photo mode. If this option is disabled, only JPEGs will be saved in focus bracketing photo modes.</string>
+    <string name="preference_raw_focus_bracketing">ピントのブラケット対象にRAW画像を含める</string><!-- Allow RAW for focus bracketing -->
+    <string name="preference_raw_focus_bracketing_summary">RAWオプションが、ピントのブラケットモードでも効くようにする。（通常はJPEG画像のみに適用されます）</string>
+    <!-- Whether the RAW option should also apply for focus bracketing photo mode. If this option is disabled, only JPEGs will be saved in focus bracketing photo modes.</string> -->
 
-    <string name="cycle_raw">Cycle RAW modes</string>
-    <string name="preference_show_cycle_raw">Show RAW icon</string>
-    <string name="preference_show_cycle_raw_summary">Whether to show an on-screen icon for cycling through the RAW modes</string>
+    <string name="cycle_raw">RAWモードの切り替え</string><!-- spriteCycle RAW modes> -->
+    <string name="preference_show_cycle_raw">RAW画像のアイコンを表示</string><!-- Show RAW icon -->
+    <string name="preference_show_cycle_raw_summary">RAWモードの変更・表示のためのアイコンをトップにつかするかどうかの設定です。</string><!-- Whether to show an on-screen icon for cycling through the RAW modes -->
 
-    <string name="bluetooth_current_remote">Current remote:</string>
+    <string name="bluetooth_current_remote">現在のリモート機能</string><!-- Current remote: -->
     <string name="bluetooth_scan">Scan</string>
 
     <!-- There's no point translating the What's New text - it'll be updated constantly, and change each version -->
     <string name="whats_new_text">
         [画面上の表示設定⇒更新情報ダイアログの表示のチェックを外すことで、この表示を無効化できます。]
-        \n\n<b>v0.0.10:</b>\n\n
+        \n\n
+        <b>v0.0.13:</b>\n\n\
+        <ul>
+            <li>音声認識結果を選択肢から選んだ場合のバグを直しました。</li>
+            <li>文字列リソースの日本語化を進めました。\n</li>
+        </ul>
+        <hr></hr>
+        <b>Tag Cameraの開発について</b>
         <ul>
             <li>オープンソースプロジェクトであるOpen Cameraのソースコードを利用することで、大幅にカメラ機能が改善しました。
                 デフォルト値を変更し、音声認識タグの入力や画像への文字列埋め込みが最初から使えるようになっています。\n</li>
-            <li>文字列リソースも一部日本語化しました。\n</li>
+            <li>文字列リソースを日本語化しました。\n</li>
             <li>写真撮影後画面を一時停止する設定にした場合、オリジナルのコードでは撮影直後に一旦画像が保存されますが、
                 Tag Cameraではこの段階では保存せず、一時停止画面で明示的に保存ボタンを押したときのみ保存するようにしました。\n</li>
             <li>音声認識タグは、この一旦停止中の画面で画面上のマイクボタンを押すことで画像に挿入できます。</li>
+            <hr></hr>
+            <li>音声認識結果を選択肢から選んだ場合のバグを直しました。</li>
         </ul>
     </string>
 
