@@ -817,6 +817,13 @@ public class MainUI {
         }
     }
 
+    public boolean showExposureIcon() {
+        if( !main_activity.supportsExposureButton() )
+            return false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(main_activity);
+        return sharedPreferences.getBoolean(PreferenceKeys.ShowExposurePreferenceKey, false);
+    }
+
     public boolean showExposureLockIcon() {
         if( !main_activity.getPreview().supportsExposureLock() )
             return false;
@@ -910,7 +917,8 @@ public class MainUI {
                 if( main_activity.getPreview().getCameraControllerManager().getNumberOfCameras() > 1 )
                     switchCameraButton.setVisibility(visibility);
                 switchVideoButton.setVisibility(visibility);
-                if( main_activity.supportsExposureButton() )
+                //if( main_activity.supportsExposureButton() )
+                if( showExposureIcon() )
                     exposureButton.setVisibility(visibility);
                 if( showExposureLockIcon() )
                     exposureLockButton.setVisibility(visibility);
@@ -1019,7 +1027,8 @@ public class MainUI {
                 if( main_activity.getPreview().getCameraControllerManager().getNumberOfCameras() > 1 )
                     switchCameraButton.setVisibility(visibility);
                 switchVideoButton.setVisibility(visibility);
-                if( main_activity.supportsExposureButton() )
+                //if( main_activity.supportsExposureButton() )
+                if( showExposureIcon() )
                     exposureButton.setVisibility(visibility_video); // still allow exposure when recording video
                 if( showExposureLockIcon() )
                     exposureLockButton.setVisibility(visibility_video); // still allow exposure lock when recording video

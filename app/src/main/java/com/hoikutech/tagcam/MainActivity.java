@@ -1905,6 +1905,12 @@ public class MainActivity extends Activity {
 
         // ensure icons invisible if disabling them from showing from the Settings
         // (if enabling them, we'll make the icon visible later on)
+
+        if( !mainUI.showExposureIcon() ) {
+            View button = findViewById(R.id.exposure);
+            button.setVisibility(View.GONE);
+        }
+
         if( !mainUI.showExposureLockIcon() ) {
             View button = findViewById(R.id.exposure_lock);
             button.setVisibility(View.GONE);
@@ -3556,7 +3562,8 @@ public class MainActivity extends Activity {
         // However still nee to update visibility of icons where visibility depends on camera setup - e.g., exposure button
         // not supported for high speed video frame rates - see testTakeVideoFPSHighSpeedManual().
         View exposureButton = findViewById(R.id.exposure);
-        exposureButton.setVisibility(supportsExposureButton() && !mainUI.inImmersiveMode() ? View.VISIBLE : View.GONE);
+        exposureButton.setVisibility(getMainUI().showExposureIcon() && !mainUI.inImmersiveMode() ? View.VISIBLE : View.GONE);
+        //exposureButton.setVisibility(supportsExposureButton() && !mainUI.inImmersiveMode() ? View.VISIBLE : View.GONE);
 
         // need to update some icons, e.g., white balance and exposure lock due to them being turned off when pause/resuming
         mainUI.updateOnScreenIcons();

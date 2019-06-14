@@ -781,6 +781,9 @@
     <string name="white_balance_locked">ホワイトバランスが固定されました</string><!-- White balance locked -->
     <string name="white_balance_unlocked">ホワイトバランスが解除されました</string><!-- White balance unlocked -->
 
+    <string name="preference_show_exposure">露出変更アイコンの表示</string>
+    <string name="preference_show_exposure_summary">露出時間の変更ダイアログを出すボタンをプレビュー画面に設置します。</string>
+
     <string name="preference_show_exposure_lock">自動露出ボタンの表示</string>
     <string name="preference_show_exposure_lock_summary">自動露出を有効化・無効化するボタンをプレビュー画面に設置します。</string>
     <string name="exposure_unlock">露出の固定解除</string><!-- Unlock exposure -->
