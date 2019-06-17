@@ -396,4 +396,10 @@ public class PreferenceKeys {
     }
 
     public static final String ImmersiveModePreferenceKey = "preference_immersive_mode";
+
+
+
+    public static final String ShowVoiceMemoPreferenceKey = "preference_show_voice_memo";
+    public static final String VoiceMemoPreferenceKey = "preference_voice_memo";
+
 }

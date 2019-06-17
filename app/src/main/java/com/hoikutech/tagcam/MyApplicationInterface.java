@@ -2968,6 +2968,27 @@ public class MyApplicationInterface extends BasicApplicationInterface {
     }
 
 
+    @Override
+    public void setEnableVoiceMemo(boolean bEnable) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(main_activity);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(PreferenceKeys.VoiceMemoPreferenceKey, bEnable);
+        editor.apply();
+    }
+    @Override
+    public boolean isVoiceMemoEnabled() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(main_activity);
+        return sharedPreferences.getBoolean(PreferenceKeys.VoiceMemoPreferenceKey, true);
+    }
+    @Override
+    public boolean getShowVoiceMemo() {
+        //if( !main_activity.supportsExposureButton() )
+        //    return false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(main_activity);
+        return sharedPreferences.getBoolean(PreferenceKeys.ShowVoiceMemoPreferenceKey, false);
+    }
+
+
     // for testing
 
     boolean hasThumbnailAnimation() {

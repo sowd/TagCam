@@ -134,6 +134,7 @@ public class MainActivity extends Activity {
     private final ToastBoxer white_balance_lock_toast = new ToastBoxer();
     private final ToastBoxer exposure_lock_toast = new ToastBoxer();
     private final ToastBoxer audio_control_toast = new ToastBoxer();
+    private final ToastBoxer voice_memo_toast = new ToastBoxer();
     private boolean block_startup_toast = false; // used when returning from Settings/Popup - if we're displaying a toast anyway, don't want to display the info toast too
 
     // application shortcuts:
@@ -1408,6 +1409,17 @@ public class MainActivity extends Activity {
         preview.showToast(white_balance_lock_toast, preview.isWhiteBalanceLocked() ? R.string.white_balance_locked : R.string.white_balance_unlocked);
     }
 
+    public void clickedVoiceMemo(View view) {
+        if( MyDebug.LOG )
+            Log.d(TAG, "clickedVoiceMemo");
+        preview.toggleVoiceMemoEnabled();
+        mainUI.updateVoiceMemoIcon();
+        preview.showToast(voice_memo_toast
+                , getApplicationInterface().isVoiceMemoEnabled()
+                        ? R.string.voice_memo_enabled
+                        : R.string.voice_memo_disabled);
+    }
+
     public void clickedExposureLock(View view) {
         if( MyDebug.LOG )
             Log.d(TAG, "clickedExposureLock");
@@ -1905,6 +1917,11 @@ public class MainActivity extends Activity {
 
         // ensure icons invisible if disabling them from showing from the Settings
         // (if enabling them, we'll make the icon visible later on)
+
+        if( !mainUI.showVoiceMemoIcon() ) {
+            View button = findViewById(R.id.voice_memo);
+            button.setVisibility(View.GONE);
+        }
 
         if( !mainUI.showExposureIcon() ) {
             View button = findViewById(R.id.exposure);
@@ -3564,6 +3581,10 @@ public class MainActivity extends Activity {
         View exposureButton = findViewById(R.id.exposure);
         exposureButton.setVisibility(getMainUI().showExposureIcon() && !mainUI.inImmersiveMode() ? View.VISIBLE : View.GONE);
         //exposureButton.setVisibility(supportsExposureButton() && !mainUI.inImmersiveMode() ? View.VISIBLE : View.GONE);
+
+        View voiceMemoButton = findViewById(R.id.voice_memo);
+        voiceMemoButton.setVisibility(getMainUI().showVoiceMemoIcon() && !mainUI.inImmersiveMode()
+                ? View.VISIBLE : View.GONE );
 
         // need to update some icons, e.g., white balance and exposure lock due to them being turned off when pause/resuming
         mainUI.updateOnScreenIcons();

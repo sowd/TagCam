@@ -169,6 +169,19 @@
         android:onClick="clickedSettings"
         />
 
+    <ImageButton
+        android:id="@+id/voice_memo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/voice_memo"
+        android:src="@drawable/voice_memo_on"
+        android:onClick="clickedVoiceMemo"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:visibility="gone"
+        />
 
 
     <ImageButton

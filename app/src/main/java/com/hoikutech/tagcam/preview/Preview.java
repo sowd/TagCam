@@ -97,7 +97,6 @@ import android.view.WindowManager;
 import android.view.View.MeasureSpec;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 /** This class was originally named due to encapsulating the camera preview,
@@ -2034,6 +2033,8 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             this.video_quality_handler.setVideoSizes(camera_features.video_sizes);
             this.video_quality_handler.setVideoSizesHighSpeed(camera_features.video_sizes_high_speed);
             this.supported_preview_sizes = camera_features.preview_sizes;
+
+            this.is_voice_memo_enabled = applicationInterface.isVoiceMemoEnabled();
         }
 
         if( MyDebug.LOG ) {
@@ -8140,4 +8141,12 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         return this.zoom_ratios.get(zoom_factor)/100.0f;
     }
 
+
+    private boolean is_voice_memo_enabled;
+    public void toggleVoiceMemoEnabled() {
+        if( MyDebug.LOG )
+            Log.d(TAG, "toggleEnableVoiceTag()");
+        is_voice_memo_enabled = !is_voice_memo_enabled;
+        applicationInterface.setEnableVoiceMemo(is_voice_memo_enabled);
+    }
 }

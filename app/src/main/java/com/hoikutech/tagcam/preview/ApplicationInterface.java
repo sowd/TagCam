@@ -189,4 +189,8 @@ public interface ApplicationInterface {
     void onCaptureStarted(); // called immediately before we start capturing the picture
     void onPictureCompleted(); // called after all picture callbacks have been called and returned
     void onContinuousFocusMove(boolean start); // called when focusing starts/stop in continuous picture mode (in photo mode only)
+
+    void setEnableVoiceMemo(boolean bEnable);
+    boolean isVoiceMemoEnabled();
+    boolean getShowVoiceMemo();
 }

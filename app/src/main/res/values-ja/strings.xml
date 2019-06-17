@@ -14,7 +14,7 @@
 
     <string name="on">有効</string> <!-- whether a setting is turned on, e.g., "Auto-level: On" -->
     <string name="off">無効</string> <!-- whether a setting is turned off, e.g., "Auto-level: Off" -->
-    
+
     <string name="choose_save_location">保存場所を選択する:</string>
     <string name="clear_folder_history">フォルダの履歴を消去する</string>
     <string name="clear_folder_history_question">履歴を消去しますか？</string>
@@ -896,6 +896,15 @@
     <string name="add_voice_tag_confirm">音声認識タグの追加</string>
     <string name="voice_recognition_error">認識エラー</string>
 
+    <string name="voice_memo">長押し音声メモ</string>
+    <string name="voice_memo_enable">長押し音声メモを有効化</string>
+    <string name="voice_memo_disable">長押し音声メモを無効化</string>
+    <string name="voice_memo_enabled">長押し音声メモ有効</string>
+    <string name="voice_memo_disabled">長押し音声メモ無効</string>
+    <string name="preference_show_voice_memo">長押し音声メモアイコンを表示</string>
+    <string name="preference_show_voice_memo_summary">シャッターボタン長押し時に音声メモ（録音）を行うかどうかを決めるボタンをプレビュー画面に設置します。</string>
+    <string name="preference_voice_memo">長押し音声メモを有効化する</string>
+    <string name="preference_voice_memo_summary">写真撮影ボタンを長押しした時に音声を録音し、exifに格納します。</string>
 
 </resources>
 

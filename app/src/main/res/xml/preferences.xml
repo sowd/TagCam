@@ -141,12 +141,20 @@
                 android:summary="@string/preference_timer_beep_summary"
                 android:defaultValue="true"
                 />
-    
+
             <SwitchPreference
                 android:key="preference_timer_speak"
                 android:title="@string/preference_timer_speak"
                 android:summary="@string/preference_timer_speak_summary"
                 android:defaultValue="false"
+                />
+
+            <SwitchPreference
+                android:key="preference_voice_memo"
+                android:title="@string/preference_voice_memo"
+                android:summary="@string/preference_voice_memo_summary"
+                android:icon="@drawable/voice_memo_on"
+                android:defaultValue="true"
                 />
 
             <ListPreference 
@@ -603,6 +611,14 @@
                 />
 
             <!--  if we move this to another PreferenceGroup, we should update code to remove this Preference -->
+            <CheckBoxPreference
+                android:key="preference_show_voice_memo"
+                android:title="@string/preference_show_voice_memo"
+                android:summary="@string/preference_show_voice_memo_summary"
+                android:icon="@drawable/voice_memo_on"
+                android:defaultValue="false"
+                />
+
             <CheckBoxPreference
                 android:key="preference_show_exposure"
                 android:title="@string/preference_show_exposure"

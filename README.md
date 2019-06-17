@@ -11,3 +11,5 @@ Mark Harman氏による[Open Camera](https://opencamera.sourceforge.io/)のソ�
 + Some icons by ic_launcher : [https://github.com/romannurik/AndroidAssetStudio](https://github.com/romannurik/AndroidAssetStudio)
 
 + Some more icons by [google material design icons](google_material_design_icons_LICENSE-2.0.txt)
+
++ Some more icon by [Custom Icon Design](http://www.iconarchive.com/artist/custom-icon-design.html) (Document icon)

@@ -303,6 +303,7 @@ public class MainUI {
             buttons_permanent.add(main_activity.findViewById(R.id.face_detection));
             buttons_permanent.add(main_activity.findViewById(R.id.audio_control));
             buttons_permanent.add(main_activity.findViewById(R.id.kraken_icon));
+            buttons_permanent.add(main_activity.findViewById(R.id.voice_memo));
 
             List<View> buttons_all = new ArrayList<>(buttons_permanent);
             // icons which only sometimes show on the icon panel:
@@ -914,6 +915,8 @@ public class MainUI {
                 View settingsButton = main_activity.findViewById(R.id.settings);
                 View zoomControls = main_activity.findViewById(R.id.zoom);
                 View zoomSeekBar = main_activity.findViewById(R.id.zoom_seekbar);
+                View voiceMemoButton = main_activity.findViewById(R.id.voice_memo);
+
                 if( main_activity.getPreview().getCameraControllerManager().getNumberOfCameras() > 1 )
                     switchCameraButton.setVisibility(visibility);
                 switchVideoButton.setVisibility(visibility);
@@ -938,6 +941,9 @@ public class MainUI {
                     cycleFlashButton.setVisibility(visibility);
                 if( showFaceDetectionIcon() )
                     faceDetectionButton.setVisibility(visibility);
+                if( showVoiceMemoIcon())
+                    voiceMemoButton.setVisibility(visibility);
+
                 if( main_activity.hasAudioControl() )
                     audioControlButton.setVisibility(visibility);
                 popupButton.setVisibility(visibility);
@@ -1024,6 +1030,8 @@ public class MainUI {
                 View faceDetectionButton = main_activity.findViewById(R.id.face_detection);
                 View audioControlButton = main_activity.findViewById(R.id.audio_control);
                 View popupButton = main_activity.findViewById(R.id.popup);
+                View voiceMemoButton = main_activity.findViewById(R.id.voice_memo);
+
                 if( main_activity.getPreview().getCameraControllerManager().getNumberOfCameras() > 1 )
                     switchCameraButton.setVisibility(visibility);
                 switchVideoButton.setVisibility(visibility);
@@ -1048,6 +1056,10 @@ public class MainUI {
                     cycleFlashButton.setVisibility(visibility);
                 if( showFaceDetectionIcon() )
                     faceDetectionButton.setVisibility(visibility);
+
+                if( showVoiceMemoIcon())
+                    voiceMemoButton.setVisibility(visibility);
+
                 if( main_activity.hasAudioControl() )
                     audioControlButton.setVisibility(visibility);
                 if( !(show_gui_photo && show_gui_video) ) {
@@ -1072,6 +1084,7 @@ public class MainUI {
             }
         });
     }
+
 
     public void updateExposureLockIcon() {
         ImageButton view = main_activity.findViewById(R.id.exposure_lock);
@@ -1177,6 +1190,8 @@ public class MainUI {
         this.updateAutoLevelIcon();
         this.updateCycleFlashIcon();
         this.updateFaceDetectionIcon();
+
+        this.updateVoiceMemoIcon();
     }
 
     public void audioControlStarted() {
@@ -2765,7 +2780,21 @@ public class MainUI {
         return this.top_margin;
     }
 
-    // for testing
+
+    public boolean showVoiceMemoIcon() {
+        //if( !main_activity.getPreview().supportsVoiceTag() )
+        //    return false;
+        return main_activity.getApplicationInterface().getShowVoiceMemo();
+    }
+
+    public void updateVoiceMemoIcon() {
+        ImageButton view = main_activity.findViewById(R.id.voice_memo);
+        boolean enabled = main_activity.getApplicationInterface().isVoiceMemoEnabled();
+        view.setImageResource(enabled ? R.drawable.voice_memo_on : R.drawable.voice_memo_off);
+        view.setContentDescription( main_activity.getResources().getString(enabled ? R.string.voice_memo_disable : R.string.voice_memo_enable) );
+    }
+
+   // for testing
     public View getUIButton(String key) {
         if( MyDebug.LOG ) {
             Log.d(TAG, "getPopupButton(" + key + "): " + test_ui_buttons.get(key));
