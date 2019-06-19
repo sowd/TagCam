@@ -2,6 +2,7 @@ package com.hoikutech.tagcam;
 
 import com.hoikutech.tagcam.cameracontroller.CameraController;
 import com.hoikutech.tagcam.cameracontroller.RawImage;
+import com.hoikutech.tagcam.preview.Preview;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -107,6 +108,13 @@ public class ImageSaver extends Thread {
                 return !bDecodeUrlEncode ? value : URLDecoder.decode(value, "UTF-8") ;
             } catch (JSONException | UnsupportedEncodingException e) { e.printStackTrace(); }
             return null ;
+        }
+        boolean doesExifCommentKeyExist(String key) {
+            if( exifComment != null ) try {
+                JSONObject exifJson = new JSONObject(exifComment);
+                return exifJson.has(key);
+            } catch (JSONException e) { e.printStackTrace(); }
+            return false ;
         }
 
         enum Type {
@@ -1995,13 +2003,18 @@ public class ImageSaver extends Thread {
                         }
                     }
 
-                    String transcript = request.getExifCommentStringValue("transcript",true);
+                    String transcript = request.getExifCommentStringValue(Preview.DelayedImageSaver.TAG_TRANSCRIPT,true);
                     if( transcript != null ){
                             applicationInterface.drawTextWithBackground(canvas, p, transcript, color, Color.BLACK,
                                     width - offset_x, ypos, MyApplicationInterface.Alignment.ALIGNMENT_BOTTOM, null, draw_shadowed);
                             ypos -= diff_y;
                     }
 
+                    if(request.doesExifCommentKeyExist(Preview.DelayedImageSaver.TAG_WAVE_BASE64) ){
+                        applicationInterface.drawTextWithBackground(canvas, p, "\uD83D\uDD0A", color, Color.BLACK,
+                                width - offset_x, ypos, MyApplicationInterface.Alignment.ALIGNMENT_BOTTOM, null, draw_shadowed);
+                        ypos -= diff_y;
+                    }
                 }
                 if( text_stamp ) {
                     if( MyDebug.LOG )
@@ -2238,8 +2251,7 @@ public class ImageSaver extends Thread {
             }
             else if( storageUtils.isUsingSAF() ) {
                 saveUri = storageUtils.createOutputMediaFileSAF(StorageUtils.MEDIA_TYPE_IMAGE, filename_suffix, extension, request.current_date);
-            }
-            else {
+            } else {
                 picFile = storageUtils.createOutputMediaFile(StorageUtils.MEDIA_TYPE_IMAGE, filename_suffix, extension, request.current_date);
                 if( MyDebug.LOG )
                     Log.d(TAG, "save to: " + picFile.getAbsolutePath());

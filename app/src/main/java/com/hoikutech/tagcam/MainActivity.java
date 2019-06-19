@@ -352,6 +352,26 @@ public class MainActivity extends Activity {
                 if( motionEvent.getAction() == MotionEvent.ACTION_UP ) {
                     if( MyDebug.LOG )
                         Log.d(TAG, "takePhotoButton ACTION_UP");
+
+                    if( getPreview().mDelayedImageSaver.getSaveMode() == Preview.DelayedImageSaver.SAVEMODE_VOICEMEMO ){
+                        if( mRecognizeSpeech!=null && mRecognizeSpeech.isRecordingSound() ) {
+                            String base64 = mRecognizeSpeech.StopRecordSound();
+                            if( base64 != null )
+                                getPreview().mDelayedImageSaver.addTag(
+                                    Preview.DelayedImageSaver.TAG_WAVE_BASE64, base64 );
+
+                            /*if( getPreview().mDelayedImageSaver.isWaitingForSave()) {
+                                getPreview().mDelayedImageSaver.saveImage(true);
+                            }*/
+                            getPreview().mDelayedImageSaver.setSaveMode(Preview.DelayedImageSaver.SAVEMODE_NONE);
+                        } else {
+                            // Cancel photo shoot.
+                            getPreview().mDelayedImageSaver.setSaveMode(Preview.DelayedImageSaver.SAVEMODE_WAITING_PHOTOSHOOT_CANCELLATION);
+                        }
+
+                        mRecognizeSpeech = null;
+                        return false ;
+                    }
                     takePhotoButtonLongClickCancelled();
                     if( MyDebug.LOG )
                         Log.d(TAG, "takePhotoButton ACTION_UP done");
@@ -1047,6 +1067,26 @@ public class MainActivity extends Activity {
     private boolean longClickedTakePhoto() {
         if( MyDebug.LOG )
             Log.d(TAG, "longClickedTakePhoto");
+        if( ! preview.isVideo() && getApplicationInterface().isVoiceMemoEnabled() && mRecognizeSpeech == null ){
+            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+                // we restrict the checks to Android 6 or later just in case, see note in LocationSupplier.setupLocationListener()
+                if( MyDebug.LOG )
+                    Log.d(TAG, "check for record audio permission");
+                if( ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ) {
+                    if( MyDebug.LOG )
+                        Log.d(TAG, "record audio permission not available");
+                    applicationInterface.requestRecordAudioPermission();
+                    return false;
+                }
+            }
+
+            preview.mDelayedImageSaver.setSaveMode(
+                    Preview.DelayedImageSaver.SAVEMODE_VOICEMEMO);
+            this.takePicture(false);
+
+            return false ;
+        }
+
         // need to check whether fast burst is supported (including for the current resolution),
         // in case we're in Standard photo mode
         if( supportsFastBurst() ) {
@@ -1084,13 +1124,14 @@ public class MainActivity extends Activity {
         if( MyDebug.LOG )
             Log.d(TAG, "clickedTakePhoto");
 
-        if( getPreview().mDelayedImageSaver.isWaitingForSave()){
+        if( preview.mDelayedImageSaver.isWaitingForSave()){
             if(mRecognizeSpeech!=null) return ;
             this.getPreview().mDelayedImageSaver.saveImage(true);
             return;
-        }
-
-        this.takePicture(false);
+        } else if( preview.mDelayedImageSaver.getSaveMode() == Preview.DelayedImageSaver.SAVEMODE_WAITING_PHOTOSHOOT_CANCELLATION){
+            preview.mDelayedImageSaver.cancelPhotoSave();
+        } else
+            this.takePicture(false);
     }
 
 
@@ -3193,13 +3234,18 @@ public class MainActivity extends Activity {
         }
 
         // Start voice recognition
-
-        if( mRecognizeSpeech != null && mRecognizeSpeech.isRecognizing() ) {
-            mRecognizeSpeech.interruptRecognition();
-            mRecognizeSpeech = null ;
-        } else {
+        if(mRecognizeSpeech == null || !mRecognizeSpeech.isRecognizing()){
+            // Start recognition
+            preview.mDelayedImageSaver.setSaveMode(
+                    Preview.DelayedImageSaver.SAVEMODE_TRANSCRIPTED );
             mRecognizeSpeech = new RecognizeSpeech();
             mRecognizeSpeech.doRecognize(this);
+        } else {
+            // Cancel recognition by pressing icon
+            mRecognizeSpeech.interruptRecognition();
+            mRecognizeSpeech = null ;
+            preview.mDelayedImageSaver.setSaveMode(
+                    Preview.DelayedImageSaver.SAVEMODE_NONE );
         }
     }
     public RecognizeSpeech mRecognizeSpeech;

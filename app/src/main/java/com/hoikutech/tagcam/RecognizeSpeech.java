@@ -3,10 +3,15 @@ package com.hoikutech.tagcam;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +23,12 @@ import android.widget.ListView;
 
 import com.hoikutech.tagcam.preview.Preview;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class RecognizeSpeech implements RecognitionListener {
@@ -190,4 +201,129 @@ public class RecognizeSpeech implements RecognitionListener {
             tagGenerator.descTextBox.setText(tagGenerator.getText(0));
         }
     }
+
+    private MediaRecorder mMediaRecorder;
+    private String recordSoundPath;
+    public void StartRecordSound(MainActivity _main_activity){
+        this.main_activity = _main_activity;
+        // 出力するファイルパスを指定
+        try {
+            recordSoundPath =
+                File.createTempFile("voiceMemo", ".wav", main_activity.getCacheDir())
+                .getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            recordSoundPath = null ;
+            return ; // Cannot create temporary file
+        }
+
+        if( isRecordingSound() ){
+            mMediaRecorder.stop();
+            mMediaRecorder.reset();
+            //mMediaRecorder = null ;
+        }
+
+        mMediaRecorder = new MediaRecorder();
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+        //mMediaRecorder.setAudioSamplingRate(44100);
+        //mMediaRecorder.setAudioEncodingBitRate(160000);
+
+
+
+        mMediaRecorder.setOutputFile(recordSoundPath);
+
+        try {
+            mMediaRecorder.prepare();
+            mMediaRecorder.start();
+        }
+        catch (final Exception e) {
+
+        }
+
+    }
+    public String StopRecordSound(){
+        try {
+            if( mMediaRecorder == null || recordSoundPath == null ) return null ;
+            mMediaRecorder.stop();
+            mMediaRecorder.reset();
+            mMediaRecorder = null ;
+
+            byte[] waveBytes = getFileByteArray(recordSoundPath) ;
+            if( waveBytes == null ) return null ;
+
+            byte[] encodeBytes = Base64.encode(waveBytes, Base64.DEFAULT);
+            if(encodeBytes == null) return null ;
+
+            return new String(encodeBytes, "UTF-8");
+        } catch (/*UnsupportedEncoding*/ Exception e) {
+            e.printStackTrace();
+        }
+
+        return null ;
+    }
+
+    public boolean isRecordingSound(){return mMediaRecorder!=null;}
+
+    public byte[] getFileByteArray(String path) {
+        File file = new File(path);
+        try (FileInputStream inputStream = new FileInputStream(file);
+             ByteArrayOutputStream bout = new ByteArrayOutputStream();) {
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while((len = inputStream.read(buffer)) != -1) {
+                bout.write(buffer, 0, len);
+            }
+            return bout.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+        /*
+    class WaveRecorder {
+        private AudioRecord record;
+
+        // 定数
+        private final int AUDIO_SAMPLE_FREQ = 44100;
+        private final int AUDIO_BUFFER_SIZE = AudioRecord.getMinBufferSize(
+                AUDIO_SAMPLE_FREQ, AudioFormat.CHANNEL_IN_MONO,
+                AudioFormat.ENCODING_PCM_16BIT);
+        private final int FRAME_BUFFER_SIZE = AUDIO_BUFFER_SIZE / 2 ;
+
+        private short data[] = new short[FRAME_BUFFER_SIZE];
+
+        public void start() {
+            // AudioRecord作成
+            record = new AudioRecord(MediaRecorder.AudioSource.MIC,
+                    AUDIO_SAMPLE_FREQ, AudioFormat.CHANNEL_IN_MONO,
+                    AudioFormat.ENCODING_PCM_16BIT, AUDIO_BUFFER_SIZE);
+            record.setRecordPositionUpdateListener(new AudioRecord.OnRecordPositionUpdateListener() {
+                // フレームごとの処理
+                @Override
+                public void onPeriodicNotification(AudioRecord recorder) {
+                    recorder.read(data, 0, FRAME_BUFFER_SIZE);
+                }
+
+                @Override
+                public void onMarkerReached(AudioRecord recorder) {
+                }
+            });
+
+            record.setPositionNotificationPeriod(FRAME_BUFFER_SIZE);
+
+            // 録音開始
+            record.startRecording();
+
+            record.read(data, 0, FRAME_BUFFER_SIZE);
+        }
+
+        public void stop() {
+            record.stop();
+            record.release();
+            record = null;
+        }
+    }
+        */
 }

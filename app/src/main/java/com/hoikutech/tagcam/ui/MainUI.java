@@ -715,8 +715,16 @@ public class MainUI {
                 if( MyDebug.LOG )
                     Log.d(TAG, "set icon to photo");
                 //resource = R.drawable.take_photo_selector;
-                resource = (main_activity.getPreview().mDelayedImageSaver.isWaitingForSave()
-                    ? R.drawable.ic_save_white_48dp : R.drawable.take_photo_selector) ;
+                if( main_activity.getPreview().mDelayedImageSaver.getSaveMode()
+                == Preview.DelayedImageSaver.SAVEMODE_VOICEMEMO
+                && main_activity.mRecognizeSpeech != null )
+                    resource = R.drawable.voice_memo_red;
+                else if(main_activity.getPreview().mDelayedImageSaver.isWaitingForSave())
+                    resource = R.drawable.ic_save_white_48dp;
+                else
+                    resource = R.drawable.take_photo_selector;
+                //resource = (main_activity.getPreview().mDelayedImageSaver.isWaitingForSave()
+                //    ? R.drawable.ic_save_white_48dp : R.drawable.take_photo_selector) ;
                 content_description = R.string.take_photo;
                 switch_video_content_description = R.string.switch_to_video;
             }

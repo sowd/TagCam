@@ -2,6 +2,7 @@ package com.hoikutech.tagcam.preview;
 
 import com.hoikutech.tagcam.ImageSaver;
 import com.hoikutech.tagcam.MainActivity;
+import com.hoikutech.tagcam.RecognizeSpeech;
 import com.hoikutech.tagcam.cameracontroller.RawImage;
 //import com.hoikutech.tagcam.MainActivity;
 import com.hoikutech.tagcam.MyDebug;
@@ -5730,7 +5731,8 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                     Log.d(TAG, "onCompleted");
 
                 if( (remaining_repeat_photos == -1 || remaining_repeat_photos > 0 )
-                    || !applicationInterface.getPausePreviewPref() ){
+                    || ( mDelayedImageSaver.getSaveMode() != DelayedImageSaver.SAVEMODE_VOICEMEMO
+                        && !applicationInterface.getPausePreviewPref() )){
                     mDelayedImageSaver.saveImage(false );  /// Non-preview pause modes
                 }
 
@@ -5756,7 +5758,8 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                     boolean pause_preview = applicationInterface.getPausePreviewPref();
                     if( MyDebug.LOG )
                         Log.d(TAG, "pause_preview? " + pause_preview);
-                    if( pause_preview /*&& success*/ ) {  // success check disabled because files are not saved yet.
+                    if( pause_preview /*&& success*/
+                    || mDelayedImageSaver.getSaveMode() == DelayedImageSaver.SAVEMODE_VOICEMEMO) {  // success check disabled because files are not saved yet.
                         if( is_preview_started ) {
                             // need to manually stop preview on Android L Camera2
                             if( camera_controller != null ) {
@@ -5766,6 +5769,13 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                         }
 
                         setPreviewPaused(true);
+
+                        if(mDelayedImageSaver.getSaveMode() == DelayedImageSaver.SAVEMODE_VOICEMEMO){
+                            MainActivity main_activity = (MainActivity)applicationInterface.getContext();
+                            main_activity.mRecognizeSpeech = new RecognizeSpeech();
+                            main_activity.mRecognizeSpeech.StartRecordSound(main_activity);
+                            main_activity.getMainUI().setTakePhotoIcon();
+                        }
                     }
                     else {
                         if( !is_preview_started ) {
@@ -5893,12 +5903,24 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         private boolean has_date = false;
         private Date current_date = null;
 
+        private String locale ;
+
+        public static final int SAVEMODE_NONE = 0 ;
+        public static final int SAVEMODE_TRANSCRIPTED = 1 ;
+        public static final int SAVEMODE_VOICEMEMO = 2 ;
+        public static final int SAVEMODE_WAITING_PHOTOSHOOT_CANCELLATION = 3 ;
+        private int saveMode = SAVEMODE_TRANSCRIPTED;
+        public int getSaveMode(){ return saveMode ; }
+        public void setSaveMode(int newSaveMode){ saveMode = newSaveMode; }
+
         /** Ensures we get the same date for both JPEG and RAW; and that we set the date ASAP so that it corresponds to actual
          *  photo time.
          */
         private void init() {
             clearTempImages();
             success = false; // whether jpeg callback succeeded
+            Locale loc = Locale.getDefault();
+            locale = loc.getLanguage()+"_"+loc.getCountry();
 
             if( !has_date ) {
                 has_date = true;
@@ -5917,6 +5939,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         }
 
 
+        public static final String TAG_WAVE_BASE64 = "wav_base64";
         public static final String TAG_TRANSCRIPT = "transcript";
         public void addTag(String tagKey,String _tagValue){
             String tagValue = _tagValue;
@@ -5930,12 +5953,20 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             else
                 ImageSaver.Request.exifComment_Static += "\t,"+kv;
 
-            showToast(null, "Tag "+tagKey+": \""+_tagValue+"\" Added.");
+            if( !tagKey.equals("locale"))
+            showToast(null, String.format(
+                    getResources().getString(R.string.tag_added_message),tagKey));
+            //showToast(null, "Tag "+tagKey+": \""+_tagValue+"\" Added.");
         }
 
         public void saveImage(boolean bEndPauseAfterSaving){
-            if( ImageSaver.Request.exifComment_Static != null) // Make it a JSON formatted str
-                ImageSaver.Request.exifComment_Static = "{\n"+ImageSaver.Request.exifComment_Static +"}";
+            String cmst = ImageSaver.Request.exifComment_Static;
+            ImageSaver.Request.exifComment_Static = null;
+            addTag("locale",locale);
+            if( cmst != null )
+                ImageSaver.Request.exifComment_Static += ","+cmst;
+            ImageSaver.Request.exifComment_Static
+                    = "{\n"+ImageSaver.Request.exifComment_Static +"}";// Make it a JSON formatted str
 
             if( data != null ){
                 if( !applicationInterface.onPictureTaken(data, current_date) ) {
@@ -5975,6 +6006,12 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                 }
                 applicationInterface.cameraInOperation(false, false);
             }
+        }
+        public void cancelPhotoSave(){
+            mDelayedImageSaver.setSaveMode(Preview.DelayedImageSaver.SAVEMODE_NONE);
+            startCameraPreview();
+            applicationInterface.cameraInOperation(false, false);
+            mDelayedImageSaver.clearTempImages();
         }
 
         public void onEnterPauseMode(boolean bAsSaveButton){
