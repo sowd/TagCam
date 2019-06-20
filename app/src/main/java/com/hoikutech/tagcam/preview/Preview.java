@@ -5773,7 +5773,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                         if(mDelayedImageSaver.getSaveMode() == DelayedImageSaver.SAVEMODE_VOICEMEMO){
                             MainActivity main_activity = (MainActivity)applicationInterface.getContext();
                             main_activity.mRecognizeSpeech = new RecognizeSpeech();
-                            main_activity.mRecognizeSpeech.StartRecordSound(main_activity);
+                            main_activity.mRecognizeSpeech.mWaveRecorder.start(main_activity);
                             main_activity.getMainUI().setTakePhotoIcon();
                         }
                     }
@@ -5920,7 +5920,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             clearTempImages();
             success = false; // whether jpeg callback succeeded
             Locale loc = Locale.getDefault();
-            locale = loc.getLanguage()+"_"+loc.getCountry();
+            locale = loc.getLanguage()+"-"+loc.getCountry();
 
             if( !has_date ) {
                 has_date = true;

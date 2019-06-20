@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -16,7 +18,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -26,9 +27,12 @@ import com.hoikutech.tagcam.preview.Preview;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 
 public class RecognizeSpeech implements RecognitionListener {
@@ -202,108 +206,57 @@ public class RecognizeSpeech implements RecognitionListener {
         }
     }
 
-    private MediaRecorder mMediaRecorder;
-    private String recordSoundPath;
-    public void StartRecordSound(MainActivity _main_activity){
-        this.main_activity = _main_activity;
-        // 出力するファイルパスを指定
-        try {
-            recordSoundPath =
-                File.createTempFile("voiceMemo", ".wav", main_activity.getCacheDir())
-                .getAbsolutePath();
-        } catch (IOException e) {
-            e.printStackTrace();
-            recordSoundPath = null ;
-            return ; // Cannot create temporary file
-        }
+    public class WaveRecorder {
+        // Logic from: https://gist.github.com/ohtangza/b5da3b7247b7eaa737a9d3695d909093
+        private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
+        private static final int SAMPLE_RATE = 16000; //44100; // Hz
+        private static final int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
+        private static final int CHANNEL_MASK = AudioFormat.CHANNEL_IN_MONO;
 
-        if( isRecordingSound() ){
-            mMediaRecorder.stop();
-            mMediaRecorder.reset();
-            //mMediaRecorder = null ;
-        }
+        private final int BUFFER_SIZE =
+                2 * AudioRecord.getMinBufferSize( SAMPLE_RATE, CHANNEL_MASK, ENCODING );
+        private byte[] buffer = new byte[BUFFER_SIZE];
 
-        mMediaRecorder = new MediaRecorder();
-        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-        //mMediaRecorder.setAudioSamplingRate(44100);
-        //mMediaRecorder.setAudioEncodingBitRate(160000);
+        private AudioRecord audioRecord;
+        private FileOutputStream wavOut ;
+        private String outFilePath ;
 
-
-
-        mMediaRecorder.setOutputFile(recordSoundPath);
-
-        try {
-            mMediaRecorder.prepare();
-            mMediaRecorder.start();
-        }
-        catch (final Exception e) {
-
-        }
-
-    }
-    public String StopRecordSound(){
-        try {
-            if( mMediaRecorder == null || recordSoundPath == null ) return null ;
-            mMediaRecorder.stop();
-            mMediaRecorder.reset();
-            mMediaRecorder = null ;
-
-            byte[] waveBytes = getFileByteArray(recordSoundPath) ;
-            if( waveBytes == null ) return null ;
-
-            byte[] encodeBytes = Base64.encode(waveBytes, Base64.DEFAULT);
-            if(encodeBytes == null) return null ;
-
-            return new String(encodeBytes, "UTF-8");
-        } catch (/*UnsupportedEncoding*/ Exception e) {
-            e.printStackTrace();
-        }
-
-        return null ;
-    }
-
-    public boolean isRecordingSound(){return mMediaRecorder!=null;}
-
-    public byte[] getFileByteArray(String path) {
-        File file = new File(path);
-        try (FileInputStream inputStream = new FileInputStream(file);
-             ByteArrayOutputStream bout = new ByteArrayOutputStream();) {
-            byte[] buffer = new byte[1024];
-            int len = 0;
-            while((len = inputStream.read(buffer)) != -1) {
-                bout.write(buffer, 0, len);
+        public void start(MainActivity _main_activity ) {
+            main_activity = _main_activity ;
+            if( isRecording() ){
+                stop(); // force restart recording
             }
-            return bout.toByteArray();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-        /*
-    class WaveRecorder {
-        private AudioRecord record;
 
-        // 定数
-        private final int AUDIO_SAMPLE_FREQ = 44100;
-        private final int AUDIO_BUFFER_SIZE = AudioRecord.getMinBufferSize(
-                AUDIO_SAMPLE_FREQ, AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT);
-        private final int FRAME_BUFFER_SIZE = AUDIO_BUFFER_SIZE / 2 ;
+            File file ;
+            try {
+                //file = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) , "voiceMemo.wav");
+                file = File.createTempFile("voiceMemo", ".wav", main_activity.getCacheDir());
+                outFilePath = file.getAbsolutePath();
 
-        private short data[] = new short[FRAME_BUFFER_SIZE];
+                // Create recorder
+                audioRecord = new AudioRecord(
+                        AUDIO_SOURCE, SAMPLE_RATE, CHANNEL_MASK, ENCODING, BUFFER_SIZE);
+                wavOut = new FileOutputStream(outFilePath);
+                writeWavHeader(wavOut, CHANNEL_MASK, SAMPLE_RATE, ENCODING);
 
-        public void start() {
-            // AudioRecord作成
-            record = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                    AUDIO_SAMPLE_FREQ, AudioFormat.CHANNEL_IN_MONO,
-                    AudioFormat.ENCODING_PCM_16BIT, AUDIO_BUFFER_SIZE);
-            record.setRecordPositionUpdateListener(new AudioRecord.OnRecordPositionUpdateListener() {
+            } catch (IOException e) {
+                e.printStackTrace();
+                if (audioRecord != null)
+                    stop();
+                return;
+            }
+
+            audioRecord.setRecordPositionUpdateListener(new AudioRecord.OnRecordPositionUpdateListener() {
                 // フレームごとの処理
                 @Override
                 public void onPeriodicNotification(AudioRecord recorder) {
-                    recorder.read(data, 0, FRAME_BUFFER_SIZE);
+                    if( audioRecord == null ) return ; // Stopped.
+                    int read = recorder.read(buffer, 0, buffer.length);
+                    try {
+                        wavOut.write(buffer, 0, read);
+                    } catch( Exception e ){
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -311,19 +264,195 @@ public class RecognizeSpeech implements RecognitionListener {
                 }
             });
 
-            record.setPositionNotificationPeriod(FRAME_BUFFER_SIZE);
+            audioRecord.setPositionNotificationPeriod(BUFFER_SIZE/2);
+            audioRecord.startRecording();
 
-            // 録音開始
-            record.startRecording();
-
-            record.read(data, 0, FRAME_BUFFER_SIZE);
+            // Initial read?
+            audioRecord.read(buffer, 0, buffer.length);
         }
 
-        public void stop() {
-            record.stop();
-            record.release();
-            record = null;
+        public String stop() {
+            if( audioRecord != null ) {
+                int read = audioRecord.read(buffer, 0, buffer.length);
+                if( wavOut != null ) try {
+                    wavOut.write(buffer, 0, read);
+                } catch( Exception e ){
+                    e.printStackTrace();
+                }
+                audioRecord.stop();
+                audioRecord.release();
+                audioRecord = null;
+            }
+
+            if( wavOut != null ) {
+                try {
+                    wavOut.close();
+                    wavOut = null;
+                    updateWavHeader(new File(outFilePath));
+
+                    // Convert to base64
+                    byte[] waveBytes = getFileByteArray(outFilePath) ;
+                    if( waveBytes == null ) return null ;
+
+                    byte[] encodeBytes = Base64.encode(waveBytes, Base64.DEFAULT);
+                    if(encodeBytes == null) return null ;
+
+                    String encStr = new String(encodeBytes, "UTF-8");
+
+                    return encStr.replaceAll("\n","").replaceAll("\r","");
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        public boolean isRecording(){ return audioRecord != null;}
+
+        private byte[] getFileByteArray(String path) {
+            File file = new File(path);
+            try (FileInputStream inputStream = new FileInputStream(file);
+                 ByteArrayOutputStream bout = new ByteArrayOutputStream();) {
+                byte[] buffer = new byte[1024];
+                int len = 0;
+                while((len = inputStream.read(buffer)) != -1) {
+                    bout.write(buffer, 0, len);
+                }
+                return bout.toByteArray();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        /**
+         * Writes the proper 44-byte RIFF/WAVE header to/for the given stream
+         * Two size fields are left empty/null since we do not yet know the final stream size
+         *
+         * @param out         The stream to write the header to
+         * @param channelMask An AudioFormat.CHANNEL_* mask
+         * @param sampleRate  The sample rate in hertz
+         * @param encoding    An AudioFormat.ENCODING_PCM_* value
+         * @throws IOException
+         */
+        private void writeWavHeader(OutputStream out, int channelMask, int sampleRate, int encoding) throws IOException {
+            short channels;
+            switch (channelMask) {
+                case AudioFormat.CHANNEL_IN_MONO:
+                    channels = 1;
+                    break;
+                case AudioFormat.CHANNEL_IN_STEREO:
+                    channels = 2;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unacceptable channel mask");
+            }
+
+            short bitDepth;
+            switch (encoding) {
+                case AudioFormat.ENCODING_PCM_8BIT:
+                    bitDepth = 8;
+                    break;
+                case AudioFormat.ENCODING_PCM_16BIT:
+                    bitDepth = 16;
+                    break;
+                case AudioFormat.ENCODING_PCM_FLOAT:
+                    bitDepth = 32;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unacceptable encoding");
+            }
+
+            writeWavHeader(out, channels, sampleRate, bitDepth);
+        }
+
+        /**
+         * Writes the proper 44-byte RIFF/WAVE header to/for the given stream
+         * Two size fields are left empty/null since we do not yet know the final stream size
+         *
+         * @param out        The stream to write the header to
+         * @param channels   The number of channels
+         * @param sampleRate The sample rate in hertz
+         * @param bitDepth   The bit depth
+         * @throws IOException
+         */
+        private void writeWavHeader(OutputStream out, short channels, int sampleRate, short bitDepth) throws IOException {
+            // Convert the multi-byte integers to raw bytes in little endian format as required by the spec
+            byte[] littleBytes = ByteBuffer
+                    .allocate(14)
+                    .order(ByteOrder.LITTLE_ENDIAN)
+                    .putShort(channels)
+                    .putInt(sampleRate)
+                    .putInt(sampleRate * channels * (bitDepth / 8))
+                    .putShort((short) (channels * (bitDepth / 8)))
+                    .putShort(bitDepth)
+                    .array();
+
+            // Not necessarily the best, but it's very easy to visualize this way
+            out.write(new byte[]{
+                    // RIFF header
+                    'R', 'I', 'F', 'F', // ChunkID
+                    0, 0, 0, 0, // ChunkSize (must be updated later)
+                    'W', 'A', 'V', 'E', // Format
+                    // fmt subchunk
+                    'f', 'm', 't', ' ', // Subchunk1ID
+                    16, 0, 0, 0, // Subchunk1Size
+                    1, 0, // AudioFormat
+                    littleBytes[0], littleBytes[1], // NumChannels
+                    littleBytes[2], littleBytes[3], littleBytes[4], littleBytes[5], // SampleRate
+                    littleBytes[6], littleBytes[7], littleBytes[8], littleBytes[9], // ByteRate
+                    littleBytes[10], littleBytes[11], // BlockAlign
+                    littleBytes[12], littleBytes[13], // BitsPerSample
+                    // data subchunk
+                    'd', 'a', 't', 'a', // Subchunk2ID
+                    0, 0, 0, 0, // Subchunk2Size (must be updated later)
+            });
+        }
+
+        /**
+         * Updates the given wav file's header to include the final chunk sizes
+         *
+         * @param wav The wav file to update
+         * @throws IOException
+         */
+        private void updateWavHeader(File wav) throws IOException {
+            byte[] sizes = ByteBuffer
+                    .allocate(8)
+                    .order(ByteOrder.LITTLE_ENDIAN)
+                    // There are probably a bunch of different/better ways to calculate
+                    // these two given your circumstances. Cast should be safe since if the WAV is
+                    // > 4 GB we've already made a terrible mistake.
+                    .putInt((int) (wav.length() - 8)) // ChunkSize
+                    .putInt((int) (wav.length() - 44)) // Subchunk2Size
+                    .array();
+
+            RandomAccessFile accessWave = null;
+            //noinspection CaughtExceptionImmediatelyRethrown
+            try {
+                accessWave = new RandomAccessFile(wav, "rw");
+                // ChunkSize
+                accessWave.seek(4);
+                accessWave.write(sizes, 0, 4);
+
+                // Subchunk2Size
+                accessWave.seek(40);
+                accessWave.write(sizes, 4, 4);
+            } catch (IOException ex) {
+                // Rethrow but we still close accessWave in our finally
+                throw ex;
+            } finally {
+                if (accessWave != null) {
+                    try {
+                        accessWave.close();
+                    } catch (IOException ex) {
+                        //
+                    }
+                }
+            }
         }
     }
-        */
+
+    public WaveRecorder mWaveRecorder = new WaveRecorder();
 }

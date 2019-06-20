@@ -1,6 +1,9 @@
+![Tag Camera](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 ## Tag Camera (タグカメラ)
 
 タグカメラは、写真に様々な補足情報を追加するための、Android用カメラアプリです。商用ではなく研究目的のソフトウェアです。
+
+[Google Playから公開](https://play.google.com/store/apps/details?id=com.hoikutech.tagcam&hl=ja)しています。
 
 Mark Harman氏による[Open Camera](https://opencamera.sourceforge.io/)のソースコードをベースに開発しており、元のライセンスがGPL3なので、こちらも[GPL3](LICENSE)です。
 

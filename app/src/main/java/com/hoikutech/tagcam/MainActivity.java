@@ -354,8 +354,8 @@ public class MainActivity extends Activity {
                         Log.d(TAG, "takePhotoButton ACTION_UP");
 
                     if( getPreview().mDelayedImageSaver.getSaveMode() == Preview.DelayedImageSaver.SAVEMODE_VOICEMEMO ){
-                        if( mRecognizeSpeech!=null && mRecognizeSpeech.isRecordingSound() ) {
-                            String base64 = mRecognizeSpeech.StopRecordSound();
+                        if( mRecognizeSpeech!=null && mRecognizeSpeech.mWaveRecorder.isRecording() ) {
+                            String base64 = mRecognizeSpeech.mWaveRecorder.stop();
                             if( base64 != null )
                                 getPreview().mDelayedImageSaver.addTag(
                                     Preview.DelayedImageSaver.TAG_WAVE_BASE64, base64 );

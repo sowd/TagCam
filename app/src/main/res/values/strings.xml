@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_popup">Popup settings</string>
     <string name="intro_text">Touch to focus, and press the blue camera button to take photos.
-        Long pressing the shutter button records voice memo and embed the base64-ed string into exif comment.
+        Long pressing the shutter button records voice memo in raw .wav format and embed it as the base64-ed string into the exif comment.
         If you enable "pause after shoot" setting, you can also add voice recognition tag into the exif comment.
         Tag Camera is based on an excellent open source project "Open Camera."
         All basic functionalities are just inherited from Open Camera.
@@ -872,15 +872,9 @@
     <string name="whats_new_text">
         [This dialog is shown when Tag Camera is updated. You can disable it under
         Settings/On screen GUI/Show What\'s New dialog.]
-        \n\n<b>v0.0.14:</b>\n\n
-        <ul>
-            <li>Forked from Open Camera and added voice memo/recognition function. The developer of Open Camera is a God. Thank you very much!\n</li>
-            <li>If you long press the shutter button, the sound is recorded as far as you are touching the button. The resulting wave file is base64 encoded and embedded into exif comment.</li>
-            <li>When paused after shooting, file is not immediately saved. It happens when save button is pressed.</li>
-            <li>When paused, voice recognition can be fired to add transcription tag. Transcripted text is embeded into exif comment, file name, and image text area (if enabled.)\n</li>
-            <li>Default settings are drastically changed.\n</li>
-            <li>Japanese string resources are updated.\n</li>
-        </ul>
+        \n\n<b>v0.0.16:</b>\n\n
+        + \'_\' in locale string was replaced by \'-\'\n
+        + The sound format bug fixed. (3gp to raw wav)\n
     </string>
 
     <string name="tag_added_message">Tag %s was added.</string>
