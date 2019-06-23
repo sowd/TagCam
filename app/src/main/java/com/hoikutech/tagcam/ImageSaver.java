@@ -2131,6 +2131,7 @@ public class ImageSaver extends Thread {
 
         if( request.getExifCommentStringValue("transcript",true) != null )
             filename_suffix = (filename_suffix==null?"":filename_suffix)+"_1_"+request.getExifCommentStringValue("transcript",true);
+        filename_suffix += "_tag"; // Easily identify images taken by this camera
 
 
         if( request.type != Request.Type.JPEG ) {

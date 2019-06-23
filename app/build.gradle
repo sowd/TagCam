@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
 
-        versionCode 16
-        versionName "0.0.16"
+        versionCode 17
+        versionName "0.0.17"
 
         applicationId "com.hoikutech.tagcam"
         minSdkVersion 21

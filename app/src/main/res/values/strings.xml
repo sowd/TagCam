@@ -872,9 +872,8 @@
     <string name="whats_new_text">
         [This dialog is shown when Tag Camera is updated. You can disable it under
         Settings/On screen GUI/Show What\'s New dialog.]
-        \n\n<b>v0.0.16:</b>\n\n
-        + \'_\' in locale string was replaced by \'-\'\n
-        + The sound format bug fixed. (3gp to raw wav)\n
+        \n\n<b>v0.0.17:</b>\n\n
+        + "_tag" is added at the end of filename to be easily idenfied.\n
     </string>
 
     <string name="tag_added_message">Tag %s was added.</string>
