@@ -5947,11 +5947,11 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
                 try { tagValue = URLEncoder.encode(_tagValue, "UTF-8"); }
                 catch (UnsupportedEncodingException e) { tagValue = _tagValue ; }
             }
-            String kv = "\""+tagKey+"\" : \""+tagValue+"\"\n";
+            String kv = "\""+tagKey+"\":\""+tagValue+"\"";
             if( ImageSaver.Request.exifComment_Static == null )
-                ImageSaver.Request.exifComment_Static = "\t"+kv;
+                ImageSaver.Request.exifComment_Static = kv;
             else
-                ImageSaver.Request.exifComment_Static += "\t,"+kv;
+                ImageSaver.Request.exifComment_Static += kv;
 
             if( !tagKey.equals("locale"))
             showToast(null, String.format(
@@ -5966,7 +5966,7 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
             if( cmst != null )
                 ImageSaver.Request.exifComment_Static += ","+cmst;
             ImageSaver.Request.exifComment_Static
-                    = "{\n"+ImageSaver.Request.exifComment_Static +"}";// Make it a JSON formatted str
+                    = "{"+ImageSaver.Request.exifComment_Static +"}";// Make it a JSON formatted str
 
             if( data != null ){
                 if( !applicationInterface.onPictureTaken(data, current_date) ) {

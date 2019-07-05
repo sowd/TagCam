@@ -2129,8 +2129,9 @@ public class ImageSaver extends Thread {
             Log.d(TAG, "saveSingleImageNow");
 
 
+        filename_suffix = (filename_suffix==null?"":filename_suffix)+"_";
         if( request.getExifCommentStringValue("transcript",true) != null )
-            filename_suffix = (filename_suffix==null?"":filename_suffix)+"_1_"+request.getExifCommentStringValue("transcript",true);
+            filename_suffix = filename_suffix+request.getExifCommentStringValue("transcript",true);
         filename_suffix += "_tag"; // Easily identify images taken by this camera
 
 
