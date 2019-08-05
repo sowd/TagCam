@@ -6,12 +6,14 @@ android {
 
     defaultConfig {
 
-        versionCode 19
-        versionName "0.0.19"
+        versionCode 20
+        versionName "0.0.20"
 
         applicationId "com.hoikutech.tagcam"
         minSdkVersion 21
         targetSdkVersion 28
+
+        multiDexEnabled true
 
         renderscriptTargetApi 20
         //renderscriptSupportModeEnabled true // don't use support library as it bloats the APK, and we don't need pre-4.4 support

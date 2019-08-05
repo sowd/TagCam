@@ -872,8 +872,9 @@
     <string name="whats_new_text">
         [This dialog is shown when Tag Camera is updated. You can disable it under
         Settings/On screen GUI/Show What\'s New dialog.]
-        \n\n<b>v0.0.19:</b>\n\n
-        + If wave data is inserted to the image, file name ended with _..._tag.jpg
+        \n\n<b>v0.0.20:</b>\n\n
+        + If the wave data is inserted to the image, the file name ends with _..._tag.jpg
+        + The icon is enlarged.
     </string>
 
     <string name="tag_added_message">Tag %s was added.</string>
