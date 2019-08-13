@@ -846,7 +846,7 @@
                     android:summary="@string/preference_stamp_summary"
                     android:entries="@array/preference_stamp_entries"
                     android:entryValues="@array/preference_stamp_values"
-                    android:defaultValue="preference_stamp_yes"
+                    android:defaultValue="preference_stamp_no"
                     />
     
                 <ListPreference 

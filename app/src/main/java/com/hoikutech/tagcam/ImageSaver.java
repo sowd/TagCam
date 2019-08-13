@@ -1860,7 +1860,7 @@ public class ImageSaver extends Thread {
         final MyApplicationInterface applicationInterface = main_activity.getApplicationInterface();
         boolean dategeo_stamp = request.preference_stamp.equals("preference_stamp_yes");
         boolean text_stamp = request.preference_textstamp.length() > 0;
-        if( dategeo_stamp || text_stamp ) {
+        if( true /*dategeo_stamp || text_stamp*/ ) {
             if( bitmap == null ) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "decode bitmap in order to stamp info");
@@ -2010,11 +2010,13 @@ public class ImageSaver extends Thread {
                             ypos -= diff_y;
                     }
 
-                    if(request.doesExifCommentKeyExist(Preview.DelayedImageSaver.TAG_WAVE_BASE64) ){
-                        applicationInterface.drawTextWithBackground(canvas, p, "\uD83D\uDD0A", color, Color.BLACK,
-                                width - offset_x, ypos, MyApplicationInterface.Alignment.ALIGNMENT_BOTTOM, null, draw_shadowed);
-                        ypos -= diff_y;
-                    }
+                }
+
+                // Insert speaker mark even if dategeo_stamp is false
+                if(request.doesExifCommentKeyExist(Preview.DelayedImageSaver.TAG_WAVE_BASE64) ){
+                    applicationInterface.drawTextWithBackground(canvas, p, "\uD83D\uDD0A", color, Color.BLACK,
+                            width - offset_x, ypos, MyApplicationInterface.Alignment.ALIGNMENT_BOTTOM, null, draw_shadowed);
+                    ypos -= diff_y;
                 }
                 if( text_stamp ) {
                     if( MyDebug.LOG )
