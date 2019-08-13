@@ -1860,7 +1860,7 @@ public class ImageSaver extends Thread {
         final MyApplicationInterface applicationInterface = main_activity.getApplicationInterface();
         boolean dategeo_stamp = request.preference_stamp.equals("preference_stamp_yes");
         boolean text_stamp = request.preference_textstamp.length() > 0;
-        if( true /*dategeo_stamp || text_stamp*/ ) {
+        if( true || dategeo_stamp || text_stamp ) {
             if( bitmap == null ) {
                 if( MyDebug.LOG )
                     Log.d(TAG, "decode bitmap in order to stamp info");
@@ -1938,6 +1938,8 @@ public class ImageSaver extends Thread {
                         applicationInterface.drawTextWithBackground(canvas, p, datetime_stamp, color, Color.BLACK, width - offset_x, ypos, MyApplicationInterface.Alignment.ALIGNMENT_BOTTOM, null, draw_shadowed);
                     }
                     ypos -= diff_y;
+
+
                     String gps_stamp = main_activity.getTextFormatter().getGPSString(preference_stamp_gpsformat, request.preference_units_distance, request.store_location, request.location, request.store_geo_direction, request.geo_direction);
 
                     if( gps_stamp.length() > 0 ) {
@@ -2004,6 +2006,7 @@ public class ImageSaver extends Thread {
                     }
 
                     String transcript = request.getExifCommentStringValue(Preview.DelayedImageSaver.TAG_TRANSCRIPT,true);
+
                     if( transcript != null ){
                             applicationInterface.drawTextWithBackground(canvas, p, transcript, color, Color.BLACK,
                                     width - offset_x, ypos, MyApplicationInterface.Alignment.ALIGNMENT_BOTTOM, null, draw_shadowed);
@@ -2049,7 +2052,7 @@ public class ImageSaver extends Thread {
         boolean dategeo_stamp = request.preference_stamp.equals("preference_stamp_yes");
         boolean text_stamp = request.preference_textstamp.length() > 0;
         File exifTempFile = null;
-        if( bitmap != null || request.image_format != Request.ImageFormat.STD || request.do_auto_stabilise || request.mirror || dategeo_stamp || text_stamp ) {
+        if( true || bitmap != null || request.image_format != Request.ImageFormat.STD || request.do_auto_stabilise || request.mirror || dategeo_stamp || text_stamp ) {
             // either we have a bitmap, or will need to decode the bitmap to do post-processing
             // need to rotate the bitmap according to the exif orientation (which some devices use, e.g., Samsung)
             // so need to write to a temp file for this - we also use this later on to transfer the exif tags
