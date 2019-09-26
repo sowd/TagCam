@@ -872,9 +872,8 @@
     <string name="whats_new_text">
         [This dialog is shown when Tag Camera is updated. You can disable it under
         Settings/On screen GUI/Show What\'s New dialog.]
-        \n\n<b>v0.0.22:</b>\n\n
-        + Insert speaker icon when sound is embedded, even if geo/time stamping is disabled\n
-        + Geo/time stamping defaults to false
+        \n\n<b>v0.0.23:</b>\n\n
+        + Insert WiFi scan result if NanoGW Uploader is running.
     </string>
 
     <string name="tag_added_message">Tag %s was added.</string>

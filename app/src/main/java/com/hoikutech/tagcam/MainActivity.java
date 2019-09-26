@@ -1,5 +1,6 @@
 package com.hoikutech.tagcam;
 
+import com.hoikutech.nanogwuploader.ITagCamInterface;
 import com.hoikutech.tagcam.cameracontroller.CameraController;
 import com.hoikutech.tagcam.cameracontroller.CameraControllerManager2;
 import com.hoikutech.tagcam.preview.Preview;
@@ -22,7 +23,9 @@ import java.util.Map;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,7 +42,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.animation.ArgbEvaluator;
@@ -349,34 +354,35 @@ public class MainActivity extends Activity {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if( motionEvent.getAction() == MotionEvent.ACTION_UP ) {
-                    if( MyDebug.LOG )
-                        Log.d(TAG, "takePhotoButton ACTION_UP");
+            if( motionEvent.getAction() == MotionEvent.ACTION_UP ) {
+                if( MyDebug.LOG )
+                    Log.d(TAG, "takePhotoButton ACTION_UP");
 
-                    if( getPreview().mDelayedImageSaver.getSaveMode() == Preview.DelayedImageSaver.SAVEMODE_VOICEMEMO ){
-                        if( mRecognizeSpeech!=null && mRecognizeSpeech.mWaveRecorder.isRecording() ) {
-                            String base64 = mRecognizeSpeech.mWaveRecorder.stop();
-                            if( base64 != null )
-                                getPreview().mDelayedImageSaver.addTag(
-                                    Preview.DelayedImageSaver.TAG_WAVE_BASE64, base64 );
 
-                            /*if( getPreview().mDelayedImageSaver.isWaitingForSave()) {
-                                getPreview().mDelayedImageSaver.saveImage(true);
-                            }*/
-                            getPreview().mDelayedImageSaver.setSaveMode(Preview.DelayedImageSaver.SAVEMODE_NONE);
-                        } else {
-                            // Cancel photo shoot.
-                            getPreview().mDelayedImageSaver.setSaveMode(Preview.DelayedImageSaver.SAVEMODE_WAITING_PHOTOSHOOT_CANCELLATION);
-                        }
+                if( getPreview().mDelayedImageSaver.getSaveMode() == Preview.DelayedImageSaver.SAVEMODE_VOICEMEMO ){
+                    if( mRecognizeSpeech!=null && mRecognizeSpeech.mWaveRecorder.isRecording() ) {
+                        String base64 = mRecognizeSpeech.mWaveRecorder.stop();
+                        if( base64 != null )
+                            getPreview().mDelayedImageSaver.addTag(
+                                Preview.DelayedImageSaver.TAG_WAVE_BASE64, base64 );
 
-                        mRecognizeSpeech = null;
-                        return false ;
+                        /*if( getPreview().mDelayedImageSaver.isWaitingForSave()) {
+                            getPreview().mDelayedImageSaver.saveImage(true);
+                        }*/
+                        getPreview().mDelayedImageSaver.setSaveMode(Preview.DelayedImageSaver.SAVEMODE_NONE);
+                    } else {
+                        // Cancel photo shoot.
+                        getPreview().mDelayedImageSaver.setSaveMode(Preview.DelayedImageSaver.SAVEMODE_WAITING_PHOTOSHOOT_CANCELLATION);
                     }
-                    takePhotoButtonLongClickCancelled();
-                    if( MyDebug.LOG )
-                        Log.d(TAG, "takePhotoButton ACTION_UP done");
+
+                    mRecognizeSpeech = null;
+                    return false ;
                 }
-                return false;
+                takePhotoButtonLongClickCancelled();
+                if( MyDebug.LOG )
+                    Log.d(TAG, "takePhotoButton ACTION_UP done");
+            }
+            return false;
             }
         });
 
@@ -996,11 +1002,37 @@ public class MainActivity extends Activity {
 
         preview.onResume();
 
+        Intent service = new Intent("com.hoikutech.nanogwuploader.ACTION_BIND");
+        service.setPackage("com.hoikutech.nanogwuploader"); // Android 5.0 Lolipop以降で必須の設定
+        bindService(service, mTagCamInterfaceConnection, BIND_AUTO_CREATE);
+
         if( MyDebug.LOG ) {
             Log.d(TAG, "onResume: total time to resume: " + (System.currentTimeMillis() - debug_time));
         }
     }
+    static private ITagCamInterface mTagCamInterface = null ;
+    private TagCamInterfaceConnection mTagCamInterfaceConnection = new TagCamInterfaceConnection();
 
+    private class TagCamInterfaceConnection implements ServiceConnection {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mTagCamInterface = ITagCamInterface.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mTagCamInterface = null;
+        }
+    };
+
+    public static String getTagCamInterfaceJSONString(){
+        try {
+            return mTagCamInterface.getJSONString();
+        } catch( RemoteException e ){
+            Log.e(TAG,e.toString());
+            return null;
+        }
+    }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         if( MyDebug.LOG )
@@ -1043,6 +1075,11 @@ public class MainActivity extends Activity {
         applicationInterface.clearLastImages(); // this should happen when pausing the preview, but call explicitly just to be safe
         applicationInterface.getDrawPreview().clearGhostImage();
         preview.onPause();
+
+        // Unbind.
+        if (mTagCamInterface != null) {
+            unbindService(mTagCamInterfaceConnection);
+        }
         if( MyDebug.LOG ) {
             Log.d(TAG, "onPause: total time to pause: " + (System.currentTimeMillis() - debug_time));
         }

@@ -5939,19 +5939,23 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         }
 
 
+        public static final String TAG_EXTERNAL = "external";
         public static final String TAG_WAVE_BASE64 = "wav_base64";
         public static final String TAG_TRANSCRIPT = "transcript";
-        public void addTag(String tagKey,String _tagValue){
+        public void addTag(String tagKey,String _tagValue) {
+            addTag(tagKey,_tagValue,false);
+        }
+        public void addTag(String tagKey,String _tagValue,boolean bValueIsRawJson){
             String tagValue = _tagValue;
             if( tagKey.equals(TAG_TRANSCRIPT) ){ // Tag convert to urlencoded utf8
                 try { tagValue = URLEncoder.encode(_tagValue, "UTF-8"); }
                 catch (UnsupportedEncodingException e) { tagValue = _tagValue ; }
             }
-            String kv = "\""+tagKey+"\":\""+tagValue+"\"";
+            String kv = "\""+tagKey+"\":"+(bValueIsRawJson ? tagValue : "\""+tagValue+"\"" );
             if( ImageSaver.Request.exifComment_Static == null )
                 ImageSaver.Request.exifComment_Static = kv;
             else
-                ImageSaver.Request.exifComment_Static += kv;
+                ImageSaver.Request.exifComment_Static += ","+kv;
 
             if( !tagKey.equals("locale"))
             showToast(null, String.format(
@@ -5960,14 +5964,19 @@ public class Preview implements SurfaceHolder.Callback, TextureView.SurfaceTextu
         }
 
         public void saveImage(boolean bEndPauseAfterSaving){
-            String cmst = ImageSaver.Request.exifComment_Static;
-            ImageSaver.Request.exifComment_Static = null;
+            //String cmst = ImageSaver.Request.exifComment_Static;
+            //ImageSaver.Request.exifComment_Static = null;
             addTag("locale",locale);
-            if( cmst != null )
-                ImageSaver.Request.exifComment_Static += ","+cmst;
+            //if( cmst != null )
+            //    ImageSaver.Request.exifComment_Static += ","+cmst;
+            String externalJson = MainActivity.getTagCamInterfaceJSONString();
+            if( externalJson != null )
+                addTag(TAG_EXTERNAL,externalJson,true);
+
             ImageSaver.Request.exifComment_Static
                     = "{"+ImageSaver.Request.exifComment_Static +"}";// Make it a JSON formatted str
 
+            Log.v(TAG, ImageSaver.Request.exifComment_Static) ;
             if( data != null ){
                 if( !applicationInterface.onPictureTaken(data, current_date) ) {
                     if( MyDebug.LOG )
